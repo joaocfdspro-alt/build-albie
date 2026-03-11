@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import logoImage from "@/assets/logo-maria.png";
+import IvoLogo from "@/components/IvoLogo";
 import { ThemeToggle } from "@/components/admin/ThemeToggle";
 import { InviteAdminPanel } from "@/components/admin/InviteAdminPanel";
 import { OnboardingTutorial, HelpButton } from "@/components/admin/OnboardingTutorial";
