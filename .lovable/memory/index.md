@@ -32,7 +32,7 @@ Ivo Brasil rebrand - design system, brand rules, and project structure
 - Hub hero: horizontal variant (logo-hrz-dark.png)
 
 ## WhatsApp
-Currently placeholder: 5511999999999 — needs real number from client
+Link: https://api.whatsapp.com/send/?phone=5527992936922&text&type=phone_number&app_absent=0
 
 ## Footer
 "Desenvolvido por D7 Company" (not "Criado por")

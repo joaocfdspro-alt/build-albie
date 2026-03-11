@@ -16,7 +16,7 @@ import IvoLogo from "@/components/IvoLogo";
 import D7Footer from "@/components/D7Footer";
 
 const checkoutUrl = "https://ivobrasil.com.br/onegociador/";
-const whatsappUrl = "https://wa.me/5511999999999";
+const whatsappUrl = "https://api.whatsapp.com/send/?phone=5527992936922&text&type=phone_number&app_absent=0";
 
 const lessons = [
   {

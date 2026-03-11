@@ -24,7 +24,7 @@ import D7Footer from "@/components/D7Footer";
 import ivoHero from "@/assets/ivo-hero.jpg";
 
 const checkoutUrl = "#"; // Link a ser definido
-const whatsappUrl = "https://wa.me/5511999999999";
+const whatsappUrl = "https://api.whatsapp.com/send/?phone=5527992936922&text&type=phone_number&app_absent=0";
 
 const modules = [
   { icon: Brain, number: "SEMANA 01-02", title: "Mentalidade do Negociador", description: "Pare de pensar como vendedor. Desenvolva a mentalidade estratégica que separa negociadores de elite dos amadores." },
