@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Lock, Mail, ArrowRight, Loader2, Eye, EyeOff } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import logoImage from "@/assets/logo-maria.png";
+import IvoLogo from "@/components/IvoLogo";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
@@ -18,102 +18,42 @@ const AdminLogin = () => {
     e.preventDefault();
     setError("");
     setLoading(true);
-
     const { error } = await signIn(email, password);
-    if (error) {
-      setError("Credenciais inválidas. Verifique seu e-mail e senha.");
-      setLoading(false);
-    } else {
-      navigate("/admin");
-    }
+    if (error) { setError("Credenciais inválidas."); setLoading(false); } else { navigate("/admin"); }
   };
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="w-full max-w-sm"
-      >
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <img src={logoImage} alt="Maria Marcelino" className="h-8 invert opacity-60 mx-auto mb-6" />
+          <div className="mb-6"><IvoLogo size="md" className="opacity-60" /></div>
           <h1 className="text-xl font-bold text-foreground">Painel Administrativo</h1>
           <p className="text-sm text-muted-foreground mt-1">Acesso restrito</p>
         </div>
-
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="text-xs font-semibold text-muted-foreground mb-1.5 block uppercase tracking-wider">
-              E-mail
-            </label>
+            <label className="text-xs font-semibold text-muted-foreground mb-1.5 block uppercase tracking-wider">E-mail</label>
             <div className="relative">
               <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full h-12 rounded-xl bg-card border border-border pl-10 pr-4 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all"
-                placeholder="admin@email.com"
-                required
-              />
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full h-12 rounded-lg bg-card border border-border pl-10 pr-4 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all" placeholder="admin@email.com" required />
             </div>
           </div>
-
           <div>
-            <label className="text-xs font-semibold text-muted-foreground mb-1.5 block uppercase tracking-wider">
-              Senha
-            </label>
+            <label className="text-xs font-semibold text-muted-foreground mb-1.5 block uppercase tracking-wider">Senha</label>
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <input
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full h-12 rounded-xl bg-card border border-border pl-10 pr-12 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all"
-                placeholder="••••••••"
-                required
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-              >
+              <input type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} className="w-full h-12 rounded-lg bg-card border border-border pl-10 pr-12 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all" placeholder="••••••••" required />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors">
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
           </div>
-
-          {error && (
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-xs text-destructive bg-destructive/10 border border-destructive/20 rounded-lg px-3 py-2"
-            >
-              {error}
-            </motion.p>
-          )}
-
-          <motion.button
-            type="submit"
-            disabled={loading}
-            whileTap={{ scale: 0.97 }}
-            className="w-full h-12 rounded-xl bg-gradient-gold-deep text-primary-foreground font-bold text-sm shadow-gold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 disabled:opacity-70"
-          >
-            {loading ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <>
-                Entrar
-                <ArrowRight className="h-4 w-4" />
-              </>
-            )}
+          {error && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-xs text-destructive bg-destructive/10 border border-destructive/20 rounded-lg px-3 py-2">{error}</motion.p>}
+          <motion.button type="submit" disabled={loading} whileTap={{ scale: 0.97 }} className="w-full h-12 rounded-lg bg-gradient-gold-deep text-primary-foreground font-bold text-sm shadow-gold hover:opacity-90 transition-opacity flex items-center justify-center gap-2 disabled:opacity-70">
+            {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <><span>Entrar</span><ArrowRight className="h-4 w-4" /></>}
           </motion.button>
         </form>
-
-        <p className="text-[10px] text-muted-foreground/40 text-center mt-6">
-          Acesso exclusivo para administradores convidados.
-        </p>
+        <p className="text-[10px] text-muted-foreground/40 text-center mt-6">Acesso exclusivo para administradores convidados.</p>
       </motion.div>
     </div>
   );
