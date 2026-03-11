@@ -13,7 +13,7 @@ const D7Footer = () => (
         rel="noopener noreferrer"
         className="text-[10px] text-muted-foreground hover:text-foreground/70 transition-colors"
       >
-        Criado por D7Company
+        Desenvolvido por D7 Company
       </a>
     </div>
   </footer>

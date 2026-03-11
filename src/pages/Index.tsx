@@ -31,6 +31,8 @@ const Index = () => {
                 alt="Ivo Brasil"
                 className="absolute inset-0 w-full h-full object-cover object-[center_20%]"
               />
+              {/* Persistent blur overlay that stays on scroll */}
+              <div className="absolute inset-0 backdrop-blur-[2px]" />
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
             </div>
           </div>
@@ -38,14 +40,6 @@ const Index = () => {
           {/* Content overlay */}
           <div className="relative z-10 h-full flex flex-col justify-end">
             <div className="absolute inset-0 bg-gradient-hero" />
-
-            {/* Gold accent line */}
-            <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ delay: 0.8, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute bottom-[210px] left-8 right-8 h-[1px] line-gold origin-left"
-            />
 
             {/* Logo */}
             <motion.div
@@ -78,6 +72,14 @@ const Index = () => {
                 por falta de produto.<br />
                 <span className="text-gradient-gold">Perde por falta de método.</span>
               </motion.h1>
+
+              {/* Gold accent line between hero text and description */}
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ delay: 0.8, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                className="h-[1px] line-gold origin-left mb-4"
+              />
 
               <motion.p
                 initial={{ opacity: 0 }}
@@ -123,7 +125,7 @@ const Index = () => {
             <HubLink
               icon={Target}
               title="Código da Negociação"
-              subtitle="Programa de 90 dias para negociadores estratégicos · R$ 997"
+              subtitle="Programa de 90 dias para negociadores estratégicos"
               href="/codigo-da-negociacao"
               variant="highlight"
               index={1}
@@ -178,7 +180,7 @@ const Index = () => {
               rel="noopener noreferrer"
               className="text-[10px] text-muted-foreground hover:text-foreground/70 transition-colors mt-1"
             >
-              Criado por D7Company
+              Desenvolvido por D7 Company
             </a>
           </div>
         </div>

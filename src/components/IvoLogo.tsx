@@ -1,24 +1,27 @@
+import logoHrzDark from "@/assets/logo-hrz-dark.png";
+import logoIcoDark from "@/assets/logo-ico-dark.png";
+
 interface IvoLogoProps {
   className?: string;
   size?: "sm" | "md" | "lg";
-  light?: boolean;
+  variant?: "horizontal" | "icon";
 }
 
-const IvoLogo = ({ className = "", size = "md", light = false }: IvoLogoProps) => {
-  const sizeClasses = {
-    sm: "text-sm tracking-[0.35em]",
-    md: "text-lg tracking-[0.4em]",
-    lg: "text-2xl tracking-[0.45em]",
+const IvoLogo = ({ className = "", size = "md", variant = "horizontal" }: IvoLogoProps) => {
+  const sizeMap = {
+    horizontal: { sm: "h-5", md: "h-7", lg: "h-10" },
+    icon: { sm: "h-6", md: "h-9", lg: "h-14" },
   };
 
+  const src = variant === "icon" ? logoIcoDark : logoHrzDark;
+  const alt = "Ivo Brasil — O Negociador";
+
   return (
-    <span
-      className={`font-copperplate font-bold uppercase leading-none ${sizeClasses[size]} ${
-        light ? "text-foreground" : "text-gold"
-      } ${className}`}
-    >
-      IVO BRASIL
-    </span>
+    <img
+      src={src}
+      alt={alt}
+      className={`${sizeMap[variant][size]} w-auto object-contain ${className}`}
+    />
   );
 };
 
