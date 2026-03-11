@@ -6,6 +6,9 @@ import {
   GraduationCap,
   Instagram,
   Target,
+  Mic,
+  Users,
+  Flame,
 } from "lucide-react";
 import ivoHero from "@/assets/ivo-hero.jpg";
 import HubLink from "@/components/HubLink";
