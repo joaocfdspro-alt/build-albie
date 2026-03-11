@@ -137,24 +137,52 @@ const Index = () => {
             />
 
             <HubLink
-              icon={BookOpen}
-              title="Livro: Negociação sem Complicação"
-              subtitle="Fundamentos e técnicas para maximizar seus ganhos"
-              href="https://clubedeautores.com.br/livro/negociacao-sem-complicacao"
+              icon={GraduationCap}
+              title="Método O Negociador"
+              subtitle="Treinamento com técnicas e estratégias práticas"
+              href="https://ivobrasil.com.br/onegociador/"
               variant="secondary"
               index={2}
+            />
+
+            <HubLink
+              icon={Users}
+              title="Mentoria"
+              subtitle="Acompanhamento estratégico para negociadores"
+              href="https://ivobrasil.com.br/mentorias/"
+              variant="secondary"
+              index={3}
+            />
+
+            <HubLink
+              icon={BookOpen}
+              title="Livros"
+              subtitle="Fundamentos e técnicas para maximizar seus ganhos"
+              href="https://ivobrasil.com.br/livros/"
+              variant="secondary"
+              index={4}
               tag="Livro"
             />
 
             <HubLink
-              icon={GraduationCap}
-              title="Curso: O Negociador"
-              subtitle="Treinamento com técnicas e estratégias práticas"
-              href="/o-negociador"
+              icon={Mic}
+              title="Palestras"
+              subtitle="Palestras corporativas sobre negociação e liderança"
+              href="https://ivobrasil.com.br/palestras/"
               variant="secondary"
-              index={3}
+              index={5}
+            />
+
+            <HubLink
+              icon={Flame}
+              title="Imersão Virando a Mesa"
+              subtitle="Imersão presencial — próxima edição em breve"
+              href="/imersao-virando-a-mesa"
+              variant="secondary"
+              index={6}
               isInternal
-              onClick={() => navigate("/o-negociador")}
+              onClick={() => navigate("/imersao-virando-a-mesa")}
+              tag="Em breve"
             />
           </div>
 
