@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Quiz from "./pages/Quiz";
 import CodigoDaNegociacao from "./pages/CodigoDaNegociacao";
 import ONegociador from "./pages/ONegociador";
+import ImersaoVirandoAMesa from "./pages/ImersaoVirandoAMesa";
 import LinkPendente from "./pages/LinkPendente";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
