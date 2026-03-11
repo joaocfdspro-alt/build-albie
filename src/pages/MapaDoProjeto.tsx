@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Download, ExternalLink, Info, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const siteUrl = "https://mariasdobrasil.online";
+const siteUrl = "https://ivobrasil.com.br";
 const mapaUrl = `${siteUrl}/mapa`;
 
 interface Item {
@@ -24,129 +24,124 @@ const sections: Section[] = [
     title: "🏠 Página Inicial (Hub de Links)",
     fullUrl: `${siteUrl}/`,
     description:
-      "É a porta de entrada do ecossistema. Funciona como um Linktree premium e concentra todos os caminhos que a audiência pode percorrer. Quando a Maria compartilha seu link principal em bio do Instagram, stories ou cartão de visita, é para cá que as pessoas vão.",
+      "É a porta de entrada do ecossistema do Ivo Brasil. Funciona como um Linktree premium e concentra todos os caminhos que a audiência pode percorrer. Quando o Ivo compartilha seu link principal em bio do Instagram, stories ou cartão de visita, é para cá que as pessoas vão.",
     items: [
       {
-        label: "Comunidade Marias do Brasil (WhatsApp)",
-        url: "https://chat.whatsapp.com/FHFoHxuJC6CDHiyJ1z6Bw8",
-        why: "Grupo gratuito no WhatsApp. Serve para criar senso de comunidade e manter contato recorrente com a audiência. Quem entra no grupo recebe conteúdo e eventualmente é convidada para produtos pagos.",
-      },
-      {
-        label: "Aulão: Destrave Sua Voz",
-        url: `${siteUrl}/aulao`,
-        why: "Link interno que leva à página do aulão gratuito. Funciona como isca de valor — a pessoa assiste e fica aquecida para o produto principal.",
-      },
-      {
-        label: "Diagnóstico da Sua Voz (Quiz)",
+        label: "Diagnóstico de Negociação (Quiz)",
         url: `${siteUrl}/quiz`,
-        why: "Link interno que leva ao quiz. Captura nome, e-mail e telefone do lead, e classifica o perfil vocal dela. Gera dados estratégicos para a equipe.",
+        why: "Link interno que leva ao quiz de 8 perguntas. Captura nome, e-mail e telefone do lead, classifica o perfil de negociação e gera dados estratégicos para a equipe.",
       },
       {
-        label: "Liberte Sua Voz (Produto Principal)",
-        url: `${siteUrl}/liberte-sua-voz`,
-        why: "Link interno para a página de vendas do programa completo (12x R$103,21). É o principal produto do ecossistema.",
+        label: "Código da Negociação (Programa de 90 dias)",
+        url: `${siteUrl}/codigo-da-negociacao`,
+        why: "Link interno para a página de vendas do programa principal — 90 dias para se tornar um negociador estratégico (R$997).",
       },
       {
-        label: "Sua Primeira Palestra (Workshop)",
-        url: `${siteUrl}/sua-primeira-palestra`,
-        why: "Link interno para a página de vendas do workshop de 3 aulas (R$97). Produto de entrada, mais acessível.",
+        label: "Curso O Negociador",
+        url: `${siteUrl}/o-negociador`,
+        why: "Link interno para a página de vendas do curso O Negociador. Produto de entrada com foco em técnicas práticas de negociação.",
       },
       {
-        label: "Instagram @mariamarcelinoavoz",
-        url: "https://instagram.com/mariamarcelinoavoz",
-        why: "Link externo para o perfil do Instagram da Maria. Aparece no rodapé como ponto de contato e prova social.",
+        label: "Imersão Virando a Mesa",
+        url: `${siteUrl}/imersao-virando-a-mesa`,
+        why: "Link interno para a página da imersão presencial focada em técnicas de negociação para empresários, gestores e empreendedores.",
+      },
+      {
+        label: "Instagram @ivobrasil1",
+        url: "https://instagram.com/ivobrasil1",
+        why: "Link externo para o perfil do Instagram do Ivo. Aparece no rodapé como ícone clicável.",
+      },
+      {
+        label: "YouTube @ivobrasil1",
+        url: "https://www.youtube.com/@ivobrasil1",
+        why: "Link externo para o canal do YouTube do Ivo. Aparece no rodapé como ícone clicável.",
+      },
+      {
+        label: "LinkedIn",
+        url: "https://www.linkedin.com/in/ivobrasil/?locale=pt",
+        why: "Link externo para o perfil do LinkedIn do Ivo. Aparece no rodapé como ícone clicável.",
+      },
+      {
+        label: "WhatsApp",
+        url: "https://api.whatsapp.com/send/?phone=5527992936922&text&type=phone_number&app_absent=0",
+        why: "Link direto para conversa no WhatsApp com o número (27) 99293-6922. Aparece nos botões de CTA e no rodapé.",
       },
     ],
   },
   {
-    title: "🎬 Aulão: Destrave Sua Voz",
-    fullUrl: `${siteUrl}/aulao`,
-    description:
-      "Página de conteúdo gratuito. Contém um vídeo de 20 minutos incorporado do YouTube. O objetivo é aquecer a audiência e direcionar para a compra do programa Liberte Sua Voz.",
-    items: [
-      {
-        label: "Vídeo incorporado do YouTube",
-        url: "https://www.youtube.com/watch?v=4PkMj42OWv0",
-        why: "O vídeo fica embutido na página — a pessoa assiste sem sair do site. Se precisar trocar o vídeo, é só nos avisar com o novo link do YouTube.",
-      },
-      {
-        label: "Botão CTA → Página Liberte Sua Voz",
-        url: `${siteUrl}/liberte-sua-voz`,
-        why: "Após assistir o aulão, o botão direciona a pessoa para a página de vendas do programa principal. É o funil natural.",
-      },
-    ],
-  },
-  {
-    title: "🧠 Diagnóstico da Sua Voz (Quiz Interativo)",
+    title: "🧠 Diagnóstico de Perfil de Negociação (Quiz Interativo)",
     fullUrl: `${siteUrl}/quiz`,
     description:
-      "Quiz de 8 perguntas que identifica o perfil vocal da pessoa. Ao final, ela preenche nome, e-mail e telefone para ver o resultado. Esses dados ficam salvos no banco de dados e a equipe recebe um e-mail automático com o relatório estratégico do lead.",
+      "Quiz de 8 perguntas que identifica o perfil de negociação da pessoa. Ao final, ela preenche nome, e-mail e telefone para ver o resultado. Esses dados ficam salvos no banco de dados e a equipe recebe um e-mail automático com o relatório estratégico do lead.",
     items: [
       {
-        label: "Resultado: Voz Aprisionada (0–8 pontos)",
+        label: "Resultado: Negociador Intuitivo (8–11 pontos)",
         url: "",
-        why: "Lead frio — precisa de mais aquecimento antes de qualquer oferta. A equipe deve focar em conteúdo gratuito.",
+        why: "Lead frio — negocia sem método, perde dinheiro em cada conversa. A equipe deve focar em conteúdo educativo e sessão diagnóstica.",
       },
       {
-        label: "Resultado: Voz Hesitante (9–16 pontos)",
+        label: "Resultado: Negociador Reativo (12–18 pontos)",
         url: "",
-        why: "Lead morno — já reconhece o problema mas ainda não está pronta pra comprar. Indicar o aulão gratuito.",
+        why: "Lead morno — cede sob pressão, sabe que precisa melhorar. Indicar o curso O Negociador e compartilhar cases de sucesso.",
       },
       {
-        label: "Resultado: Voz em Despertar (17–24 pontos)",
+        label: "Resultado: Negociador Consciente (19–25 pontos)",
         url: "",
-        why: "Lead quente — está no momento certo para uma oferta. Direcionar para Liberte Sua Voz ou Sua Primeira Palestra.",
+        why: "Lead quente — busca método e consistência. Direcionar para o Código da Negociação com condição especial.",
       },
       {
-        label: "Resultado: Voz Poderosa (25–32 pontos)",
+        label: "Resultado: Negociador Estratégico (26–32 pontos)",
         url: "",
-        why: "Lead premium — já tem consciência e urgência alta. Oferecer o programa completo com prioridade.",
+        why: "Lead premium — busca maestria e networking de alto nível. Oferecer mentoria individual ou masterclass exclusiva.",
       },
     ],
   },
   {
-    title: "📖 Liberte Sua Voz — Página de Vendas",
-    fullUrl: `${siteUrl}/liberte-sua-voz`,
+    title: "📖 Código da Negociação — Página de Vendas",
+    fullUrl: `${siteUrl}/codigo-da-negociacao`,
     description:
-      "Página de vendas completa do programa principal de transformação vocal. Contém hero com foto, 6 módulos detalhados, depoimentos em vídeo e texto, FAQ, e botões de compra que levam direto ao checkout da Hotmart.",
+      "Página de vendas do programa principal de 90 dias para se tornar um negociador estratégico. R$997. Contém hero, módulos, depoimentos, FAQ e botões de compra.",
     items: [
       {
-        label: "Link de checkout (Hotmart)",
-        url: "https://pay.hotmart.com/U100026291F?off=ciqw2oyq",
-        why: "É o link de pagamento. Ao clicar em qualquer botão 'Quero ter resultados!', a pessoa vai direto para a página de compra na Hotmart. Se precisar trocar a oferta ou o preço, é aqui que se altera.",
+        label: "Link de checkout",
+        url: "#",
+        why: "Link de pagamento do programa Código da Negociação. Ao clicar em qualquer botão de compra, a pessoa vai direto para o checkout. (Link a definir pelo Ivo)",
       },
       {
         label: "WhatsApp de dúvidas",
-        url: "https://wa.me/5528999785743",
-        why: "Botão flutuante que abre uma conversa no WhatsApp com o número (28) 99978-5743. Serve para tirar dúvidas de quem está em cima do muro antes de comprar.",
-      },
-      {
-        label: "5 depoimentos em vídeo (YouTube Shorts)",
-        url: "",
-        why: "Carrossel vertical com vídeos reais de alunas. Servem como prova social e são incorporados diretamente do YouTube.",
-      },
-      {
-        label: "4 prints de depoimentos (carrossel infinito)",
-        url: "",
-        why: "Imagens de prints de WhatsApp de alunas reais. Rodam em loop automático para reforçar a prova social.",
+        url: "https://api.whatsapp.com/send/?phone=5527992936922&text&type=phone_number&app_absent=0",
+        why: "Botão que abre conversa no WhatsApp com o número (27) 99293-6922 para tirar dúvidas antes de comprar.",
       },
     ],
   },
   {
-    title: "🎤 Sua Primeira Palestra — Página de Vendas",
-    fullUrl: `${siteUrl}/sua-primeira-palestra`,
+    title: "🎤 Curso O Negociador — Página de Vendas",
+    fullUrl: `${siteUrl}/o-negociador`,
     description:
-      "Página de vendas do workshop gravado de 3 aulas práticas. Produto de entrada com valor acessível (R$97). Ideal para quem ainda não está pronta para o programa completo.",
+      "Página de vendas do curso O Negociador. Produto de entrada com técnicas práticas de negociação para quem está começando.",
     items: [
       {
-        label: "Link de checkout (Hotmart)",
-        url: "https://pay.hotmart.com/B104429684X?bid=1771089623423",
-        why: "Link de pagamento direto na Hotmart. R$97 pagamento único. Se precisar trocar a oferta, é aqui.",
+        label: "Link de checkout",
+        url: "https://ivobrasil.com.br/onegociador/",
+        why: "Link de pagamento do curso O Negociador. Redireciona para a página de checkout externa.",
       },
       {
         label: "WhatsApp de dúvidas",
-        url: "https://wa.me/5528999785743",
-        why: "Mesmo número do programa principal — (28) 99978-5743. Abre conversa direta para tirar dúvidas.",
+        url: "https://api.whatsapp.com/send/?phone=5527992936922&text&type=phone_number&app_absent=0",
+        why: "Botão que abre conversa no WhatsApp com o número (27) 99293-6922.",
+      },
+    ],
+  },
+  {
+    title: "🔥 Imersão Virando a Mesa",
+    fullUrl: `${siteUrl}/imersao-virando-a-mesa`,
+    description:
+      "Página da imersão presencial focada em técnicas avançadas de negociação para aumentar o faturamento de empresários, gestores e empreendedores. Contém formulário de lista de espera.",
+    items: [
+      {
+        label: "Formulário de lista de espera",
+        url: "",
+        why: "Captura nome, e-mail e telefone de interessados na imersão. Os dados ficam salvos no banco de dados para a equipe entrar em contato.",
       },
     ],
   },
@@ -179,7 +174,7 @@ const sections: Section[] = [
       {
         label: "Arquivar e excluir leads",
         url: "",
-        why: "Menu de 3 pontinhos em cada lead permite arquivar (esconde da contagem mas preserva) ou excluir definitivamente. Leads de teste devem ser removidos para manter métricas reais.",
+        why: "Menu de 3 pontinhos em cada lead permite arquivar (esconde da contagem mas preserva) ou excluir definitivamente.",
       },
     ],
   },
@@ -187,27 +182,12 @@ const sections: Section[] = [
     title: "📧 Sistema de Notificações por E-mail",
     fullUrl: "",
     description:
-      "Sempre que alguém completa o quiz, um e-mail HTML profissional é disparado automaticamente para os endereços abaixo. O e-mail contém o nome do lead, contato, resultado do diagnóstico, 'temperatura' do lead (frio a premium), análise comportamental, próximo passo sugerido e oferta recomendada. Também inclui um botão de acesso direto ao painel administrativo.",
+      "Sempre que alguém completa o quiz, um e-mail HTML profissional é disparado automaticamente com o nome do lead, contato, resultado do diagnóstico, 'temperatura' do lead (frio a premium), análise comportamental, próximo passo sugerido e oferta recomendada.",
     items: [
       {
-        label: "Destinatário: 0019.andrematheus@gmail.com",
+        label: "Destinatários",
         url: "",
-        why: "E-mail do André Matheus — recebe a notificação de cada novo lead para acompanhamento comercial.",
-      },
-      {
-        label: "Destinatário: euimperadordasvendas@gmail.com",
-        url: "",
-        why: "E-mail da equipe de vendas — recebe o relatório estratégico para abordagem imediata do lead.",
-      },
-      {
-        label: "Destinatário: contato@mariasdobrasil.online",
-        url: "",
-        why: "E-mail institucional da Maria — backup e registro oficial de todos os leads capturados.",
-      },
-      {
-        label: "Remetente: contato@mariasdobrasil.online",
-        url: "",
-        why: "Todos os e-mails de notificação são enviados a partir deste endereço, com domínio verificado (mariasdobrasil.online).",
+        why: "Os e-mails de notificação precisam ser configurados com os endereços da equipe do Ivo Brasil.",
       },
     ],
   },
@@ -221,7 +201,7 @@ export const MapaContent = () => {
       <div className="mb-2">
         <h1 className="text-xl md:text-2xl font-black tracking-tight text-foreground mb-1">Mapa Completo do Projeto</h1>
         <p className="text-sm text-muted-foreground leading-relaxed">
-          Guia de referência com todas as páginas, links, destinos, e-mails e fluxos automáticos do ecossistema.
+          Guia de referência com todas as páginas, links, destinos, e-mails e fluxos automáticos do ecossistema Ivo Brasil.
         </p>
         <p className="text-xs text-muted-foreground/60 mt-1">
           Atualizado em {new Date().toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" })}
@@ -299,40 +279,39 @@ export const MapaContent = () => {
           <div className="space-y-2">
             <p className="font-bold text-foreground">Links de checkout:</p>
             <p className="text-muted-foreground">
-              Liberte Sua Voz →{" "}
-              <span className="text-foreground break-all">pay.hotmart.com/U100026291F?off=ciqw2oyq</span>
+              Código da Negociação →{" "}
+              <span className="text-foreground break-all">A definir</span>
             </p>
             <p className="text-muted-foreground">
-              Sua Primeira Palestra →{" "}
-              <span className="text-foreground break-all">pay.hotmart.com/B104429684X?bid=1771089623423</span>
+              O Negociador →{" "}
+              <span className="text-foreground break-all">ivobrasil.com.br/onegociador/</span>
             </p>
           </div>
           <div className="space-y-2">
             <p className="font-bold text-foreground">WhatsApp:</p>
             <p className="text-muted-foreground">
-              Número: <span className="text-foreground">(28) 99978-5743</span>
+              Número: <span className="text-foreground">(27) 99293-6922</span>
             </p>
             <p className="text-muted-foreground">
-              Link: <span className="text-foreground break-all">wa.me/5528999785743</span>
+              Link: <span className="text-foreground break-all">api.whatsapp.com/send/?phone=5527992936922</span>
             </p>
           </div>
           <div className="space-y-2">
-            <p className="font-bold text-foreground">E-mails que recebem notificação:</p>
-            <p className="text-foreground">0019.andrematheus@gmail.com</p>
-            <p className="text-foreground">euimperadordasvendas@gmail.com</p>
-            <p className="text-foreground">contato@mariasdobrasil.online</p>
+            <p className="font-bold text-foreground">Redes Sociais:</p>
+            <p className="text-foreground">Instagram: @ivobrasil1</p>
+            <p className="text-foreground">YouTube: @ivobrasil1</p>
+            <p className="text-foreground">LinkedIn: /in/ivobrasil/</p>
           </div>
           <div className="space-y-2">
-            <p className="font-bold text-foreground">Remetente dos e-mails:</p>
-            <p className="text-foreground">contato@mariasdobrasil.online</p>
-            <p className="text-muted-foreground">(domínio verificado)</p>
+            <p className="font-bold text-foreground">E-mails de notificação:</p>
+            <p className="text-muted-foreground">A configurar com a equipe do Ivo</p>
           </div>
         </div>
       </div>
 
       {/* Footer */}
       <div className="text-center text-xs text-muted-foreground space-y-1 pt-2">
-        <p>© {new Date().getFullYear()} Maria Marcelino · Desenvolvido por D7Company</p>
+        <p>© {new Date().getFullYear()} Ivo Brasil · Desenvolvido por D7Company</p>
       </div>
     </div>
   );
