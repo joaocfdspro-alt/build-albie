@@ -80,10 +80,13 @@ const ImersaoVirandoAMesa = () => {
           />
 
           <p className="text-base md:text-lg text-secondary-foreground/80 leading-relaxed max-w-lg mx-auto mb-4">
-            A próxima edição da imersão presencial com Ivo Brasil ainda será anunciada.
+            Uma experiência presencial e intensiva focada em técnicas avançadas de negociação para aumentar o faturamento da sua empresa.
+          </p>
+          <p className="text-sm text-muted-foreground leading-relaxed max-w-md mx-auto mb-4">
+            Voltada para empresários, gestores, empreendedores e profissionais que querem dominar a arte de negociar com estratégia, fechar acordos mais lucrativos e transformar cada conversa em resultado.
           </p>
           <p className="text-sm text-muted-foreground leading-relaxed max-w-md mx-auto mb-12">
-            Cadastre-se abaixo para ser o primeiro a saber da data, local e condições especiais de pré-venda.
+            A próxima edição ainda será anunciada. Cadastre-se abaixo para receber em primeira mão a data, o local e as condições especiais de pré-venda.
           </p>
         </motion.div>
 

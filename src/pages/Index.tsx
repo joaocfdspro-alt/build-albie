@@ -1,15 +1,14 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import {
-  BrainCircuit,
   BookOpen,
   GraduationCap,
-  Instagram,
   Target,
   Mic,
   Users,
   Flame,
 } from "lucide-react";
+import quizIcon from "@/assets/quiz-icon.png";
 import ivoHero from "@/assets/ivo-hero.jpg";
 import HubLink from "@/components/HubLink";
 import IvoLogo from "@/components/IvoLogo";
@@ -32,10 +31,9 @@ const Index = () => {
               <img
                 src={ivoHero}
                 alt="Ivo Brasil"
-                className="absolute inset-0 w-full h-full object-cover object-[center_20%]"
+                className="absolute inset-0 w-full h-full object-cover object-[center_20%] blur-[2px]"
               />
-              {/* Persistent blur overlay that stays on scroll */}
-              <div className="absolute inset-0 backdrop-blur-[2px]" />
+              {/* No separate blur overlay - blur applied directly to img */}
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
             </div>
           </div>
@@ -114,7 +112,7 @@ const Index = () => {
 
           <div className="space-y-3">
             <HubLink
-              icon={BrainCircuit}
+              iconSrc={quizIcon}
               title="Diagnóstico de Negociação"
               subtitle="Descubra seu perfil e onde você está perdendo dinheiro"
               href="/quiz"
@@ -122,13 +120,12 @@ const Index = () => {
               index={0}
               isInternal
               onClick={() => navigate("/quiz")}
-              tag="Quiz"
             />
 
             <HubLink
               icon={Target}
               title="Código da Negociação"
-              subtitle="Programa de 90 dias para negociadores estratégicos"
+              subtitle="Programa de 90 dias para se tornar um negociador estratégico"
               href="/codigo-da-negociacao"
               variant="highlight"
               index={1}
@@ -161,7 +158,7 @@ const Index = () => {
               href="https://ivobrasil.com.br/livros/"
               variant="secondary"
               index={4}
-              tag="Livro"
+              
             />
 
             <HubLink
