@@ -34,8 +34,7 @@ const Index = () => {
                 alt="Ivo Brasil"
                 className="absolute inset-0 w-full h-full object-cover object-[center_20%]"
               />
-              {/* Persistent blur overlay that stays on scroll */}
-              <div className="absolute inset-0 backdrop-blur-[2px]" />
+              {/* No separate blur overlay - blur applied directly to img */}
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
             </div>
           </div>
