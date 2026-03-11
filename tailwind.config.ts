@@ -15,6 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["Montserrat", "sans-serif"],
+        copperplate: ["Copperplate", "Copperplate Gothic Bold", "Copperplate Gothic", "Trajan Pro", "Georgia", "serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -57,6 +58,7 @@ export default {
         },
         warm: "hsl(var(--warm))",
         cream: "hsl(var(--cream))",
+        copper: "hsl(var(--copper))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -83,8 +85,8 @@ export default {
           to: { height: "0" },
         },
         "pulse-gold": {
-          "0%, 100%": { boxShadow: "0 0 15px hsl(38 75% 55% / 0.2)" },
-          "50%": { boxShadow: "0 0 30px hsl(38 75% 55% / 0.4)" },
+          "0%, 100%": { boxShadow: "0 0 15px hsl(38 36% 62% / 0.15)" },
+          "50%": { boxShadow: "0 0 30px hsl(38 36% 62% / 0.3)" },
         },
         "fade-up": {
           from: { opacity: "0", transform: "translateY(20px)" },
