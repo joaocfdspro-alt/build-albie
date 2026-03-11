@@ -34,5 +34,12 @@ Ivo Brasil rebrand - design system, brand rules, and project structure
 ## WhatsApp
 Link: https://api.whatsapp.com/send/?phone=5527992936922&text&type=phone_number&app_absent=0
 
+## Social Links
+- Instagram: https://instagram.com/ivobrasil1
+- YouTube: https://www.youtube.com/@ivobrasil1
+- LinkedIn: https://www.linkedin.com/in/ivobrasil/?locale=pt
+
 ## Footer
-"Desenvolvido por D7 Company" (not "Criado por")
+- Only social icons (Instagram, YouTube, WhatsApp, LinkedIn) in gold color
+- Logo icon
+- Copyright and "Desenvolvido por D7 Company"
