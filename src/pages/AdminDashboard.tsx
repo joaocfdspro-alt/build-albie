@@ -44,10 +44,10 @@ type SortKey = "created_at" | "name" | "total_score" | "diagnostic_title";
 type SortDir = "asc" | "desc";
 
 const diagnosticColors: Record<string, string> = {
-  "Voz Aprisionada": "bg-red-500/15 text-red-400 border-red-500/20",
-  "Voz Hesitante": "bg-amber-500/15 text-amber-400 border-amber-500/20",
-  "Voz em Despertar": "bg-blue-500/15 text-blue-400 border-blue-500/20",
-  "Voz Poderosa": "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
+  "Negociador Intuitivo": "bg-red-500/15 text-red-400 border-red-500/20",
+  "Negociador Reativo": "bg-amber-500/15 text-amber-400 border-amber-500/20",
+  "Negociador Consciente": "bg-blue-500/15 text-blue-400 border-blue-500/20",
+  "Negociador Estratégico": "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
 };
 
 const AdminDashboard = () => {
