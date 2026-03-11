@@ -1,84 +1,94 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500&display=swap');
 
+@font-face {
+  font-family: 'Copperplate';
+  src: url('/fonts/Copperplate.ttc') format('truetype-collection');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 20 8% 5%;
-    --foreground: 42 25% 92%;
+    --background: 0 0% 2%;
+    --foreground: 38 20% 90%;
 
-    --card: 20 10% 9%;
-    --card-foreground: 42 25% 92%;
+    --card: 0 0% 6%;
+    --card-foreground: 38 20% 90%;
 
-    --popover: 20 10% 9%;
-    --popover-foreground: 42 25% 92%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 38 20% 90%;
 
-    --primary: 40 85% 56%;
-    --primary-foreground: 20 8% 5%;
+    --primary: 38 36% 62%;
+    --primary-foreground: 0 0% 2%;
 
-    --secondary: 20 8% 13%;
-    --secondary-foreground: 42 20% 80%;
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 38 15% 75%;
 
-    --muted: 20 6% 14%;
-    --muted-foreground: 25 12% 45%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 30 8% 42%;
 
-    --accent: 40 85% 56%;
-    --accent-foreground: 20 8% 5%;
+    --accent: 38 36% 62%;
+    --accent-foreground: 0 0% 2%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 25 12% 16%;
-    --input: 25 12% 16%;
-    --ring: 40 85% 56%;
+    --border: 30 8% 14%;
+    --input: 30 8% 14%;
+    --ring: 38 36% 62%;
 
-    --radius: 0.75rem;
+    --radius: 0.5rem;
 
-    --gold: 40 85% 56%;
-    --gold-light: 42 90% 72%;
-    --gold-dark: 36 75% 38%;
-    --warm: 22 50% 10%;
-    --cream: 42 25% 92%;
-    --ember: 18 70% 22%;
+    --gold: 38 36% 62%;
+    --gold-light: 38 42% 75%;
+    --gold-dark: 38 40% 42%;
+    --warm: 20 15% 8%;
+    --cream: 38 20% 90%;
+    --ember: 21 69% 30%;
+    --copper: 21 69% 30%;
 
-    --sidebar-background: 20 8% 5%;
-    --sidebar-foreground: 42 25% 92%;
-    --sidebar-primary: 40 85% 56%;
-    --sidebar-primary-foreground: 20 8% 5%;
-    --sidebar-accent: 20 8% 13%;
-    --sidebar-accent-foreground: 42 25% 92%;
-    --sidebar-border: 25 12% 16%;
-    --sidebar-ring: 40 85% 56%;
+    --sidebar-background: 0 0% 2%;
+    --sidebar-foreground: 38 20% 90%;
+    --sidebar-primary: 38 36% 62%;
+    --sidebar-primary-foreground: 0 0% 2%;
+    --sidebar-accent: 0 0% 10%;
+    --sidebar-accent-foreground: 38 20% 90%;
+    --sidebar-border: 30 8% 14%;
+    --sidebar-ring: 38 36% 62%;
   }
 
   .admin-light {
-    --background: 40 20% 97%;
-    --foreground: 20 15% 15%;
+    --background: 30 15% 97%;
+    --foreground: 0 0% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 20 15% 15%;
+    --card-foreground: 0 0% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 20 15% 15%;
-    --primary: 40 85% 46%;
+    --popover-foreground: 0 0% 10%;
+    --primary: 38 36% 52%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 40 15% 93%;
-    --secondary-foreground: 20 15% 25%;
-    --muted: 40 10% 90%;
-    --muted-foreground: 20 8% 50%;
-    --accent: 40 85% 46%;
+    --secondary: 30 10% 93%;
+    --secondary-foreground: 0 0% 25%;
+    --muted: 30 8% 90%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 38 36% 52%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --border: 40 15% 88%;
-    --input: 40 15% 88%;
-    --ring: 40 85% 46%;
-    --gold: 40 85% 46%;
-    --gold-light: 42 80% 62%;
-    --gold-dark: 36 75% 32%;
-    --warm: 40 20% 95%;
-    --cream: 42 25% 92%;
-    --ember: 18 30% 85%;
+    --border: 30 10% 88%;
+    --input: 30 10% 88%;
+    --ring: 38 36% 52%;
+    --gold: 38 36% 52%;
+    --gold-light: 38 42% 65%;
+    --gold-dark: 38 40% 35%;
+    --warm: 30 15% 95%;
+    --cream: 38 20% 90%;
+    --ember: 21 30% 80%;
+    --copper: 21 50% 40%;
   }
 }
 
@@ -96,85 +106,90 @@
 }
 
 @layer utilities {
+  .font-copperplate {
+    font-family: 'Copperplate', 'Copperplate Gothic Bold', 'Copperplate Gothic', 'Trajan Pro', Georgia, serif;
+  }
+
   .text-gradient-gold {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(42 90% 72%), hsl(40 85% 56%), hsl(36 75% 38%));
+    background-image: linear-gradient(135deg, hsl(38 42% 75%), hsl(38 36% 62%), hsl(38 40% 42%));
   }
 
   .text-gradient-ember {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(40 85% 56%), hsl(18 70% 50%));
+    background-image: linear-gradient(135deg, hsl(38 36% 62%), hsl(21 69% 50%));
   }
 
   .bg-gradient-gold {
-    background-image: linear-gradient(135deg, hsl(42 90% 72%), hsl(40 85% 56%));
+    background-image: linear-gradient(135deg, hsl(38 42% 75%), hsl(38 36% 62%));
   }
 
   .bg-gradient-gold-deep {
-    background-image: linear-gradient(135deg, hsl(40 85% 56%), hsl(36 75% 38%));
+    background-image: linear-gradient(135deg, hsl(38 36% 62%), hsl(38 40% 42%));
   }
 
   .bg-gradient-dark {
-    background-image: linear-gradient(180deg, hsl(20 8% 5%) 0%, hsl(22 12% 8%) 50%, hsl(20 8% 5%) 100%);
+    background-image: linear-gradient(180deg, hsl(0 0% 2%) 0%, hsl(20 10% 5%) 50%, hsl(0 0% 2%) 100%);
   }
 
   .bg-gradient-hero {
     background-image: linear-gradient(
       180deg,
       transparent 0%,
-      hsl(20 8% 5% / 0.3) 40%,
-      hsl(20 8% 5% / 0.85) 70%,
-      hsl(20 8% 5%) 100%
+      hsl(0 0% 2% / 0.3) 40%,
+      hsl(0 0% 2% / 0.85) 70%,
+      hsl(0 0% 2%) 100%
     );
   }
 
   .shadow-gold {
-    box-shadow: 0 4px 40px -8px hsl(40 85% 56% / 0.3);
+    box-shadow: 0 4px 40px -8px hsl(38 36% 62% / 0.25);
   }
 
   .shadow-gold-intense {
-    box-shadow: 0 0 50px -10px hsl(40 85% 56% / 0.4), 0 0 100px -20px hsl(40 85% 56% / 0.15);
+    box-shadow: 0 0 50px -10px hsl(38 36% 62% / 0.3), 0 0 100px -20px hsl(38 36% 62% / 0.1);
   }
 
   .glow-gold {
-    box-shadow: 0 0 25px hsl(40 85% 56% / 0.12), 0 0 80px hsl(40 85% 56% / 0.06);
+    box-shadow: 0 0 25px hsl(38 36% 62% / 0.1), 0 0 80px hsl(38 36% 62% / 0.05);
   }
 
   .border-gold-gradient {
-    border-image: linear-gradient(180deg, hsl(40 85% 56% / 0.4), hsl(40 85% 56% / 0.05)) 1;
+    border-image: linear-gradient(180deg, hsl(38 36% 62% / 0.4), hsl(38 36% 62% / 0.05)) 1;
   }
 
   .line-gold {
-    background-image: linear-gradient(90deg, transparent, hsl(40 85% 56% / 0.5), transparent);
+    background-image: linear-gradient(90deg, transparent, hsl(38 36% 62% / 0.4), transparent);
   }
 }
 
 @media print {
   .print\:admin-light {
-    --background: 40 20% 97%;
-    --foreground: 20 15% 15%;
+    --background: 30 15% 97%;
+    --foreground: 0 0% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 20 15% 15%;
+    --card-foreground: 0 0% 10%;
     --popover: 0 0% 100%;
-    --popover-foreground: 20 15% 15%;
-    --primary: 40 85% 46%;
+    --popover-foreground: 0 0% 10%;
+    --primary: 38 36% 52%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 40 15% 93%;
-    --secondary-foreground: 20 15% 25%;
-    --muted: 40 10% 90%;
-    --muted-foreground: 20 8% 50%;
-    --accent: 40 85% 46%;
+    --secondary: 30 10% 93%;
+    --secondary-foreground: 0 0% 25%;
+    --muted: 30 8% 90%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 38 36% 52%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
-    --border: 40 15% 88%;
-    --input: 40 15% 88%;
-    --ring: 40 85% 46%;
-    --gold: 40 85% 46%;
-    --gold-light: 42 80% 62%;
-    --gold-dark: 36 75% 32%;
-    --warm: 40 20% 95%;
-    --cream: 42 25% 92%;
-    --ember: 18 30% 85%;
+    --border: 30 10% 88%;
+    --input: 30 10% 88%;
+    --ring: 38 36% 52%;
+    --gold: 38 36% 52%;
+    --gold-light: 38 42% 65%;
+    --gold-dark: 38 40% 35%;
+    --warm: 30 15% 95%;
+    --cream: 38 20% 90%;
+    --ember: 21 30% 80%;
+    --copper: 21 50% 40%;
   }
 }

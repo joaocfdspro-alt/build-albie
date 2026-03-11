@@ -1,8 +1,11 @@
+import IvoLogo from "@/components/IvoLogo";
+
 const D7Footer = () => (
   <footer className="border-t border-border/50 py-6">
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center gap-3">
+      <IvoLogo size="sm" />
       <p className="text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Maria Marcelino
+        © {new Date().getFullYear()} Ivo Brasil
       </p>
       <a
         href="https://www.d7company.com.br/build"

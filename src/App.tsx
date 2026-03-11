@@ -5,10 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Quiz from "./pages/Quiz";
-import Aulao from "./pages/Aulao";
-import LiberteSuaVoz from "./pages/LiberteSuaVoz";
+import CodigoDaNegociacao from "./pages/CodigoDaNegociacao";
+import ONegociador from "./pages/ONegociador";
 import LinkPendente from "./pages/LinkPendente";
-import SuaPrimeiraPalestra from "./pages/SuaPrimeiraPalestra";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminSetup from "./pages/AdminSetup";
@@ -28,9 +27,8 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/quiz" element={<Quiz />} />
-          <Route path="/aulao" element={<Aulao />} />
-          <Route path="/liberte-sua-voz" element={<LiberteSuaVoz />} />
-          <Route path="/sua-primeira-palestra" element={<SuaPrimeiraPalestra />} />
+          <Route path="/codigo-da-negociacao" element={<CodigoDaNegociacao />} />
+          <Route path="/o-negociador" element={<ONegociador />} />
           <Route path="/link-pendente" element={<LinkPendente />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard />} />
