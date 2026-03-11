@@ -1,15 +1,14 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import {
-  BrainCircuit,
   BookOpen,
   GraduationCap,
-  Instagram,
   Target,
   Mic,
   Users,
   Flame,
 } from "lucide-react";
+import quizIcon from "@/assets/quiz-icon.png";
 import ivoHero from "@/assets/ivo-hero.jpg";
 import HubLink from "@/components/HubLink";
 import IvoLogo from "@/components/IvoLogo";
