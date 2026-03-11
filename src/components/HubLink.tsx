@@ -14,7 +14,7 @@ interface HubLinkProps {
   tag?: string;
 }
 
-const HubLink = ({ icon: Icon, title, subtitle, href, variant = "secondary", index, isInternal, onClick, tag }: HubLinkProps) => {
+const HubLink = ({ icon: Icon, iconSrc, title, subtitle, href, variant = "secondary", index, isInternal, onClick, tag }: HubLinkProps) => {
   const isPrimary = variant === "primary";
   const isHighlight = variant === "highlight";
 
