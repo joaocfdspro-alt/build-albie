@@ -2,7 +2,8 @@ import { motion } from "framer-motion";
 import { LucideIcon, ArrowUpRight } from "lucide-react";
 
 interface HubLinkProps {
-  icon: LucideIcon;
+  icon?: LucideIcon;
+  iconSrc?: string;
   title: string;
   subtitle: string;
   href: string;
