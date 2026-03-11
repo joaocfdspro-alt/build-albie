@@ -158,7 +158,7 @@ const Index = () => {
               href="https://ivobrasil.com.br/livros/"
               variant="secondary"
               index={4}
-              tag="Livro"
+              
             />
 
             <HubLink

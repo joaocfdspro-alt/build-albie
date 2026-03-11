@@ -47,7 +47,11 @@ const HubLink = ({ icon: Icon, iconSrc, title, subtitle, href, variant = "second
         
         <div className="flex items-center gap-4 relative z-10">
           <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${isPrimary ? "bg-primary-foreground/15" : "bg-muted/80"}`}>
-            <Icon className={`h-5 w-5 ${isPrimary ? "" : "text-gold"}`} />
+            {iconSrc ? (
+              <img src={iconSrc} alt="" className="h-7 w-7 object-contain" />
+            ) : Icon ? (
+              <Icon className={`h-5 w-5 ${isPrimary ? "" : "text-gold"}`} />
+            ) : null}
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
