@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ArrowLeft, Sparkles, CalendarCheck, Loader2 } from "lucide-react";
 import { z } from "zod";
-import logoImage from "@/assets/logo-maria.png";
+import IvoLogo from "@/components/IvoLogo";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Question {
@@ -12,75 +12,75 @@ interface Question {
 
 const questions: Question[] = [
   {
-    question: "Quando você precisa falar em público, o que acontece com você?",
+    question: "Como você se prepara antes de uma negociação importante?",
     options: [
-      { text: "Travo. Meu corpo congela e eu prefiro desaparecer.", score: 1 },
-      { text: "Falo, mas sinto que ninguém me leva a sério.", score: 2 },
-      { text: "Consigo falar, mas sei que poderia ser muito melhor.", score: 3 },
-      { text: "Me sinto segura, mas quero alcançar outro nível.", score: 4 },
+      { text: "Não me preparo — vou no instinto e na hora improviso.", score: 1 },
+      { text: "Penso sobre o que quero, mas sem um método definido.", score: 2 },
+      { text: "Pesquiso a outra parte e defino limites, mas falta estratégia.", score: 3 },
+      { text: "Tenho framework completo com BATNA, âncoras e plano B.", score: 4 },
     ],
   },
   {
-    question: "Quando alguém discorda de você, como reage?",
+    question: "Quando a outra parte faz uma contraproposta agressiva, você:",
     options: [
-      { text: "Recuo imediatamente. Tenho medo de ser julgada.", score: 1 },
-      { text: "Falo, mas depois fico remoendo o que disse.", score: 2 },
-      { text: "Me posiciono, mas sinto que falta clareza na minha fala.", score: 3 },
-      { text: "Defendo com firmeza, mas quero mais impacto.", score: 4 },
+      { text: "Aceito rapidamente para não perder o negócio.", score: 1 },
+      { text: "Fico nervoso e faço concessões sem planejamento.", score: 2 },
+      { text: "Contra-argumento, mas sem muita convicção.", score: 3 },
+      { text: "Mantenho a posição, uso silêncio estratégico e redireciono.", score: 4 },
     ],
   },
   {
-    question: "Qual é a sua relação com a própria voz?",
+    question: "Qual é sua abordagem ao definir preço ou valor?",
     options: [
-      { text: "Odeio me ouvir. Evito áudios e vídeos a todo custo.", score: 1 },
-      { text: "Tolero, mas sinto que minha voz não me representa.", score: 2 },
-      { text: "Estou aprendendo a aceitar, mas ainda me incomoda.", score: 3 },
-      { text: "Gosto da minha voz — quero usá-la com mais poder.", score: 4 },
+      { text: "Cobro o mínimo possível para garantir a venda.", score: 1 },
+      { text: "Defino um preço, mas baixo rápido se pressionado.", score: 2 },
+      { text: "Pesquiso o mercado e defendo com argumentos.", score: 3 },
+      { text: "Uso âncora alta, justifico com valor e nego com margem calculada.", score: 4 },
     ],
   },
   {
-    question: "As pessoas realmente entendem o que você quer dizer?",
+    question: "Como você lida com o \"não\" em negociações?",
     options: [
-      { text: "Quase nunca. Parece que falo e ninguém escuta.", score: 1 },
-      { text: "Às vezes. Preciso repetir ou explicar demais.", score: 2 },
-      { text: "Na maioria das vezes sim, mas em momentos-chave, travo.", score: 3 },
-      { text: "Sim, mas quero ainda mais precisão e influência.", score: 4 },
+      { text: "Desisto na primeira recusa.", score: 1 },
+      { text: "Insisto uma vez e depois aceito.", score: 2 },
+      { text: "Busco entender a objeção, mas nem sempre consigo reverter.", score: 3 },
+      { text: "Uso o 'não' como informação e redireciono a conversa.", score: 4 },
     ],
   },
   {
-    question: "O que mais te impede de se comunicar com confiança?",
+    question: "Em uma conversa comercial difícil, como você reage?",
     options: [
-      { text: "O medo paralisante de ser julgada ou rejeitada.", score: 1 },
-      { text: "Não consigo organizar meus pensamentos sob pressão.", score: 2 },
-      { text: "Falta de técnica — sei que posso aprender.", score: 3 },
-      { text: "Quero me posicionar em palcos maiores.", score: 4 },
+      { text: "Evito confronto e cedo para manter a relação.", score: 1 },
+      { text: "Fico tenso e perco o controle emocional.", score: 2 },
+      { text: "Me posiciono, mas sinto insegurança interna.", score: 3 },
+      { text: "Controlo o tom, uso rapport e conduzo com estratégia.", score: 4 },
     ],
   },
   {
-    question: "Em uma conversa difícil, como você costuma reagir?",
+    question: "Como se posiciona quando negocia com alguém mais experiente?",
     options: [
-      { text: "Evito o confronto. Engulo tudo e finjo que tá bem.", score: 1 },
-      { text: "Falo, mas depois me arrependo do que disse.", score: 2 },
-      { text: "Consigo me posicionar, mas a insegurança me consome.", score: 3 },
-      { text: "Lido bem, mas quero mais inteligência emocional.", score: 4 },
+      { text: "Me sinto intimidado e aceito o que oferecem.", score: 1 },
+      { text: "Tento acompanhar, mas me perco nos argumentos.", score: 2 },
+      { text: "Mantenho minha posição, mas falta técnica.", score: 3 },
+      { text: "Estudo o perfil, adapto a abordagem e negocio de igual para igual.", score: 4 },
     ],
   },
   {
-    question: "Gravar um vídeo ou áudio — como é pra você?",
+    question: "Qual é sua maior dificuldade em negociações?",
     options: [
-      { text: "Nem consigo apertar o botão. É agonizante.", score: 1 },
-      { text: "Gravo, mas faço dezenas de takes até desistir.", score: 2 },
-      { text: "Consigo gravar, mas sei que posso melhorar.", score: 3 },
-      { text: "Gravo com segurança — quero mais presença e magnetismo.", score: 4 },
+      { text: "Não consigo nem começar a conversa sobre preço.", score: 1 },
+      { text: "Faço concessões demais por medo de perder o cliente.", score: 2 },
+      { text: "Sei o que fazer, mas não tenho um método consistente.", score: 3 },
+      { text: "Quero refinar técnica e ter resultados ainda maiores.", score: 4 },
     ],
   },
   {
-    question: "Daqui a 6 meses, como você se vê comunicando?",
+    question: "Daqui a 6 meses, como você se vê negociando?",
     options: [
-      { text: "Não consigo imaginar nada diferente. Parece impossível.", score: 1 },
+      { text: "Não consigo imaginar mudança — parece impossível.", score: 1 },
       { text: "Espero ter mais coragem, mas não sei por onde começar.", score: 2 },
-      { text: "Quero ser uma comunicadora segura, clara e magnética.", score: 3 },
-      { text: "Quero usar minha voz para liderar, inspirar e transformar.", score: 4 },
+      { text: "Quero ser um negociador estratégico com método definido.", score: 3 },
+      { text: "Quero estar fechando acordos de alto nível com maestria.", score: 4 },
     ],
   },
 ];
@@ -95,33 +95,33 @@ interface DiagnosticResult {
 function getDiagnostic(score: number): DiagnosticResult {
   if (score <= 11) {
     return {
-      title: "Voz Aprisionada",
-      description: "Você carrega travas profundas que te impedem de ocupar espaços e se expressar. Isso não é fraqueza — é resultado de experiências que silenciaram sua voz. A boa notícia: essa voz está dentro de você, esperando para ser libertada.",
-      recommendation: "Uma conversa comigo pode ser o primeiro passo para romper esse ciclo. Em 15 minutos, vou te mostrar que é possível.",
-      emoji: "🔒",
+      title: "Negociador Intuitivo",
+      description: "Você negocia no instinto — sem preparo, sem método, sem controle. Isso significa que está deixando dinheiro na mesa em cada conversa. Não é falta de inteligência — é falta de sistema.",
+      recommendation: "Uma conversa estratégica comigo vai revelar exatamente onde você está perdendo e como reverter isso em 90 dias.",
+      emoji: "🎯",
     };
   }
   if (score <= 18) {
     return {
-      title: "Voz Hesitante",
-      description: "Você já se expressa, mas sente que algo falta — clareza, segurança, impacto. Você sabe que pode mais, mas não encontrou ainda o caminho para destravar toda sua potência comunicativa.",
-      recommendation: "Uma conversa comigo vai te ajudar a identificar exatamente o que está te travando e qual é o próximo passo certo pra você.",
-      emoji: "🌱",
+      title: "Negociador Reativo",
+      description: "Você reage em vez de conduzir. Quando pressionado, cede. Quando desafiado, hesita. O resultado? Acordos que parecem bons, mas te custam caro.",
+      recommendation: "Precisa de estrutura e técnica. Uma sessão diagnóstica pode mostrar o caminho para sair da reação e entrar no controle.",
+      emoji: "⚡",
     };
   }
   if (score <= 25) {
     return {
-      title: "Voz em Despertar",
-      description: "Você já tem consciência da importância da comunicação e está no caminho. Falta estrutura, técnica e o ambiente certo para acelerar sua transformação.",
-      recommendation: "Uma conversa estratégica comigo pode ser o impulso que falta para você alcançar o próximo nível.",
-      emoji: "✨",
+      title: "Negociador Consciente",
+      description: "Você já sabe que negociar é uma habilidade. Tem alguma base, mas falta método, consistência e a frieza necessária nos momentos decisivos.",
+      recommendation: "Está no ponto exato para dar um salto. O Código da Negociação foi feito para pessoas no seu estágio.",
+      emoji: "🔥",
     };
   }
   return {
-    title: "Voz Poderosa",
-    description: "Você já tem segurança, mas está buscando refinamento e impacto em ambientes maiores. Sua voz já é forte — agora é hora de amplificá-la.",
-    recommendation: "Uma conversa comigo vai te mostrar como usar sua voz como instrumento de influência e liderança.",
-    emoji: "👑",
+    title: "Negociador Estratégico",
+    description: "Você já tem domínio. Sabe conduzir, posicionar e fechar. Mas quer mais — quer maestria, quer negociar em outro nível, quer resultados que poucos alcançam.",
+    recommendation: "Uma mentoria individual pode ser o catalisador que falta. Vamos conversar sobre seu próximo nível.",
+    emoji: "💎",
   };
 }
 
@@ -159,10 +159,7 @@ const QuizFlow = () => {
     if (isTransitioning) return;
     setSelectedIndex(index);
     setIsTransitioning(true);
-
     const newAnswers = [...answers, score];
-
-    // Show selected state briefly, then advance
     setTimeout(() => {
       setAnswers(newAnswers);
       if (currentQuestion < questions.length - 1) {
@@ -239,7 +236,7 @@ const QuizFlow = () => {
       {/* Header */}
       <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border/30">
         <div className="max-w-lg mx-auto px-5 py-4 flex items-center justify-center">
-          <img src={logoImage} alt="Maria Marcelino" className="h-9 invert opacity-80" />
+          <IvoLogo size="sm" className="opacity-80" />
         </div>
       </div>
 
@@ -272,11 +269,11 @@ const QuizFlow = () => {
           <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-gold/60 mb-1">
             Diagnóstico Exclusivo
           </p>
-          <h1 className="text-lg font-black leading-tight">
-            Descubra o Poder da <span className="text-gradient-gold">Sua Voz</span>
+          <h1 className="font-copperplate text-lg font-bold leading-tight uppercase tracking-wide">
+            Descubra Seu Perfil de <span className="text-gradient-gold">Negociador</span>
           </h1>
           <p className="text-xs text-muted-foreground mt-1">
-            8 perguntas para revelar o que silencia a sua comunicação
+            8 perguntas para revelar onde você está perdendo dinheiro
           </p>
         </motion.div>
       )}
@@ -296,7 +293,6 @@ const QuizFlow = () => {
               <h2 className="text-base font-bold mb-6 leading-relaxed text-foreground/90">
                 {questions[currentQuestion].question}
               </h2>
-
               <div className="space-y-2.5">
                 {questions[currentQuestion].options.map((option, i) => {
                   const isSelected = selectedIndex === i;
@@ -308,7 +304,7 @@ const QuizFlow = () => {
                       transition={{ delay: 0.06 + i * 0.04, duration: 0.2 }}
                       onClick={() => handleAnswer(option.score, i)}
                       disabled={isTransitioning}
-                      className={`w-full text-left p-4 rounded-xl border text-sm leading-relaxed transition-all duration-200 active:scale-[0.97] disabled:pointer-events-none ${
+                      className={`w-full text-left p-4 rounded-lg border text-sm leading-relaxed transition-all duration-200 active:scale-[0.97] disabled:pointer-events-none ${
                         isSelected
                           ? "bg-gold/10 border-gold/50 text-foreground shadow-gold"
                           : "bg-card border-border/50 text-foreground/80"
@@ -319,7 +315,6 @@ const QuizFlow = () => {
                   );
                 })}
               </div>
-
               {currentQuestion > 0 && (
                 <button
                   onClick={goBack}
@@ -343,7 +338,7 @@ const QuizFlow = () => {
             >
               <div className="text-center mb-8">
                 <div className="text-4xl mb-3">🎯</div>
-                <h2 className="text-xl font-black mb-2">
+                <h2 className="font-copperplate text-xl font-bold mb-2 uppercase tracking-wide">
                   Seu diagnóstico está <span className="text-gradient-gold">pronto!</span>
                 </h2>
                 <p className="text-sm text-muted-foreground">
@@ -358,33 +353,31 @@ const QuizFlow = () => {
                     type="text"
                     value={leadData.name}
                     onChange={(e) => setLeadData({ ...leadData, name: e.target.value })}
-                    placeholder="Maria Silva"
-                    className="w-full h-12 rounded-xl bg-card border border-border/50 px-4 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all"
+                    placeholder="João Silva"
+                    className="w-full h-12 rounded-lg bg-card border border-border/50 px-4 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all"
                     maxLength={100}
                   />
                   {errors.name && <p className="text-xs text-destructive mt-1">{errors.name}</p>}
                 </div>
-
                 <div>
                   <label className="text-xs font-semibold text-foreground/70 mb-1.5 block">Seu e-mail</label>
                   <input
                     type="email"
                     value={leadData.email}
                     onChange={(e) => setLeadData({ ...leadData, email: e.target.value })}
-                    placeholder="maria@email.com"
-                    className="w-full h-12 rounded-xl bg-card border border-border/50 px-4 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all"
+                    placeholder="joao@email.com"
+                    className="w-full h-12 rounded-lg bg-card border border-border/50 px-4 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all"
                     maxLength={255}
                   />
                   {errors.email && <p className="text-xs text-destructive mt-1">{errors.email}</p>}
                 </div>
-
                 <div>
                   <label className="text-xs font-semibold text-foreground/70 mb-1.5 block">Seu telefone</label>
                   <div className="flex gap-2">
                     <select
                       value={leadData.countryCode}
                       onChange={(e) => setLeadData({ ...leadData, countryCode: e.target.value })}
-                      className="h-12 rounded-xl bg-card border border-border/50 px-3 text-sm text-foreground focus:outline-none focus:border-gold/50 transition-all appearance-none cursor-pointer"
+                      className="h-12 rounded-lg bg-card border border-border/50 px-3 text-sm text-foreground focus:outline-none focus:border-gold/50 transition-all appearance-none cursor-pointer"
                     >
                       {countryCodes.map((c) => (
                         <option key={c.code} value={c.code}>{c.label}</option>
@@ -398,7 +391,7 @@ const QuizFlow = () => {
                         setLeadData({ ...leadData, phone: val });
                       }}
                       placeholder="(99) 99999-9999"
-                      className="flex-1 h-12 rounded-xl bg-card border border-border/50 px-4 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all"
+                      className="flex-1 h-12 rounded-lg bg-card border border-border/50 px-4 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all"
                       maxLength={20}
                     />
                   </div>
@@ -410,7 +403,7 @@ const QuizFlow = () => {
                 onClick={handleLeadSubmit}
                 disabled={isSubmitting}
                 whileTap={{ scale: 0.97 }}
-                className="w-full mt-6 h-14 rounded-xl bg-gradient-gold-deep text-primary-foreground font-bold text-sm shadow-gold-intense hover:opacity-90 transition-opacity duration-200 flex items-center justify-center gap-2 disabled:opacity-70"
+                className="w-full mt-6 h-14 rounded-lg bg-gradient-gold-deep text-primary-foreground font-bold text-sm shadow-gold-intense hover:opacity-90 transition-opacity duration-200 flex items-center justify-center gap-2 disabled:opacity-70"
               >
                 {isSubmitting ? (
                   <Loader2 className="h-5 w-5 animate-spin" />
@@ -450,7 +443,7 @@ const QuizFlow = () => {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.25 }}
-                className="text-2xl font-black text-gradient-gold mb-3"
+                className="font-copperplate text-2xl font-bold text-gradient-gold mb-3 uppercase tracking-wide"
               >
                 {diagnostic.title}
               </motion.h2>
@@ -468,7 +461,7 @@ const QuizFlow = () => {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.45 }}
-                className="bg-card border border-gold/20 rounded-2xl p-6 mb-6 glow-gold"
+                className="bg-card border border-gold/20 rounded-lg p-6 mb-6 glow-gold"
               >
                 <Sparkles className="h-5 w-5 text-gold mx-auto mb-3" />
                 <p className="text-sm text-foreground leading-relaxed">{diagnostic.recommendation}</p>
@@ -478,13 +471,13 @@ const QuizFlow = () => {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.55 }}
-                href="https://wa.me/5528999785743?text=Ol%C3%A1%20Maria!%20Fiz%20o%20quiz%20e%20quero%20agendar%20minha%20conversa%20de%2015%20minutos."
+                href="https://wa.me/5511999999999?text=Ol%C3%A1%20Ivo!%20Fiz%20o%20quiz%20e%20quero%20conversar%20sobre%20o%20meu%20resultado."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 w-full py-4 rounded-xl bg-gradient-gold-deep text-primary-foreground font-bold text-sm shadow-gold-intense hover:opacity-90 active:scale-[0.97] transition-all duration-200 mb-4"
+                className="inline-flex items-center justify-center gap-2 w-full py-4 rounded-lg bg-gradient-gold-deep text-primary-foreground font-bold text-sm shadow-gold-intense hover:opacity-90 active:scale-[0.97] transition-all duration-200 mb-4"
               >
                 <CalendarCheck className="h-5 w-5" />
-                Agendar minha conversa (15 min)
+                Falar com o time comercial
               </motion.a>
 
               <button onClick={restart} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
@@ -497,7 +490,7 @@ const QuizFlow = () => {
 
       {/* Footer branding */}
       <div className="py-4 text-center">
-        <img src={logoImage} alt="Maria Marcelino" className="h-5 invert opacity-20 mx-auto" />
+        <IvoLogo size="sm" className="opacity-20" />
       </div>
     </div>
   );
