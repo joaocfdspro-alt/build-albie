@@ -32,7 +32,7 @@ const Index = () => {
               <img
                 src={ivoHero}
                 alt="Ivo Brasil"
-                className="absolute inset-0 w-full h-full object-cover object-[center_20%]"
+                className="absolute inset-0 w-full h-full object-cover object-[center_20%] blur-[2px]"
               />
               {/* No separate blur overlay - blur applied directly to img */}
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
