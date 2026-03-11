@@ -112,7 +112,7 @@ const Index = () => {
 
           <div className="space-y-3">
             <HubLink
-              icon={BrainCircuit}
+              iconSrc={quizIcon}
               title="Diagnóstico de Negociação"
               subtitle="Descubra seu perfil e onde você está perdendo dinheiro"
               href="/quiz"
@@ -120,7 +120,6 @@ const Index = () => {
               index={0}
               isInternal
               onClick={() => navigate("/quiz")}
-              tag="Quiz"
             />
 
             <HubLink
