@@ -200,7 +200,7 @@ const Index = () => {
               <span className="text-xs font-medium">@ivobrasil1</span>
             </a>
 
-            <IvoLogo size="sm" className="opacity-30" />
+            <IvoLogo size="footer" variant="icon" className="opacity-30" />
 
             <p className="text-[10px] text-muted-foreground/50">
               © {new Date().getFullYear()} Ivo Brasil

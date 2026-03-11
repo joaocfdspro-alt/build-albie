@@ -3,7 +3,7 @@ import IvoLogo from "@/components/IvoLogo";
 const D7Footer = () => (
   <footer className="border-t border-border/50 py-6">
     <div className="flex flex-col items-center gap-3">
-      <IvoLogo size="sm" />
+      <IvoLogo size="footer" variant="icon" />
       <p className="text-center text-xs text-muted-foreground">
         © {new Date().getFullYear()} Ivo Brasil
       </p>

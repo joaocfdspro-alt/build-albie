@@ -3,14 +3,14 @@ import logoIcoDark from "@/assets/logo-ico-dark.png";
 
 interface IvoLogoProps {
   className?: string;
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "footer";
   variant?: "horizontal" | "icon";
 }
 
 const IvoLogo = ({ className = "", size = "md", variant = "horizontal" }: IvoLogoProps) => {
   const sizeMap = {
-    horizontal: { sm: "h-5", md: "h-7", lg: "h-10" },
-    icon: { sm: "h-6", md: "h-9", lg: "h-14" },
+    horizontal: { sm: "h-5", md: "h-7", lg: "h-10", footer: "h-10" },
+    icon: { sm: "h-6", md: "h-9", lg: "h-14", footer: "h-10" },
   };
 
   const src = variant === "icon" ? logoIcoDark : logoHrzDark;

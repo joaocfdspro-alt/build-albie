@@ -84,7 +84,7 @@ const CodigoDaNegociacao = () => {
               <span className="hidden sm:inline">Voltar</span>
             </motion.a>
             <div className="w-px h-5 bg-border/50 hidden sm:block" />
-            <a href="/"><IvoLogo size="sm" /></a>
+            <a href="/"><IvoLogo size="sm" variant="icon" /></a>
           </div>
           <CtaButton className="h-10 px-6 text-xs" text="Garantir vaga" />
         </div>
