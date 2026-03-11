@@ -127,8 +127,6 @@ const CodigoDaNegociacao = () => {
                 className="flex flex-col sm:flex-row items-start gap-4">
                 <CtaButton />
                 <div className="text-xs text-muted-foreground">
-                  <p className="font-semibold text-foreground/80">R$ 997,00</p>
-                  <p>Pagamento único ou parcele</p>
                   <p className="mt-1">Acesso ao ciclo de 90 dias · Garantia 7 dias</p>
                 </div>
               </motion.div>

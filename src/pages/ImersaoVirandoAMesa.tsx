@@ -51,7 +51,7 @@ const ImersaoVirandoAMesa = () => {
             <span className="hidden sm:inline">Voltar</span>
           </motion.a>
           <div className="w-px h-5 bg-border/50 hidden sm:block" />
-          <a href="/"><IvoLogo size="icon" /></a>
+          <a href="/"><IvoLogo size="sm" variant="icon" /></a>
         </div>
       </nav>
 
