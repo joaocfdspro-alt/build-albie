@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Quiz from "./pages/Quiz";
 import CodigoDaNegociacao from "./pages/CodigoDaNegociacao";
 import ONegociador from "./pages/ONegociador";
+import ImersaoVirandoAMesa from "./pages/ImersaoVirandoAMesa";
 import LinkPendente from "./pages/LinkPendente";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
@@ -29,6 +30,7 @@ const App = () => (
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/codigo-da-negociacao" element={<CodigoDaNegociacao />} />
           <Route path="/o-negociador" element={<ONegociador />} />
+          <Route path="/imersao-virando-a-mesa" element={<ImersaoVirandoAMesa />} />
           <Route path="/link-pendente" element={<LinkPendente />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin" element={<AdminDashboard />} />

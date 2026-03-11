@@ -84,7 +84,7 @@ const CodigoDaNegociacao = () => {
               <span className="hidden sm:inline">Voltar</span>
             </motion.a>
             <div className="w-px h-5 bg-border/50 hidden sm:block" />
-            <a href="/"><IvoLogo size="sm" /></a>
+            <a href="/"><IvoLogo size="sm" variant="icon" /></a>
           </div>
           <CtaButton className="h-10 px-6 text-xs" text="Garantir vaga" />
         </div>
@@ -127,8 +127,6 @@ const CodigoDaNegociacao = () => {
                 className="flex flex-col sm:flex-row items-start gap-4">
                 <CtaButton />
                 <div className="text-xs text-muted-foreground">
-                  <p className="font-semibold text-foreground/80">R$ 997,00</p>
-                  <p>Pagamento único ou parcele</p>
                   <p className="mt-1">Acesso ao ciclo de 90 dias · Garantia 7 dias</p>
                 </div>
               </motion.div>

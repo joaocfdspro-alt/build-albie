@@ -87,7 +87,7 @@ const ONegociador = () => {
               <span className="hidden sm:inline">Voltar</span>
             </motion.a>
             <div className="w-px h-5 bg-border/50 hidden sm:block" />
-            <a href="/"><IvoLogo size="sm" /></a>
+            <a href="/"><IvoLogo size="sm" variant="icon" /></a>
           </div>
           <CtaButton className="h-10 px-6 text-xs" text="Garantir acesso" />
         </div>
@@ -110,7 +110,7 @@ const ONegociador = () => {
             <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
               className="font-copperplate text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] tracking-wide uppercase mb-6">
-              O <span className="text-gradient-gold">Negociador</span>
+              Método O <span className="text-gradient-gold">Negociador</span>
             </motion.h1>
 
             <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 0.6 }}
