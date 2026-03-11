@@ -125,7 +125,7 @@ const Index = () => {
             <HubLink
               icon={Target}
               title="Código da Negociação"
-              subtitle="Programa de 90 dias para negociadores estratégicos"
+              subtitle="Programa de 90 dias para se tornar um negociador estratégico"
               href="/codigo-da-negociacao"
               variant="highlight"
               index={1}
