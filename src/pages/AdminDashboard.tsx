@@ -215,7 +215,7 @@ const AdminDashboard = () => {
       <header className="sticky top-0 z-50 bg-card/80 backdrop-blur-xl border-b border-border/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src={logoImage} alt="Maria Marcelino" className={`h-6 opacity-60 ${lightMode ? "" : "invert"}`} />
+            <IvoLogo size="sm" className="opacity-60" />
             <div className="h-4 w-px bg-border" />
             <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Admin</span>
           </div>
