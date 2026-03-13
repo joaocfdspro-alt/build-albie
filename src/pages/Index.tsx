@@ -110,7 +110,7 @@ const Index = () => {
 
           <div className="space-y-3">
             <HubLink
-              iconSrc={quizIcon}
+              icon={BrainCircuit}
               title="Diagnóstico de Negociação"
               subtitle="Descubra seu perfil e onde você está perdendo dinheiro"
               href="/quiz"
