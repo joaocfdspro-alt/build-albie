@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import ivoHero from "@/assets/ivo-hero.jpg";
+
 import HubLink from "@/components/HubLink";
 import IvoLogo from "@/components/IvoLogo";
 
