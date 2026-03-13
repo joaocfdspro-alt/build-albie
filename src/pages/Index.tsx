@@ -7,6 +7,7 @@ import {
   Mic,
   Users,
   Flame,
+  BrainCircuit,
 } from "lucide-react";
 import quizIcon from "@/assets/quiz-icon.png";
 import ivoHero from "@/assets/ivo-hero.jpg";
