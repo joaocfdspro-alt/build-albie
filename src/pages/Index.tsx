@@ -24,18 +24,15 @@ const Index = () => {
       </div>
 
       <div className="relative z-10 w-full max-w-md mx-auto">
-        {/* Hero section with fixed background */}
+        {/* Hero section with sticky background */}
         <div className="relative h-[65vh] min-h-[450px] max-h-[580px]">
-          <div className="fixed top-0 left-0 right-0 h-[65vh] min-h-[450px] max-h-[580px] z-0">
-            <div className="max-w-md mx-auto h-full relative">
+          <div className="sticky top-0 h-[65vh] min-h-[450px] max-h-[580px] z-0 overflow-hidden">
               <img
                 src={ivoHero}
                 alt="Ivo Brasil"
                 className="absolute inset-0 w-full h-full object-cover object-[center_20%] blur-[2px]"
               />
-              {/* No separate blur overlay - blur applied directly to img */}
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-            </div>
           </div>
 
           {/* Content overlay */}
