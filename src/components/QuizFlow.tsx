@@ -471,7 +471,7 @@ const QuizFlow = () => {
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.55 }}
-                href="https://wa.me/5511999999999?text=Ol%C3%A1%20Ivo!%20Fiz%20o%20quiz%20e%20quero%20conversar%20sobre%20o%20meu%20resultado."
+                href="https://wa.me/5527992936922?text=Ol%C3%A1%20Ivo!%20Fiz%20o%20quiz%20e%20quero%20conversar%20sobre%20o%20meu%20resultado."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 w-full py-4 rounded-lg bg-gradient-gold-deep text-primary-foreground font-bold text-sm shadow-gold-intense hover:opacity-90 active:scale-[0.97] transition-all duration-200 mb-4"
