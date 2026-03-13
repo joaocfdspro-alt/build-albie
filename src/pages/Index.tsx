@@ -17,22 +17,23 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background relative overflow-hidden">
+    <div className="min-h-screen bg-background relative">
       {/* Subtle ambient glow */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-gold/[0.015] blur-[180px]" />
       </div>
 
       <div className="relative z-10 w-full max-w-md mx-auto">
-        {/* Hero section with sticky background */}
+        {/* Hero section */}
         <div className="relative h-[65vh] min-h-[450px] max-h-[580px]">
-          <div className="sticky top-0 h-[65vh] min-h-[450px] max-h-[580px] z-0 overflow-hidden">
-              <img
-                src={ivoHero}
-                alt="Ivo Brasil"
-                className="absolute inset-0 w-full h-full object-cover object-[center_20%] blur-[2px]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+          {/* Background image - absolute, stays in place */}
+          <div className="absolute inset-0 overflow-hidden">
+            <img
+              src={ivoHero}
+              alt="Ivo Brasil"
+              className="absolute inset-0 w-full h-full object-cover object-[center_20%] blur-[2px]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
           </div>
 
           {/* Content overlay */}
@@ -71,7 +72,6 @@ const Index = () => {
                 <span className="text-gradient-gold">Perde por falta de método.</span>
               </motion.h1>
 
-              {/* Gold accent line between hero text and description */}
               <motion.div
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
