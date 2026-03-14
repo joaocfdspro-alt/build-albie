@@ -309,10 +309,6 @@ export const MapaContent = () => {
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="text-center text-xs text-muted-foreground space-y-1 pt-2">
-        <p>© {new Date().getFullYear()} Ivo Brasil · Desenvolvido por D7Company</p>
-      </div>
     </div>
   );
 };
