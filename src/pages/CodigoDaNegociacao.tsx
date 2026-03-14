@@ -25,7 +25,7 @@ import D7Footer from "@/components/D7Footer";
 import { supabase } from "@/integrations/supabase/client";
 import ivoHero from "@/assets/ivo-hero.jpg";
 
-const checkoutUrl = "#"; // Link Xgrow a ser definido
+const checkoutUrl = "https://checkout4.xgrow.com/pt/2ad70720-887e-4cc1-b2db-2854a18e029f/MTAyOTY1";
 const whatsappUrl = "https://wa.me/5546999238882?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20C%C3%B3digo%20da%20Negocia%C3%A7%C3%A3o.";
 
 const modules = [
