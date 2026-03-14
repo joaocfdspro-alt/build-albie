@@ -113,12 +113,7 @@ const CodigoDaNegociacao = () => {
 
     setIsSubmitting(false);
     setShowLeadModal(false);
-    // Redirect to checkout
-    if (checkoutUrl !== "#") {
-      window.open(checkoutUrl, "_blank");
-    } else {
-      window.open(whatsappUrl, "_blank");
-    }
+    window.open(checkoutUrl, "_blank");
   };
 
   return (
