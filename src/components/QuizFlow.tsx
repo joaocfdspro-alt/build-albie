@@ -297,6 +297,7 @@ const QuizFlow = () => {
   const [aiDiagnostic, setAiDiagnostic] = useState<AIDiagnostic | null>(null);
   const [isLoadingAI, setIsLoadingAI] = useState(false);
   const [loadingStepIndex, setLoadingStepIndex] = useState(0);
+  const [emailCopyNotice, setEmailCopyNotice] = useState<"idle" | "sent" | "pending">("idle");
 
   // Loading step animation
   useEffect(() => {
