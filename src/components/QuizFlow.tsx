@@ -408,59 +408,66 @@ const QuizFlow = () => {
     setIsLoadingAI(true);
     setShowLeadForm(false);
     setShowResult(true);
+    setEmailCopyNotice("pending");
 
     const totalScore = answers.reduce((a, b) => a + b, 0);
     const profile = getProfileMeta(totalScore);
+    const generatedDiagnostic = buildAdaptiveDiagnostic({
+      name: result.data.name,
+      totalScore,
+      answers,
+      openResponse,
+      seed: Date.now(),
+    });
 
-    // Save lead
+    setAiDiagnostic(generatedDiagnostic);
+
+    let insertedLead: {
+      id: string;
+      name: string;
+      email: string;
+      phone: string;
+      country_code: string;
+      total_score: number;
+      diagnostic_title: string;
+      created_at: string;
+      open_response: string | null;
+      ai_diagnostic: AIDiagnostic | null;
+    } | null = null;
+
     try {
-      await supabase.from("quiz_leads").insert({
-        name: result.data.name,
-        email: result.data.email,
-        phone: result.data.phone,
-        country_code: result.data.countryCode,
-        total_score: totalScore,
-        diagnostic_title: profile.title,
-        open_response: openResponse,
-      });
-    } catch { /* silent */ }
-
-    // Call AI
-    try {
-      const questionsWithAnswers = questions.map((q, i) => ({
-        question: q.question,
-        answer: q.options.find(o => o.score === answers[i])?.text || "",
-      }));
-
-      const { data: aiData, error: aiError } = await supabase.functions.invoke("quiz-diagnostic", {
-        body: {
+      const { data } = await supabase
+        .from("quiz_leads")
+        .insert({
           name: result.data.name,
-          answers: questionsWithAnswers,
-          openResponse,
-          totalScore,
-          profileTitle: profile.title,
-        },
-      });
+          email: result.data.email,
+          phone: result.data.phone,
+          country_code: result.data.countryCode,
+          total_score: totalScore,
+          diagnostic_title: profile.title,
+          open_response: openResponse,
+          ai_diagnostic: generatedDiagnostic,
+        })
+        .select("id, name, email, phone, country_code, total_score, diagnostic_title, created_at, open_response, ai_diagnostic")
+        .single();
 
-      if (!aiError && aiData?.diagnostic) {
-        setAiDiagnostic(aiData.diagnostic);
-        try {
-          const { data: leads } = await supabase
-            .from("quiz_leads")
-            .select("id")
-            .eq("email", result.data.email)
-            .order("created_at", { ascending: false })
-            .limit(1);
-          if (leads?.[0]) {
-            await supabase.from("quiz_leads").update({ ai_diagnostic: aiData.diagnostic }).eq("id", leads[0].id);
-          }
-        } catch { /* silent */ }
-      } else {
-        console.warn("AI diagnostic unavailable, using static fallback");
-      }
-    } catch (err) {
-      console.warn("AI diagnostic failed, using static fallback:", err);
+      insertedLead = data;
+    } catch {
+      insertedLead = null;
     }
+
+    if (insertedLead) {
+      try {
+        const { error: notifyError } = await supabase.functions.invoke("notify-new-lead", {
+          body: { record: insertedLead, send_lead_copy: true },
+        });
+        setEmailCopyNotice(notifyError ? "pending" : "sent");
+      } catch {
+        setEmailCopyNotice("pending");
+      }
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 1800));
 
     setIsSubmitting(false);
     setIsLoadingAI(false);
