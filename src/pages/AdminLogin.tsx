@@ -23,10 +23,10 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="mb-6"><IvoLogo size="md" className="opacity-60" /></div>
+          <div className="mb-6 flex justify-center"><IvoLogo size="lg" /></div>
           <h1 className="text-xl font-bold text-foreground">Painel Administrativo</h1>
           <p className="text-sm text-muted-foreground mt-1">Acesso restrito</p>
         </div>
@@ -55,6 +55,11 @@ const AdminLogin = () => {
         </form>
         <p className="text-[10px] text-muted-foreground/40 text-center mt-6">Acesso exclusivo para administradores convidados.</p>
       </motion.div>
+      <p className="mt-8 text-[10px] text-muted-foreground/30">
+        <a href="https://www.d7company.com.br/tech" target="_blank" rel="noopener noreferrer" className="hover:text-muted-foreground transition-colors">
+          Desenvolvido por D7 Company
+        </a>
+      </p>
     </div>
   );
 };

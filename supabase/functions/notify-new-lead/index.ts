@@ -1,5 +1,3 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
-
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
@@ -8,48 +6,48 @@ const corsHeaders = {
 
 const NOTIFY_EMAILS = [
   "0019.andrematheus@gmail.com",
-  "euimperadordasvendas@gmail.com",
-  "contato@mariasdobrasil.online",
+  "ledioprofissional@gmail.com",
 ];
 
-const ADMIN_PANEL_URL = "https://mariasdobrasil.lovable.app/admin";
+const ADMIN_PANEL_URL = "https://ivobrasil.lovable.app/admin";
+const COMMERCIAL_WHATSAPP = "5546999238882";
 
-function getTemperature(score: number): { label: string; color: string; emoji: string; bgColor: string } {
-  if (score <= 12) return { label: "Frio", color: "#6b7280", emoji: "🧊", bgColor: "#f3f4f6" };
-  if (score <= 20) return { label: "Morno", color: "#d97706", emoji: "🌤️", bgColor: "#fef3c7" };
-  if (score <= 26) return { label: "Quente", color: "#ea580c", emoji: "🔥", bgColor: "#ffedd5" };
-  return { label: "Premium", color: "#7c3aed", emoji: "💎", bgColor: "#ede9fe" };
+function getTemperature(score: number): { label: string; color: string; bgColor: string } {
+  if (score <= 11) return { label: "Frio", color: "#6b7280", bgColor: "#f3f4f6" };
+  if (score <= 18) return { label: "Morno", color: "#d97706", bgColor: "#fef3c7" };
+  if (score <= 25) return { label: "Quente", color: "#ea580c", bgColor: "#ffedd5" };
+  return { label: "Premium", color: "#7c3aed", bgColor: "#ede9fe" };
 }
 
 function getStrategy(score: number): { profile: string; nextStep: string; offer: string } {
-  if (score <= 12) return {
+  if (score <= 11) return {
     profile: "Lead em fase de descoberta. Precisa de nutrição e educação antes de oferta direta.",
-    nextStep: "Enviar conteúdo educativo sobre comunicação e oratória. Convidar para webinar gratuito.",
-    offer: "Aulão gratuito ou sessão diagnóstico cortesia"
+    nextStep: "Enviar conteúdo educativo sobre negociação. Convidar para webinar gratuito.",
+    offer: "Sessão diagnóstico cortesia ou conteúdo gratuito"
   };
-  if (score <= 20) return {
+  if (score <= 18) return {
     profile: "Lead consciente do problema mas ainda hesitante. Sensível a prova social.",
     nextStep: "Compartilhar cases de sucesso e depoimentos. Oferecer sessão 1:1 de avaliação.",
-    offer: "Curso Liberte Sua Voz ou Sua Primeira Palestra"
+    offer: "Curso O Negociador ou Código da Negociação"
   };
-  if (score <= 26) return {
+  if (score <= 25) return {
     profile: "Lead com alta consciência e pronto para investir. Responde bem a urgência e exclusividade.",
     nextStep: "Contato direto para apresentar programa. Oferecer condição especial ou bônus exclusivo.",
-    offer: "Programa premium ou mentoria personalizada"
+    offer: "Código da Negociação ou mentoria personalizada"
   };
   return {
-    profile: "Lead top de funil — já entende o valor, busca excelência. Decisor rápido.",
-    nextStep: "Apresentar Mastermind ou programa VIP imediatamente. Usar abordagem consultiva.",
-    offer: "Mastermind, mentoria VIP ou programa sob medida"
+    profile: "Lead top de funil. Já entende o valor, busca excelência. Decisor rápido.",
+    nextStep: "Apresentar mentoria ou programa VIP imediatamente. Usar abordagem consultiva.",
+    offer: "Mentoria VIP ou programa sob medida"
   };
 }
 
 function getDiagnosticStyle(title: string): { color: string; bgColor: string; borderColor: string } {
   const map: Record<string, { color: string; bgColor: string; borderColor: string }> = {
-    "Voz Aprisionada": { color: "#dc2626", bgColor: "#fef2f2", borderColor: "#fecaca" },
-    "Voz Hesitante": { color: "#d97706", bgColor: "#fffbeb", borderColor: "#fde68a" },
-    "Voz em Despertar": { color: "#2563eb", bgColor: "#eff6ff", borderColor: "#bfdbfe" },
-    "Voz Poderosa": { color: "#16a34a", bgColor: "#f0fdf4", borderColor: "#bbf7d0" },
+    "Negociador Intuitivo": { color: "#dc2626", bgColor: "#fef2f2", borderColor: "#fecaca" },
+    "Negociador Reativo": { color: "#d97706", bgColor: "#fffbeb", borderColor: "#fde68a" },
+    "Negociador Consciente": { color: "#2563eb", bgColor: "#eff6ff", borderColor: "#bfdbfe" },
+    "Negociador Estratégico": { color: "#16a34a", bgColor: "#f0fdf4", borderColor: "#bbf7d0" },
   };
   return map[title] || { color: "#6b7280", bgColor: "#f9fafb", borderColor: "#e5e7eb" };
 }
@@ -76,8 +74,8 @@ function buildEmailHtml(lead: any): string {
   <table width="100%" cellpadding="0" cellspacing="0">
     <tr>
       <td>
-        <p style="margin:0;font-size:11px;text-transform:uppercase;letter-spacing:3px;color:#c9952e;font-weight:700;">Maria Marcelino · Diagnóstico da Voz</p>
-        <h1 style="margin:8px 0 0;font-size:22px;color:#ffffff;font-weight:800;line-height:1.3;">Novo Lead Capturado ${temp.emoji}</h1>
+        <p style="margin:0;font-size:11px;text-transform:uppercase;letter-spacing:3px;color:#c9952e;font-weight:700;">Ivo Brasil · Diagnóstico de Negociação</p>
+        <h1 style="margin:8px 0 0;font-size:22px;color:#ffffff;font-weight:800;line-height:1.3;">Novo Lead Capturado</h1>
       </td>
       <td align="right" valign="top">
         <div style="background:${temp.bgColor};color:${temp.color};padding:6px 16px;border-radius:20px;font-size:12px;font-weight:800;display:inline-block;">
@@ -132,15 +130,25 @@ function buildEmailHtml(lead: any): string {
     <tr>
       <td style="padding:14px 20px;background:#faf8f5;">
         <p style="margin:0;font-size:10px;color:#8b7a6b;text-transform:uppercase;letter-spacing:1px;">WhatsApp</p>
-        <p style="margin:4px 0 0;font-size:14px;"><a href="https://wa.me/${whatsappNumber}" style="color:#16a34a;text-decoration:none;font-weight:600;">📱 ${lead.country_code} ${lead.phone}</a></p>
+        <p style="margin:4px 0 0;font-size:14px;"><a href="https://wa.me/${whatsappNumber}" style="color:#16a34a;text-decoration:none;font-weight:600;">${lead.country_code} ${lead.phone}</a></p>
       </td>
     </tr>
   </table>
 </td></tr>
 
+${lead.open_response ? `
+<!-- Open Response -->
+<tr><td style="padding:24px 40px 0;">
+  <p style="margin:0 0 12px;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#8b7a6b;font-weight:700;">Resposta Aberta do Lead</p>
+  <div style="background:#faf8f5;border:1px solid #f0ebe4;border-radius:12px;padding:16px 20px;">
+    <p style="margin:0;font-size:13px;color:#1a1512;line-height:1.6;font-style:italic;">"${lead.open_response}"</p>
+  </div>
+</td></tr>
+` : ''}
+
 <!-- Strategy Section -->
 <tr><td style="padding:28px 40px 0;">
-  <p style="margin:0 0 12px;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#8b7a6b;font-weight:700;">🎯 Análise Estratégica</p>
+  <p style="margin:0 0 12px;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#8b7a6b;font-weight:700;">Análise Estratégica</p>
   <table width="100%" cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#1a1512,#2a231c);border-radius:12px;overflow:hidden;">
     <tr>
       <td style="padding:20px 24px;border-bottom:1px solid #3a332c;">
@@ -166,15 +174,15 @@ function buildEmailHtml(lead: any): string {
 <!-- CTA -->
 <tr><td style="padding:28px 40px;" align="center">
   <a href="${ADMIN_PANEL_URL}" style="display:inline-block;background:linear-gradient(135deg,#c9952e,#a07822);color:#ffffff;padding:16px 48px;border-radius:12px;text-decoration:none;font-weight:800;font-size:15px;letter-spacing:0.5px;box-shadow:0 4px 20px rgba(201,149,46,0.35);">
-    ⚡ Acessar Painel Admin
+    Acessar Painel Admin
   </a>
   <p style="margin:12px 0 0;font-size:11px;color:#8b7a6b;">Veja o diagnóstico completo e tome a melhor decisão comercial</p>
 </td></tr>
 
 <!-- Footer -->
 <tr><td style="background:#faf8f5;padding:20px 40px;border-top:1px solid #f0ebe4;" align="center">
-  <p style="margin:0;font-size:10px;color:#8b7a6b;">Maria Marcelino · Diagnóstico da Voz · ${createdAt}</p>
-  <p style="margin:4px 0 0;font-size:9px;color:#b8ad9e;">Este e-mail é gerado automaticamente quando um novo lead completa o quiz</p>
+  <p style="margin:0;font-size:10px;color:#8b7a6b;">Ivo Brasil · Diagnóstico de Negociação · ${createdAt}</p>
+  <p style="margin:4px 0 0;font-size:9px;color:#b8ad9e;">E-mail gerado automaticamente · Desenvolvido por D7 Company</p>
 </td></tr>
 
 </table>
@@ -201,20 +209,18 @@ Deno.serve(async (req) => {
     }
 
     const temp = getTemperature(lead.total_score);
-    const emailSubject = `${temp.emoji} Novo Lead: ${lead.name} — ${lead.diagnostic_title} (${temp.label})`;
+    const emailSubject = `Novo Lead: ${lead.name} — ${lead.diagnostic_title} (${temp.label})`;
     const emailBody = buildEmailHtml(lead);
 
     const resendKey = Deno.env.get("RESEND_API_KEY");
 
     if (resendKey) {
-      // Support test override for one-off test emails
       const targetEmails = payload._test_override_emails && Array.isArray(payload._test_override_emails) 
         ? payload._test_override_emails 
         : NOTIFY_EMAILS;
       const results = [];
       for (let i = 0; i < targetEmails.length; i++) {
         const email = targetEmails[i];
-        // Add delay between requests to avoid rate limiting (2 req/s on free tier)
         if (i > 0) await new Promise((r) => setTimeout(r, 600));
         
         const res = await fetch("https://api.resend.com/emails", {
@@ -224,7 +230,7 @@ Deno.serve(async (req) => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            from: "Maria Marcelino <contato@mariasdobrasil.online>",
+            from: "Ivo Brasil <noreply@ivobrasil.com.br>",
             to: [email],
             subject: emailSubject,
             html: emailBody,
@@ -232,11 +238,11 @@ Deno.serve(async (req) => {
         });
         const resBody = await res.text();
         results.push({ email, status: res.status, body: resBody });
-        console.log(`📧 Email sent to ${email}: ${res.status}`);
+        console.log(`Email sent to ${email}: ${res.status}`);
       }
-      console.log("📧 All notifications sent:", JSON.stringify(results));
+      console.log("All notifications sent:", JSON.stringify(results));
     } else {
-      console.log("📧 New lead notification (no RESEND_API_KEY configured):");
+      console.log("New lead notification (no RESEND_API_KEY configured):");
       console.log(JSON.stringify({ to: NOTIFY_EMAILS, subject: emailSubject, lead }));
     }
 

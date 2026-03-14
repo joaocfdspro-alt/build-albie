@@ -25,22 +25,25 @@ const AdminSetup = () => {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center px-4">
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="text-center max-w-sm">
           <CheckCircle className="h-12 w-12 text-gold mx-auto mb-4" />
           <h2 className="text-xl font-bold text-foreground mb-2">Admin criado com sucesso!</h2>
           <p className="text-sm text-muted-foreground mb-6">Agora você pode fazer login.</p>
-          <button onClick={() => navigate("/admin/login")} className="h-12 px-6 rounded-lg bg-gradient-gold-deep text-primary-foreground font-bold text-sm hover:opacity-90 transition-opacity">Ir para o Login →</button>
+          <button onClick={() => navigate("/admin/login")} className="h-12 px-6 rounded-lg bg-gradient-gold-deep text-primary-foreground font-bold text-sm hover:opacity-90 transition-opacity">Ir para o Login</button>
         </motion.div>
+        <p className="mt-8 text-[10px] text-muted-foreground/30">
+          <a href="https://www.d7company.com.br/tech" target="_blank" rel="noopener noreferrer" className="hover:text-muted-foreground transition-colors">Desenvolvido por D7 Company</a>
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <div className="mb-6"><IvoLogo size="md" className="opacity-60" /></div>
+          <div className="mb-6 flex justify-center"><IvoLogo size="lg" /></div>
           <h1 className="text-xl font-bold text-foreground">Configuração Inicial</h1>
           <p className="text-sm text-muted-foreground mt-1">Crie o primeiro administrador</p>
         </div>
@@ -55,6 +58,9 @@ const AdminSetup = () => {
         </form>
         <button onClick={() => navigate("/admin/login")} className="mt-4 w-full text-center text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center justify-center gap-1"><ArrowLeft className="h-3 w-3" /> Já tenho uma conta</button>
       </motion.div>
+      <p className="mt-8 text-[10px] text-muted-foreground/30">
+        <a href="https://www.d7company.com.br/tech" target="_blank" rel="noopener noreferrer" className="hover:text-muted-foreground transition-colors">Desenvolvido por D7 Company</a>
+      </p>
     </div>
   );
 };
