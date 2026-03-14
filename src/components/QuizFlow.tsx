@@ -479,28 +479,15 @@ const QuizFlow = () => {
 
   const codigoWhatsappUrl = `https://wa.me/5546999238882?text=${encodeURIComponent("Olá! Fiz o diagnóstico de negociação e quero saber mais sobre o Código da Negociação.")}`;
 
-  const getStaticDiagnostic = (): AIDiagnostic => {
-    if (totalScore <= 11) return {
-      observation: `Acabei de analisar suas respostas e o que eu vejo é claro: você está negociando no escuro. Sem preparo, sem método, sem controle do processo. Isso não é falta de inteligência, é falta de sistema.`,
-      perspective: `O que mais me chama atenção é que você está deixando dinheiro na mesa em cada conversa sem perceber. Cada "sim" rápido demais, cada preço que você não defende, é lucro que vai embora. E o pior: você nem sabe quanto está perdendo.`,
-      recommendation: `Você precisa de uma base sólida antes de qualquer coisa. O Código da Negociação pode revelar exatamente onde estão os gaps e qual o caminho mais curto para você parar de perder dinheiro em negociações.`,
-    };
-    if (totalScore <= 18) return {
-      observation: `Analisei cada uma das suas respostas e o padrão é claro: você reage em vez de conduzir. Quando pressionado, cede. Quando desafiado, hesita. O resultado são acordos que parecem bons na hora, mas te custam caro depois.`,
-      perspective: `O interessante é que você já tem noção de que algo está errado. Já sabe que poderia fazer melhor. O que te falta não é vontade, é estrutura. Você precisa de técnica para sair da reação e entrar no controle da conversa.`,
-      recommendation: `Esse é o momento exato para dar o próximo passo. O Código da Negociação vai te mostrar como sair do modo reativo e começar a conduzir negociações com método, segurança e resultados reais.`,
-    };
-    if (totalScore <= 25) return {
-      observation: `Suas respostas mostram algo interessante: você já entende que negociar é uma habilidade, não um talento. Tem alguma base, sabe se posicionar em alguns momentos, mas falta consistência nos resultados.`,
-      perspective: `Você está naquele ponto em que tem potencial para dar um salto real, mas precisa de método. Nos momentos decisivos, a insegurança ainda aparece. E é justamente aí que o dinheiro grande se perde.`,
-      recommendation: `Você está pronto para o próximo nível. O Código da Negociação vai te dar clareza sobre o que ajustar no seu processo de negociação para fechar acordos melhores com mais frequência.`,
-    };
-    return {
-      observation: `Suas respostas revelam um negociador que já tem domínio. Você sabe conduzir, posicionar e fechar. Tem método e consciência do que está fazendo à mesa.`,
-      perspective: `O que eu vejo em negociadores do seu nível é que o próximo salto não vem de mais técnica, vem de refinamento estratégico. Maestria em negociações complexas, múltiplas partes, alto valor.`,
-      recommendation: `Para quem já está nesse patamar, o diferencial é acompanhamento de elite. O Código da Negociação oferece exatamente isso: método avançado e acesso direto para resultados que poucos alcançam.`,
-    };
-  };
+  const diagnostic =
+    aiDiagnostic ||
+    buildAdaptiveDiagnostic({
+      name: leadData.name || "Você",
+      totalScore,
+      answers,
+      openResponse,
+      seed: 77,
+    });
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
