@@ -38,6 +38,8 @@ interface Lead {
   diagnostic_title: string;
   created_at: string;
   archived_at: string | null;
+  open_response: string | null;
+  ai_diagnostic: Record<string, string> | null;
 }
 
 type SortKey = "created_at" | "name" | "total_score" | "diagnostic_title";
