@@ -25,7 +25,7 @@ const Index = () => {
           <img
             src={ivoHero}
             alt="Ivo Brasil"
-            className="w-full h-full object-cover object-top blur-[1px] scale-105"
+            className="w-full h-full object-cover object-[center_-14%] md:object-[center_-20%] blur-[1px] scale-110"
           />
           {/* Side fades to black */}
           <div className="absolute inset-y-0 -left-4 w-16 bg-gradient-to-r from-background to-transparent" />
