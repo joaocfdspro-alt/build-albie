@@ -359,8 +359,17 @@ const CodigoDaNegociacao = () => {
         <D7Footer />
       </div>
 
-      {/* Lead capture modal */}
-      {showLeadModal && (
+      {/* Sticky mobile CTA */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-background/95 backdrop-blur-sm border-t border-border/50 px-4 py-3">
+        <Button
+          size="lg"
+          onClick={handleCtaClick}
+          className="w-full h-12 text-sm font-bold tracking-wide bg-gradient-gold-deep hover:opacity-90 shadow-gold-intense rounded-lg gap-2 uppercase font-copperplate"
+        >
+          Garantir minha vaga
+          <ArrowRight className="h-4 w-4" />
+        </Button>
+      </div>
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-sm px-4">
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
