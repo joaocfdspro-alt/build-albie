@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, ArrowLeft, Loader2, Shield, MessageSquare, Eye, Lightbulb, Route, Target } from "lucide-react";
 import { z } from "zod";
 import { Link } from "react-router-dom";
