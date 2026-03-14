@@ -272,7 +272,7 @@ const QuizFlow = () => {
         answer: q.options.find(o => o.score === answers[i])?.text || "",
       }));
 
-      const { data, error } = await supabase.functions.invoke("quiz-diagnostic", {
+      const { data: aiData, error: aiError } = await supabase.functions.invoke("quiz-diagnostic", {
         body: {
           name: result.data.name,
           answers: questionsWithAnswers,
@@ -282,9 +282,8 @@ const QuizFlow = () => {
         },
       });
 
-      if (!error && data?.diagnostic) {
-        setAiDiagnostic(data.diagnostic);
-        // Update the lead with AI diagnostic
+      if (!aiError && aiData?.diagnostic) {
+        setAiDiagnostic(aiData.diagnostic);
         try {
           const { data: leads } = await supabase
             .from("quiz_leads")
@@ -293,12 +292,14 @@ const QuizFlow = () => {
             .order("created_at", { ascending: false })
             .limit(1);
           if (leads?.[0]) {
-            await supabase.from("quiz_leads").update({ ai_diagnostic: data.diagnostic }).eq("id", leads[0].id);
+            await supabase.from("quiz_leads").update({ ai_diagnostic: aiData.diagnostic }).eq("id", leads[0].id);
           }
         } catch { /* silent */ }
+      } else {
+        console.warn("AI diagnostic unavailable, using static fallback");
       }
-    } catch {
-      // Fallback: show static result
+    } catch (err) {
+      console.warn("AI diagnostic failed, using static fallback:", err);
     }
 
     setIsSubmitting(false);
