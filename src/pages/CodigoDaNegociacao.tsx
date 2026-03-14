@@ -147,7 +147,7 @@ const CodigoDaNegociacao = () => {
       <section className="relative min-h-[75vh] md:min-h-[85vh]">
         <div className="fixed top-0 left-0 right-0 h-[75vh] md:h-[85vh] z-0">
           <div className="absolute inset-0 bg-background" />
-          <img src={ivoHero} alt="Ivo Brasil" className="absolute inset-0 w-full h-full object-cover object-[center_0%] md:object-[center_0%] opacity-40" />
+          <img src={ivoHero} alt="Ivo Brasil" className="absolute inset-0 w-full h-full object-cover object-[center_20%] opacity-40" />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent md:via-background/60" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50" />
         </div>
@@ -292,7 +292,7 @@ const CodigoDaNegociacao = () => {
                       <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold/60 mb-3">Investimento</p>
                       <p className="text-sm text-muted-foreground line-through mb-1">De R$ 1.497,00</p>
                       <p className="font-copperplate text-4xl md:text-5xl font-bold text-gradient-gold mb-1">R$ 997</p>
-                      <p className="text-lg font-bold text-foreground">ou 10x de R$ 116,42</p>
+                      <p className="text-lg font-bold text-foreground">ou 10x de R$ 117,90</p>
                       <p className="text-xs text-muted-foreground mt-3">Crédito · PIX · Múltiplos cartões</p>
                       <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gold/80">
                         <Shield className="h-4 w-4" />
