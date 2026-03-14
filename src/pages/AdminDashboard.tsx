@@ -102,6 +102,15 @@ const AdminDashboard = () => {
 
   const filtered = useMemo(() => {
     let result = leads.filter(l => showArchived ? l.archived_at !== null : l.archived_at === null);
+    // Date filter
+    if (dateFilter !== "all") {
+      const now = new Date();
+      const cutoff = new Date();
+      if (dateFilter === "today") cutoff.setHours(0, 0, 0, 0);
+      else if (dateFilter === "7d") cutoff.setDate(now.getDate() - 7);
+      else if (dateFilter === "30d") cutoff.setDate(now.getDate() - 30);
+      result = result.filter(l => new Date(l.created_at) >= cutoff);
+    }
     if (search) {
       const q = search.toLowerCase();
       result = result.filter(
@@ -122,7 +131,7 @@ const AdminDashboard = () => {
       return sortDir === "desc" ? -cmp : cmp;
     });
     return result;
-  }, [leads, search, sortKey, sortDir, filterDiagnostic, showArchived]);
+  }, [leads, search, sortKey, sortDir, filterDiagnostic, showArchived, dateFilter]);
 
   const activeLeads = useMemo(() => leads.filter(l => l.archived_at === null), [leads]);
   const archivedCount = useMemo(() => leads.filter(l => l.archived_at !== null).length, [leads]);
