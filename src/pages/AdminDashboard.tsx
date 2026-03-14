@@ -38,6 +38,8 @@ interface Lead {
   diagnostic_title: string;
   created_at: string;
   archived_at: string | null;
+  open_response: string | null;
+  ai_diagnostic: Record<string, string> | null;
 }
 
 type SortKey = "created_at" | "name" | "total_score" | "diagnostic_title";
@@ -65,6 +67,7 @@ const AdminDashboard = () => {
   const [expandedLead, setExpandedLead] = useState<string | null>(null);
   const [showArchived, setShowArchived] = useState(false);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [dateFilter, setDateFilter] = useState<"all" | "today" | "7d" | "30d">("all");
   useEffect(() => {
     if (!authLoading && (!user || !isAdmin)) {
       navigate("/admin/login");
@@ -99,6 +102,15 @@ const AdminDashboard = () => {
 
   const filtered = useMemo(() => {
     let result = leads.filter(l => showArchived ? l.archived_at !== null : l.archived_at === null);
+    // Date filter
+    if (dateFilter !== "all") {
+      const now = new Date();
+      const cutoff = new Date();
+      if (dateFilter === "today") cutoff.setHours(0, 0, 0, 0);
+      else if (dateFilter === "7d") cutoff.setDate(now.getDate() - 7);
+      else if (dateFilter === "30d") cutoff.setDate(now.getDate() - 30);
+      result = result.filter(l => new Date(l.created_at) >= cutoff);
+    }
     if (search) {
       const q = search.toLowerCase();
       result = result.filter(
@@ -119,7 +131,7 @@ const AdminDashboard = () => {
       return sortDir === "desc" ? -cmp : cmp;
     });
     return result;
-  }, [leads, search, sortKey, sortDir, filterDiagnostic, showArchived]);
+  }, [leads, search, sortKey, sortDir, filterDiagnostic, showArchived, dateFilter]);
 
   const activeLeads = useMemo(() => leads.filter(l => l.archived_at === null), [leads]);
   const archivedCount = useMemo(() => leads.filter(l => l.archived_at !== null).length, [leads]);
@@ -304,6 +316,16 @@ const AdminDashboard = () => {
                 <option key={d} value={d}>{d}</option>
               ))}
             </select>
+            <select
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value as "all" | "today" | "7d" | "30d")}
+              className="h-9 rounded-lg bg-secondary border border-border/50 px-3 text-xs text-foreground focus:outline-none focus:border-gold/40 transition-all appearance-none cursor-pointer"
+            >
+              <option value="all">Todo período</option>
+              <option value="today">Hoje</option>
+              <option value="7d">Últimos 7 dias</option>
+              <option value="30d">Últimos 30 dias</option>
+            </select>
           </div>
           <div className="flex items-center gap-2">
             {showArchived ? (
@@ -433,6 +455,9 @@ const AdminDashboard = () => {
                             score={lead.total_score}
                             diagnostic={lead.diagnostic_title}
                             onClose={() => setExpandedLead(null)}
+                            phone={lead.phone}
+                            countryCode={lead.country_code}
+                            openResponse={lead.open_response}
                             mobile
                           />
                         </div>
@@ -560,6 +585,9 @@ const AdminDashboard = () => {
                               score={lead.total_score}
                               diagnostic={lead.diagnostic_title}
                               onClose={() => setExpandedLead(null)}
+                              phone={lead.phone}
+                              countryCode={lead.country_code}
+                              openResponse={lead.open_response}
                             />
                           )}
                         </AnimatePresence>
