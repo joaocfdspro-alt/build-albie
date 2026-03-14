@@ -1,5 +1,5 @@
 const D7Footer = () => (
-  <footer className="border-t border-border/50 py-6">
+  <footer className="border-t border-border/50 py-6 mt-auto">
     <div className="flex flex-col items-center gap-3">
       {/* Social Icons */}
       <div className="flex items-center gap-4">
