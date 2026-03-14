@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import IvoLogo from "@/components/IvoLogo";
+import D7Footer from "@/components/D7Footer";
 import { ThemeToggle } from "@/components/admin/ThemeToggle";
 import { InviteAdminPanel } from "@/components/admin/InviteAdminPanel";
 import { OnboardingTutorial, HelpButton } from "@/components/admin/OnboardingTutorial";
@@ -202,9 +204,7 @@ const AdminDashboard = () => {
       <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-lg border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-7 w-7 rounded-lg bg-foreground flex items-center justify-center">
-              <span className="text-background text-[10px] font-black">IB</span>
-            </div>
+            <IvoLogo size="sm" variant="icon" />
             <span className="text-sm font-semibold text-foreground tracking-tight">Painel Comercial</span>
           </div>
           <div className="flex items-center gap-2">
@@ -490,6 +490,10 @@ const AdminDashboard = () => {
       ) : (
         <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6"><MapaContent /></main>
       )}
+
+      <div className="mt-8">
+        <D7Footer />
+      </div>
 
       <AlertDialog open={!!deleteConfirmId} onOpenChange={(open) => { if (!open) setDeleteConfirmId(null); }}>
         <AlertDialogContent>
