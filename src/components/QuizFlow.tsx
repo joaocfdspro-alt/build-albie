@@ -753,18 +753,15 @@ const QuizFlow = () => {
                     transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                     className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-gold/20 border-t-gold mx-auto mb-8"
                   />
-                  <AnimatePresence mode="wait">
-                    <motion.p
-                      key={loadingStepIndex}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.3 }}
-                      className="text-sm text-foreground/70 font-medium"
-                    >
-                      {loadingSteps[loadingStepIndex]}
-                    </motion.p>
-                  </AnimatePresence>
+                  <motion.p
+                    key={loadingStepIndex}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-sm text-foreground/70 font-medium"
+                  >
+                    {loadingSteps[loadingStepIndex]}
+                  </motion.p>
                   <div className="flex justify-center gap-1.5 mt-6">
                     {loadingSteps.map((_, i) => (
                       <div
