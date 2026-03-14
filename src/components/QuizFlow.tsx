@@ -422,36 +422,27 @@ const QuizFlow = () => {
 
     setAiDiagnostic(generatedDiagnostic);
 
-    let insertedLead: {
-      id: string;
-      name: string;
-      email: string;
-      phone: string;
-      country_code: string;
-      total_score: number;
-      diagnostic_title: string;
-      created_at: string;
-      open_response: string | null;
-      ai_diagnostic: AIDiagnostic | null;
-    } | null = null;
+    let insertedLead: Record<string, unknown> | null = null;
 
     try {
       const { data } = await supabase
         .from("quiz_leads")
-        .insert({
-          name: result.data.name,
-          email: result.data.email,
-          phone: result.data.phone,
-          country_code: result.data.countryCode,
-          total_score: totalScore,
-          diagnostic_title: profile.title,
-          open_response: openResponse,
-          ai_diagnostic: generatedDiagnostic,
-        })
+        .insert([
+          {
+            name: result.data.name,
+            email: result.data.email,
+            phone: result.data.phone,
+            country_code: result.data.countryCode,
+            total_score: totalScore,
+            diagnostic_title: profile.title,
+            open_response: openResponse,
+            ai_diagnostic: generatedDiagnostic,
+          },
+        ])
         .select("id, name, email, phone, country_code, total_score, diagnostic_title, created_at, open_response, ai_diagnostic")
         .single();
 
-      insertedLead = data;
+      insertedLead = data ? { ...data, ai_diagnostic: generatedDiagnostic } : null;
     } catch {
       insertedLead = null;
     }
