@@ -143,7 +143,7 @@ const CodigoDaNegociacao = () => {
       <section className="relative min-h-[75vh] md:min-h-[85vh]">
         <div className="fixed top-0 left-0 right-0 h-[75vh] md:h-[85vh] z-0">
           <div className="absolute inset-0 bg-background" />
-          <img src={ivoHero} alt="Ivo Brasil" className="absolute inset-0 w-full h-full object-cover object-[60%_15%] opacity-40" />
+          <img src={ivoHero} alt="Ivo Brasil" className="absolute inset-0 w-full h-full object-cover object-[62%_8%] opacity-40" />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent md:via-background/60" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50" />
         </div>
@@ -259,8 +259,11 @@ const CodigoDaNegociacao = () => {
                     </div>
                   </div>
                   <div className="text-center md:text-left">
-                    <p className="font-copperplate text-3xl md:text-4xl font-bold text-gradient-gold mb-1">R$ 997,00</p>
-                    <p className="text-sm text-muted-foreground mb-6">Pagamento único ou parcele no cartão</p>
+                    <div className="border border-border/60 rounded-md p-5 mb-6 bg-background/40">
+                      <p className="font-copperplate text-3xl md:text-4xl font-bold text-gradient-gold mb-2">R$ 997,00</p>
+                      <p className="text-lg font-bold text-foreground">À vista ou 10x de R$ 116,42</p>
+                      <p className="text-sm text-muted-foreground mt-2">Crédito · PIX · Múltiplos cartões</p>
+                    </div>
                     <CtaButton className="w-full md:w-auto" onClick={handleCtaClick} />
                     <p className="text-[11px] text-muted-foreground mt-3">Garantia incondicional de 7 dias</p>
                   </div>

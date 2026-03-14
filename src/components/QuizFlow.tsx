@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowRight, ArrowLeft, Loader2, Shield, MessageSquare, Eye, Lightbulb, Route, Target } from "lucide-react";
 import { z } from "zod";
 import { Link } from "react-router-dom";
@@ -138,11 +138,149 @@ const loadingSteps = [
   "Analisando suas respostas...",
   "Cruzando padrões de negociação...",
   "Identificando pontos de melhoria...",
-  "Gerando seu diagnóstico personalizado...",
+  "Consolidando seu plano de ação...",
 ];
 
 const DIAGNOSTIC_TITLE = "Diagnóstico Executivo Exclusivo";
 const DIAGNOSTIC_SUBTITLE = "8 perguntas estratégicas para revelar onde você está perdendo dinheiro";
+
+interface DiagnosticCategory {
+  key: string;
+  label: string;
+  score: number;
+  insight: string;
+  action: string;
+}
+
+const categoryRules = [
+  {
+    key: "preparacao",
+    label: "preparo estratégico",
+    indexes: [0],
+    insights: [
+      "falta uma rotina de preparo antes das conversas decisivas",
+      "você inicia reuniões sem um roteiro claro de margem e concessão",
+      "existe espaço para fortalecer seu plano antes de sentar à mesa",
+    ],
+    actions: [
+      "estruturar um checklist de preparação em três blocos: objetivo, limites e alternativas",
+      "definir previamente BATNA, âncora e critério de concessão para cada proposta",
+      "entrar em cada negociação com cenário A, B e C para não decidir sob pressão",
+    ],
+  },
+  {
+    key: "pressao",
+    label: "controle sob pressão",
+    indexes: [1, 3],
+    insights: [
+      "a pressão da contraparte ainda muda seu ritmo de decisão",
+      "o momento de objeção intensa ainda desorganiza sua condução",
+      "em cenários tensos você acaba acelerando concessões importantes",
+    ],
+    actions: [
+      "usar pausas táticas, perguntas de precisão e silêncio estratégico antes de responder",
+      "treinar frases de reposicionamento para manter firmeza sem elevar o tom",
+      "responder objeções com estrutura: reconhecer, investigar e redirecionar",
+    ],
+  },
+  {
+    key: "valor",
+    label: "defesa de valor",
+    indexes: [2, 6],
+    insights: [
+      "seu valor ainda não está sendo defendido com consistência",
+      "você comunica preço antes de consolidar percepção de valor",
+      "há sinais de desconto prematuro quando a conversa aperta",
+    ],
+    actions: [
+      "apresentar valor em camadas antes de discutir preço final",
+      "amarrar cada proposta a ganho financeiro ou operacional mensurável",
+      "usar concessões condicionais para evitar cortes unilaterais",
+    ],
+  },
+  {
+    key: "presenca",
+    label: "presença de liderança",
+    indexes: [4, 5, 7],
+    insights: [
+      "sua postura ainda oscila quando enfrenta interlocutores mais duros",
+      "há potencial para elevar autoridade sem perder conexão humana",
+      "você já tem base técnica, mas precisa impor mais direção na conversa",
+    ],
+    actions: [
+      "conduzir abertura e fechamento com frases de comando objetivas",
+      "trabalhar respiração, ritmo de fala e enquadramento da reunião",
+      "encerrar cada rodada com próximos passos e compromisso explícito",
+    ],
+  },
+] as const;
+
+function buildAdaptiveDiagnostic(params: {
+  name: string;
+  totalScore: number;
+  answers: number[];
+  openResponse: string;
+  seed: number;
+}): AIDiagnostic {
+  const identitySeed = `${params.name}|${params.openResponse}|${params.answers.join("")}|${params.seed}`
+    .split("")
+    .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+
+  const pick = (items: readonly string[], offset: number) => items[(identitySeed + offset) % items.length];
+
+  const categories: DiagnosticCategory[] = categoryRules.map((rule, index) => {
+    const score =
+      rule.indexes.reduce((sum, i) => sum + (params.answers[i] || 0), 0) / Math.max(rule.indexes.length, 1);
+
+    return {
+      key: rule.key,
+      label: rule.label,
+      score,
+      insight: pick(rule.insights, index + 2),
+      action: pick(rule.actions, index + 11),
+    };
+  });
+
+  const weakest = [...categories].sort((a, b) => a.score - b.score).slice(0, 2);
+  const strongest = [...categories].sort((a, b) => b.score - a.score)[0];
+
+  const profileOpeners =
+    params.totalScore <= 11
+      ? [
+          "Pelo seu padrão de respostas, hoje você negocia com muita intuição e pouca estrutura.",
+          "Seu diagnóstico mostra que você está em uma fase de reconstrução da base negocial.",
+          "As respostas indicam que você tem potencial, mas está operando sem método consistente.",
+        ]
+      : params.totalScore <= 18
+        ? [
+            "Seu resultado mostra um perfil reativo, com boa leitura de cenário, mas baixa sustentação tática.",
+            "Existe consciência do problema, porém ainda falta consistência na execução em momentos críticos.",
+            "Você já percebe onde perde dinheiro, mas ainda reage mais do que conduz.",
+          ]
+        : params.totalScore <= 25
+          ? [
+              "Seu diagnóstico revela uma base sólida e potencial real para avançar de nível.",
+              "Você já tem repertório, mas ainda precisa de regularidade para transformar técnica em resultado recorrente.",
+              "As respostas mostram evolução clara e margem para refinamento estratégico.",
+            ]
+          : [
+              "Seu resultado mostra um perfil avançado, com sinais claros de domínio tático.",
+              "Você já opera acima da média e está em fase de refinamento para negociações maiores.",
+              "As respostas apontam maturidade negocial e abertura para ajustes de alta performance.",
+            ];
+
+  const openResponseSummary = params.openResponse.trim().length > 12
+    ? `No seu relato final, ficou evidente um senso de urgência real para corrigir esse padrão.`
+    : "Mesmo com resposta aberta curta, seu padrão de decisão já trouxe sinais suficientes para um plano objetivo.";
+
+  const observation = `${pick(profileOpeners, 19)} Hoje, o principal gargalo está em ${weakest[0].label}, onde ${weakest[0].insight}. Também aparece um segundo ponto em ${weakest[1].label}, que reforça esse mesmo cenário. ${openResponseSummary}`;
+
+  const perspective = `O que eu vejo em você é capacidade de evolução rápida, desde que exista método e repetição guiada. Seu melhor ativo agora está em ${strongest.label}, e isso precisa ser usado como alavanca para recuperar margem nas próximas negociações. Se ajustar os dois pontos críticos, sua curva de resultado muda em semanas e não em anos.`;
+
+  const recommendation = `Meu caminho recomendado é direto: nos próximos 30 dias, foque em ${weakest[0].action}. Em paralelo, execute ${weakest[1].action} para estabilizar seu posicionamento nas conversas de maior valor. Com esse plano, você sai do improviso e passa a conduzir negociações com controle, previsibilidade e lucro.`;
+
+  return { observation, perspective, recommendation };
+}
 
 const QuizFlow = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -159,6 +297,7 @@ const QuizFlow = () => {
   const [aiDiagnostic, setAiDiagnostic] = useState<AIDiagnostic | null>(null);
   const [isLoadingAI, setIsLoadingAI] = useState(false);
   const [loadingStepIndex, setLoadingStepIndex] = useState(0);
+  const [emailCopyNotice, setEmailCopyNotice] = useState<"idle" | "sent" | "pending">("idle");
 
   // Loading step animation
   useEffect(() => {
@@ -234,6 +373,7 @@ const QuizFlow = () => {
     setLeadData({ name: "", email: "", phone: "", countryCode: "+55" });
     setErrors({});
     setAiDiagnostic(null);
+    setEmailCopyNotice("idle");
   };
 
   const handlePhoneChange = (value: string) => {
@@ -268,59 +408,57 @@ const QuizFlow = () => {
     setIsLoadingAI(true);
     setShowLeadForm(false);
     setShowResult(true);
+    setEmailCopyNotice("pending");
 
     const totalScore = answers.reduce((a, b) => a + b, 0);
     const profile = getProfileMeta(totalScore);
+    const generatedDiagnostic = buildAdaptiveDiagnostic({
+      name: result.data.name,
+      totalScore,
+      answers,
+      openResponse,
+      seed: Date.now(),
+    });
 
-    // Save lead
+    setAiDiagnostic(generatedDiagnostic);
+
+    let insertedLead: Record<string, unknown> | null = null;
+
     try {
-      await supabase.from("quiz_leads").insert({
-        name: result.data.name,
-        email: result.data.email,
-        phone: result.data.phone,
-        country_code: result.data.countryCode,
-        total_score: totalScore,
-        diagnostic_title: profile.title,
-        open_response: openResponse,
-      });
-    } catch { /* silent */ }
+      const { data } = await supabase
+        .from("quiz_leads")
+        .insert([
+          {
+            name: result.data.name,
+            email: result.data.email,
+            phone: result.data.phone,
+            country_code: result.data.countryCode,
+            total_score: totalScore,
+            diagnostic_title: profile.title,
+            open_response: openResponse,
+            ai_diagnostic: generatedDiagnostic as unknown as Record<string, string>,
+          },
+        ])
+        .select("id, name, email, phone, country_code, total_score, diagnostic_title, created_at, open_response, ai_diagnostic")
+        .single();
 
-    // Call AI
-    try {
-      const questionsWithAnswers = questions.map((q, i) => ({
-        question: q.question,
-        answer: q.options.find(o => o.score === answers[i])?.text || "",
-      }));
-
-      const { data: aiData, error: aiError } = await supabase.functions.invoke("quiz-diagnostic", {
-        body: {
-          name: result.data.name,
-          answers: questionsWithAnswers,
-          openResponse,
-          totalScore,
-          profileTitle: profile.title,
-        },
-      });
-
-      if (!aiError && aiData?.diagnostic) {
-        setAiDiagnostic(aiData.diagnostic);
-        try {
-          const { data: leads } = await supabase
-            .from("quiz_leads")
-            .select("id")
-            .eq("email", result.data.email)
-            .order("created_at", { ascending: false })
-            .limit(1);
-          if (leads?.[0]) {
-            await supabase.from("quiz_leads").update({ ai_diagnostic: aiData.diagnostic }).eq("id", leads[0].id);
-          }
-        } catch { /* silent */ }
-      } else {
-        console.warn("AI diagnostic unavailable, using static fallback");
-      }
-    } catch (err) {
-      console.warn("AI diagnostic failed, using static fallback:", err);
+      insertedLead = data ? { ...data, ai_diagnostic: generatedDiagnostic } : null;
+    } catch {
+      insertedLead = null;
     }
+
+    if (insertedLead) {
+      try {
+        const { error: notifyError } = await supabase.functions.invoke("notify-new-lead", {
+          body: { record: insertedLead, send_lead_copy: true },
+        });
+        setEmailCopyNotice(notifyError ? "pending" : "sent");
+      } catch {
+        setEmailCopyNotice("pending");
+      }
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 1800));
 
     setIsSubmitting(false);
     setIsLoadingAI(false);
@@ -341,35 +479,22 @@ const QuizFlow = () => {
 
   const codigoWhatsappUrl = `https://wa.me/5546999238882?text=${encodeURIComponent("Olá! Fiz o diagnóstico de negociação e quero saber mais sobre o Código da Negociação.")}`;
 
-  const getStaticDiagnostic = (): AIDiagnostic => {
-    if (totalScore <= 11) return {
-      observation: `Acabei de analisar suas respostas e o que eu vejo é claro: você está negociando no escuro. Sem preparo, sem método, sem controle do processo. Isso não é falta de inteligência, é falta de sistema.`,
-      perspective: `O que mais me chama atenção é que você está deixando dinheiro na mesa em cada conversa sem perceber. Cada "sim" rápido demais, cada preço que você não defende, é lucro que vai embora. E o pior: você nem sabe quanto está perdendo.`,
-      recommendation: `Você precisa de uma base sólida antes de qualquer coisa. O Código da Negociação pode revelar exatamente onde estão os gaps e qual o caminho mais curto para você parar de perder dinheiro em negociações.`,
-    };
-    if (totalScore <= 18) return {
-      observation: `Analisei cada uma das suas respostas e o padrão é claro: você reage em vez de conduzir. Quando pressionado, cede. Quando desafiado, hesita. O resultado são acordos que parecem bons na hora, mas te custam caro depois.`,
-      perspective: `O interessante é que você já tem noção de que algo está errado. Já sabe que poderia fazer melhor. O que te falta não é vontade, é estrutura. Você precisa de técnica para sair da reação e entrar no controle da conversa.`,
-      recommendation: `Esse é o momento exato para dar o próximo passo. O Código da Negociação vai te mostrar como sair do modo reativo e começar a conduzir negociações com método, segurança e resultados reais.`,
-    };
-    if (totalScore <= 25) return {
-      observation: `Suas respostas mostram algo interessante: você já entende que negociar é uma habilidade, não um talento. Tem alguma base, sabe se posicionar em alguns momentos, mas falta consistência nos resultados.`,
-      perspective: `Você está naquele ponto em que tem potencial para dar um salto real, mas precisa de método. Nos momentos decisivos, a insegurança ainda aparece. E é justamente aí que o dinheiro grande se perde.`,
-      recommendation: `Você está pronto para o próximo nível. O Código da Negociação vai te dar clareza sobre o que ajustar no seu processo de negociação para fechar acordos melhores com mais frequência.`,
-    };
-    return {
-      observation: `Suas respostas revelam um negociador que já tem domínio. Você sabe conduzir, posicionar e fechar. Tem método e consciência do que está fazendo à mesa.`,
-      perspective: `O que eu vejo em negociadores do seu nível é que o próximo salto não vem de mais técnica, vem de refinamento estratégico. Maestria em negociações complexas, múltiplas partes, alto valor.`,
-      recommendation: `Para quem já está nesse patamar, o diferencial é acompanhamento de elite. O Código da Negociação oferece exatamente isso: método avançado e acesso direto para resultados que poucos alcançam.`,
-    };
-  };
+  const diagnostic =
+    aiDiagnostic ||
+    buildAdaptiveDiagnostic({
+      name: leadData.name || "Você",
+      totalScore,
+      answers,
+      openResponse,
+      seed: 77,
+    });
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border/30">
         <div className="max-w-lg mx-auto px-5 py-4 flex items-center justify-center">
-          <IvoLogo size="md" />
+          <IvoLogo size="lg" />
         </div>
       </div>
 
@@ -392,7 +517,7 @@ const QuizFlow = () => {
       )}
 
       {/* Persistent diagnostic title during quiz */}
-      {!showResult && !showLeadForm && (
+      {!showResult && (
         <div className="max-w-lg mx-auto px-5 pt-5">
           <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-gold/60 mb-1">
             {DIAGNOSTIC_TITLE}
@@ -405,7 +530,7 @@ const QuizFlow = () => {
 
       {/* Content area */}
       <div className="flex-1 flex items-center justify-center px-5 py-8">
-        <AnimatePresence mode="wait">
+        <div>
           {/* Multiple choice questions */}
           {!showResult && !showLeadForm && !showOpenQuestion && (
             <motion.div
@@ -615,18 +740,15 @@ const QuizFlow = () => {
                     transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                     className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-gold/20 border-t-gold mx-auto mb-8"
                   />
-                  <AnimatePresence mode="wait">
-                    <motion.p
-                      key={loadingStepIndex}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.3 }}
-                      className="text-sm text-foreground/70 font-medium"
-                    >
-                      {loadingSteps[loadingStepIndex]}
-                    </motion.p>
-                  </AnimatePresence>
+                  <motion.p
+                    key={loadingStepIndex}
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-sm text-foreground/70 font-medium"
+                  >
+                    {loadingSteps[loadingStepIndex]}
+                  </motion.p>
                   <div className="flex justify-center gap-1.5 mt-6">
                     {loadingSteps.map((_, i) => (
                       <div
@@ -642,14 +764,17 @@ const QuizFlow = () => {
                 <>
                   {/* Profile header with score prominent */}
                   <div className="text-center mb-8">
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.96 }}
+                      animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.1 }}
-                      className="text-xs text-muted-foreground mb-3"
+                      className="mx-auto mb-4 flex h-28 w-28 items-center justify-center rounded-full border border-gold/40 bg-gold/10 shadow-gold"
                     >
-                      Pontuação: {totalScore} de 32
-                    </motion.p>
+                      <div>
+                        <p className="font-copperplate text-3xl leading-none text-gradient-gold">{totalScore}</p>
+                        <p className="text-[11px] text-muted-foreground">de 32</p>
+                      </div>
+                    </motion.div>
 
                     <motion.h2
                       initial={{ opacity: 0, y: 8 }}
@@ -662,51 +787,46 @@ const QuizFlow = () => {
                   </div>
 
                   {/* Diagnostic cards */}
-                  {(() => {
-                    const diagnostic = aiDiagnostic || getStaticDiagnostic();
-                    return (
-                      <div className="space-y-4 mb-8">
-                        <motion.div
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.3 }}
-                          className="bg-card border border-border/50 rounded-lg p-5"
-                        >
-                          <div className="flex items-center gap-2 mb-3">
-                            <Eye className="h-4 w-4 text-gold" />
-                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70 font-copperplate">O que eu percebi sobre você</p>
-                          </div>
-                          <p className="text-sm text-foreground/80 leading-relaxed">{diagnostic.observation}</p>
-                        </motion.div>
+                  <div className="space-y-4 mb-8">
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="bg-card border border-border/50 rounded-lg p-5"
+                    >
+                      <div className="flex items-center gap-2 mb-3">
+                        <Eye className="h-4 w-4 text-gold" />
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70 font-copperplate">O que eu percebi sobre você</p>
+                      </div>
+                      <p className="text-sm text-foreground/80 leading-relaxed">{diagnostic.observation}</p>
+                    </motion.div>
 
-                        <motion.div
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.4 }}
-                          className="bg-card border border-gold/20 rounded-lg p-5"
-                        >
-                          <div className="flex items-center gap-2 mb-3">
-                            <Lightbulb className="h-4 w-4 text-gold" />
-                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70 font-copperplate">Minha análise da sua situação</p>
-                          </div>
-                          <p className="text-sm text-foreground/80 leading-relaxed">{diagnostic.perspective}</p>
-                        </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                      className="bg-card border border-gold/20 rounded-lg p-5"
+                    >
+                      <div className="flex items-center gap-2 mb-3">
+                        <Lightbulb className="h-4 w-4 text-gold" />
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70 font-copperplate">Minha análise da sua situação</p>
+                      </div>
+                      <p className="text-sm text-foreground/80 leading-relaxed">{diagnostic.perspective}</p>
+                    </motion.div>
 
-                        <motion.div
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.5 }}
-                          className="bg-card border border-border/50 rounded-lg p-5"
-                        >
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="bg-card border border-border/50 rounded-lg p-5"
+                    >
                           <div className="flex items-center gap-2 mb-3">
                             <Route className="h-4 w-4 text-gold" />
                             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70 font-copperplate">O caminho que eu recomendo</p>
                           </div>
                           <p className="text-sm text-foreground/80 leading-relaxed">{diagnostic.recommendation}</p>
                         </motion.div>
-                      </div>
-                    );
-                  })()}
+                  </div>
 
                   {/* Primary CTA: Conheça o Código da Negociação */}
                   <motion.div
@@ -736,6 +856,14 @@ const QuizFlow = () => {
                     Falar com especialista
                     <ArrowRight className="h-4 w-4" />
                   </motion.a>
+
+                  {emailCopyNotice !== "idle" && (
+                    <p className="text-[11px] text-center text-muted-foreground mb-6">
+                      {emailCopyNotice === "sent"
+                        ? "Uma cópia do seu diagnóstico foi enviada para seu e-mail."
+                        : "Seu diagnóstico está salvo e a cópia por e-mail será entregue em instantes."}
+                    </p>
+                  )}
 
                   {/* Soft CTA for Código da Negociação */}
                   <motion.div
@@ -767,7 +895,7 @@ const QuizFlow = () => {
               )}
             </motion.div>
           )}
-        </AnimatePresence>
+        </div>
       </div>
 
       {/* Footer */}
