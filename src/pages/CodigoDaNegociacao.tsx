@@ -143,7 +143,7 @@ const CodigoDaNegociacao = () => {
       <section className="relative min-h-[75vh] md:min-h-[85vh]">
         <div className="fixed top-0 left-0 right-0 h-[75vh] md:h-[85vh] z-0">
           <div className="absolute inset-0 bg-background" />
-          <img src={ivoHero} alt="Ivo Brasil" className="absolute inset-0 w-full h-full object-cover object-[center_18%] opacity-40" />
+          <img src={ivoHero} alt="Ivo Brasil" className="absolute inset-0 w-full h-full object-cover object-[center_4%] md:object-[center_8%] opacity-40" />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent md:via-background/60" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50" />
         </div>
