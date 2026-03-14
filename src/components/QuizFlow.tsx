@@ -543,7 +543,7 @@ const QuizFlow = () => {
 
       {/* Content area */}
       <div className="flex-1 flex items-center justify-center px-5 py-8">
-        <AnimatePresence mode="wait">
+        <div>
           {/* Multiple choice questions */}
           {!showResult && !showLeadForm && !showOpenQuestion && (
             <motion.div
