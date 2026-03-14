@@ -46,6 +46,15 @@ const benefits = [
   "Suporte direto do time do Ivo",
 ];
 
+const targetAudience = [
+  { yes: true, text: "Empresários que negociam contratos e parcerias" },
+  { yes: true, text: "Vendedores B2B e B2C que querem fechar mais" },
+  { yes: true, text: "Líderes que precisam negociar com equipes e fornecedores" },
+  { yes: true, text: "Advogados e gestores em negociações complexas" },
+  { yes: false, text: "Quem busca fórmula mágica sem esforço" },
+  { yes: false, text: "Quem não pretende aplicar o método em situações reais" },
+];
+
 const faqs = [
   { q: "Para quem é o Código da Negociação?", a: "Para empresários, líderes comerciais, executivos, vendedores (B2B, B2C), advogados, gestores e qualquer profissional que precisa negociar melhor para faturar mais." },
   { q: "Preciso ter experiência em negociação?", a: "Não. O programa começa do zero e vai até estratégias avançadas. Serve tanto para iniciantes quanto para quem já negocia e quer subir de nível." },
