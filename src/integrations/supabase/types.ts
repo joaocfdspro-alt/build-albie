@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      codigo_leads: {
+        Row: {
+          country_code: string
+          created_at: string
+          email: string
+          id: string
+          name: string
+          phone: string
+          source: string | null
+        }
+        Insert: {
+          country_code?: string
+          created_at?: string
+          email: string
+          id?: string
+          name: string
+          phone: string
+          source?: string | null
+        }
+        Update: {
+          country_code?: string
+          created_at?: string
+          email?: string
+          id?: string
+          name?: string
+          phone?: string
+          source?: string | null
+        }
+        Relationships: []
+      }
       immersion_waitlist: {
         Row: {
           created_at: string
@@ -61,6 +91,7 @@ export type Database = {
       }
       quiz_leads: {
         Row: {
+          ai_diagnostic: Json | null
           archived_at: string | null
           country_code: string
           created_at: string
@@ -68,10 +99,12 @@ export type Database = {
           email: string
           id: string
           name: string
+          open_response: string | null
           phone: string
           total_score: number
         }
         Insert: {
+          ai_diagnostic?: Json | null
           archived_at?: string | null
           country_code?: string
           created_at?: string
@@ -79,10 +112,12 @@ export type Database = {
           email: string
           id?: string
           name: string
+          open_response?: string | null
           phone: string
           total_score: number
         }
         Update: {
+          ai_diagnostic?: Json | null
           archived_at?: string | null
           country_code?: string
           created_at?: string
@@ -90,6 +125,7 @@ export type Database = {
           email?: string
           id?: string
           name?: string
+          open_response?: string | null
           phone?: string
           total_score?: number
         }
