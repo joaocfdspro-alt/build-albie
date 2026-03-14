@@ -280,7 +280,8 @@ export const MapaContent = () => {
             <p className="font-bold text-foreground">Links de checkout:</p>
             <p className="text-muted-foreground">
               Código da Negociação →{" "}
-              <span className="text-foreground break-all">A definir</span>
+              <span className="text-foreground break-all">checkout4.xgrow.com/pt/2ad70720...</span>
+            </p>
             </p>
             <p className="text-muted-foreground">
               O Negociador →{" "}
