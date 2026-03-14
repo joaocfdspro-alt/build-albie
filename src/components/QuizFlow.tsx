@@ -857,6 +857,14 @@ const QuizFlow = () => {
                     <ArrowRight className="h-4 w-4" />
                   </motion.a>
 
+                  {emailCopyNotice !== "idle" && (
+                    <p className="text-[11px] text-center text-muted-foreground mb-6">
+                      {emailCopyNotice === "sent"
+                        ? "Uma cópia do seu diagnóstico foi enviada para seu e-mail."
+                        : "Seu diagnóstico está salvo e a cópia por e-mail será entregue em instantes."}
+                    </p>
+                  )}
+
                   {/* Soft CTA for Código da Negociação */}
                   <motion.div
                     initial={{ opacity: 0, y: 8 }}
