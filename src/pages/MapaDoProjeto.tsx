@@ -103,9 +103,9 @@ const sections: Section[] = [
       "Página de vendas do programa principal de 90 dias para se tornar um negociador estratégico. R$997. Contém hero, módulos, depoimentos, FAQ e botões de compra.",
     items: [
       {
-        label: "Link de checkout",
-        url: "#",
-        why: "Link de pagamento do programa Código da Negociação. Ao clicar em qualquer botão de compra, a pessoa vai direto para o checkout. (Link a definir pelo Ivo)",
+        label: "Link de checkout (Xgrow)",
+        url: "https://checkout4.xgrow.com/pt/2ad70720-887e-4cc1-b2db-2854a18e029f/MTAyOTY1",
+        why: "Link de pagamento do programa Código da Negociação na plataforma Xgrow. Ao clicar em qualquer botão de compra, a pessoa preenche nome, e-mail e telefone e vai direto para o checkout.",
       },
       {
         label: "WhatsApp de dúvidas",
