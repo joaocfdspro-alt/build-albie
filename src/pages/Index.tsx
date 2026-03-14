@@ -18,7 +18,7 @@ const Index = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-background relative">
+    <div className="min-h-screen flex flex-col bg-background relative">
       {/* Black sides + centered column with parallax bg */}
       <div className="fixed inset-0 z-0 flex justify-center">
         <div className="relative w-full max-w-md">
