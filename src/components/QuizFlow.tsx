@@ -764,14 +764,17 @@ const QuizFlow = () => {
                 <>
                   {/* Profile header with score prominent */}
                   <div className="text-center mb-8">
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.96 }}
+                      animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.1 }}
-                      className="text-xs text-muted-foreground mb-3"
+                      className="mx-auto mb-4 flex h-28 w-28 items-center justify-center rounded-full border border-gold/40 bg-gold/10 shadow-gold"
                     >
-                      Pontuação: {totalScore} de 32
-                    </motion.p>
+                      <div>
+                        <p className="font-copperplate text-3xl leading-none text-gradient-gold">{totalScore}</p>
+                        <p className="text-[11px] text-muted-foreground">de 32</p>
+                      </div>
+                    </motion.div>
 
                     <motion.h2
                       initial={{ opacity: 0, y: 8 }}
