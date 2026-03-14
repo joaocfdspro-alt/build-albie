@@ -212,61 +212,53 @@ const AdminDashboard = () => {
     <div className={`min-h-screen bg-background ${lightMode ? "admin-light" : ""}`}>
       {showTutorial && <OnboardingTutorial onDismiss={() => setShowTutorial(false)} />}
       {/* Top bar */}
-      <header className="sticky top-0 z-50 bg-card/80 backdrop-blur-xl border-b border-border/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <IvoLogo size="sm" className="opacity-60" />
-            <div className="h-4 w-px bg-border" />
-            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Admin</span>
+      <header className="sticky top-0 z-50 bg-card/90 backdrop-blur-xl border-b border-border/40 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <IvoLogo size="sm" />
+            <div className="h-5 w-px bg-border/40" />
+            <span className="text-[11px] font-black uppercase tracking-[0.25em] text-gold/70 font-copperplate">Painel Comercial</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <HelpButton onClick={() => setShowTutorial(true)} />
             <ThemeToggle light={lightMode} onToggle={() => {
               const next = !lightMode;
               setLightMode(next);
               localStorage.setItem("admin-theme", next ? "light" : "dark");
             }} />
-            <span className="text-xs text-muted-foreground hidden sm:block">{user?.email}</span>
+            <div className="hidden sm:flex items-center gap-2 bg-secondary/50 rounded-lg px-3 py-1.5 border border-border/30">
+              <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="text-[11px] text-muted-foreground font-medium">{user?.email}</span>
+            </div>
             <button
               onClick={signOut}
-              className="h-8 px-3 rounded-lg text-xs text-muted-foreground hover:text-foreground hover:bg-secondary transition-all flex items-center gap-1.5"
+              className="h-9 px-4 rounded-lg text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-secondary/80 border border-border/30 transition-all flex items-center gap-1.5"
             >
               <LogOut className="h-3.5 w-3.5" /> Sair
             </button>
           </div>
         </div>
         {/* Tabs */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex gap-1">
-          <button
-            onClick={() => setActiveTab("leads")}
-            className={`h-9 px-4 text-xs font-semibold rounded-t-lg transition-all flex items-center gap-1.5 ${
-              activeTab === "leads"
-                ? "bg-background text-foreground border border-b-0 border-border/50"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <LayoutDashboard className="h-3.5 w-3.5" /> Leads
-          </button>
-          <button
-            onClick={() => setActiveTab("team")}
-            className={`h-9 px-4 text-xs font-semibold rounded-t-lg transition-all flex items-center gap-1.5 ${
-              activeTab === "team"
-                ? "bg-background text-foreground border border-b-0 border-border/50"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <UserCog className="h-3.5 w-3.5" /> Equipe
-          </button>
-          <button
-            onClick={() => setActiveTab("mapa")}
-            className={`h-9 px-4 text-xs font-semibold rounded-t-lg transition-all flex items-center gap-1.5 ${
-              activeTab === "mapa"
-                ? "bg-background text-foreground border border-b-0 border-border/50"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <Map className="h-3.5 w-3.5" /> Mapa
-          </button>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex gap-0.5 -mb-px">
+            {([
+              { key: "leads" as const, icon: LayoutDashboard, label: "Leads" },
+              { key: "team" as const, icon: UserCog, label: "Equipe" },
+              { key: "mapa" as const, icon: Map, label: "Mapa" },
+            ]).map(tab => (
+              <button
+                key={tab.key}
+                onClick={() => setActiveTab(tab.key)}
+                className={`h-10 px-5 text-xs font-bold rounded-t-lg transition-all flex items-center gap-2 border-b-2 ${
+                  activeTab === tab.key
+                    ? "bg-background text-gold border-gold"
+                    : "text-muted-foreground hover:text-foreground border-transparent hover:border-border/30"
+                }`}
+              >
+                <tab.icon className="h-3.5 w-3.5" /> {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
       </header>
 
