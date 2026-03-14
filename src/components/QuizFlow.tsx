@@ -436,7 +436,7 @@ const QuizFlow = () => {
             total_score: totalScore,
             diagnostic_title: profile.title,
             open_response: openResponse,
-            ai_diagnostic: generatedDiagnostic,
+            ai_diagnostic: generatedDiagnostic as unknown as Record<string, string>,
           },
         ])
         .select("id, name, email, phone, country_code, total_score, diagnostic_title, created_at, open_response, ai_diagnostic")
