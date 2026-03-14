@@ -356,7 +356,7 @@ const CodigoDaNegociacao = () => {
           </div>
         </section>
 
-        <D7Footer />
+        <D7Footer minimal />
       </div>
 
       {/* Sticky mobile CTA */}
