@@ -11,6 +11,8 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import IvoLogo from "@/components/IvoLogo";
+import D7Footer from "@/components/D7Footer";
 import { ThemeToggle } from "@/components/admin/ThemeToggle";
 import { InviteAdminPanel } from "@/components/admin/InviteAdminPanel";
 import { OnboardingTutorial, HelpButton } from "@/components/admin/OnboardingTutorial";
