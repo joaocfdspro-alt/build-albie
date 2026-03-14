@@ -823,9 +823,7 @@ const QuizFlow = () => {
                           </div>
                           <p className="text-sm text-foreground/80 leading-relaxed">{diagnostic.recommendation}</p>
                         </motion.div>
-                      </div>
-                    );
-                  })()}
+                  </div>
 
                   {/* Primary CTA: Conheça o Código da Negociação */}
                   <motion.div
