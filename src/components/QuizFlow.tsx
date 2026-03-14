@@ -373,6 +373,7 @@ const QuizFlow = () => {
     setLeadData({ name: "", email: "", phone: "", countryCode: "+55" });
     setErrors({});
     setAiDiagnostic(null);
+    setEmailCopyNotice("idle");
   };
 
   const handlePhoneChange = (value: string) => {
