@@ -204,9 +204,7 @@ const AdminDashboard = () => {
       <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-lg border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-7 w-7 rounded-lg bg-foreground flex items-center justify-center">
-              <span className="text-background text-[10px] font-black">IB</span>
-            </div>
+            <IvoLogo size="sm" variant="icon" />
             <span className="text-sm font-semibold text-foreground tracking-tight">Painel Comercial</span>
           </div>
           <div className="flex items-center gap-2">
