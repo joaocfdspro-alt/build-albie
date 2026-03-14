@@ -1,6 +1,6 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ArrowLeft, Loader2, Shield, Zap, Crown, Compass, MessageSquare, Target } from "lucide-react";
+import { ArrowRight, ArrowLeft, Loader2, Shield, MessageSquare, Target, Eye, Lightbulb, Route } from "lucide-react";
 import { z } from "zod";
 import { Link } from "react-router-dom";
 import IvoLogo from "@/components/IvoLogo";
@@ -86,50 +86,46 @@ const questions: Question[] = [
   },
 ];
 
-const OPEN_QUESTION = "O que te trouxe até aqui? O que você sente que está deixando na mesa nas suas negociações?";
+const OPEN_QUESTION = "Me conta: o que te trouxe até aqui? O que você sente que está deixando na mesa nas suas negociações?";
 
 interface DiagnosticProfile {
   title: string;
-  icon: typeof Shield;
   color: string;
+  borderColor: string;
 }
 
 function getProfileMeta(score: number): DiagnosticProfile {
-  if (score <= 11) return { title: "Negociador Intuitivo", icon: Compass, color: "text-red-400" };
-  if (score <= 18) return { title: "Negociador Reativo", icon: Zap, color: "text-amber-400" };
-  if (score <= 25) return { title: "Negociador Consciente", icon: Shield, color: "text-blue-400" };
-  return { title: "Negociador Estratégico", icon: Crown, color: "text-gold" };
+  if (score <= 11) return { title: "Negociador Intuitivo", color: "text-red-400", borderColor: "border-red-400/30" };
+  if (score <= 18) return { title: "Negociador Reativo", color: "text-amber-400", borderColor: "border-amber-400/30" };
+  if (score <= 25) return { title: "Negociador Consciente", color: "text-blue-400", borderColor: "border-blue-400/30" };
+  return { title: "Negociador Estratégico", color: "text-gold", borderColor: "border-gold/30" };
 }
 
 const leadSchema = z.object({
   name: z.string().trim().min(2, "Nome muito curto").max(100),
   email: z.string().trim().email("E-mail inválido").max(255),
-  phone: z.string().trim().min(8, "Telefone inválido").max(20),
+  phone: z.string().trim().min(8, "WhatsApp inválido").max(20),
   countryCode: z.string().trim().min(2).max(5),
 });
 
 const countryCodes = [
-  { code: "+55", label: "🇧🇷 +55", digits: 11, placeholder: "(99) 99999-9999" },
-  { code: "+1", label: "🇺🇸 +1", digits: 10, placeholder: "(555) 555-5555" },
-  { code: "+351", label: "🇵🇹 +351", digits: 9, placeholder: "912 345 678" },
-  { code: "+34", label: "🇪🇸 +34", digits: 9, placeholder: "612 345 678" },
-  { code: "+44", label: "🇬🇧 +44", digits: 10, placeholder: "7911 123456" },
-  { code: "+33", label: "🇫🇷 +33", digits: 9, placeholder: "6 12 34 56 78" },
-  { code: "+49", label: "🇩🇪 +49", digits: 11, placeholder: "151 12345678" },
-  { code: "+39", label: "🇮🇹 +39", digits: 10, placeholder: "312 345 6789" },
-  { code: "+81", label: "🇯🇵 +81", digits: 10, placeholder: "90-1234-5678" },
+  { code: "+55", label: "🇧🇷 +55", minDigits: 10, maxDigits: 11, placeholder: "(99) 99999-9999" },
+  { code: "+1", label: "🇺🇸 +1", minDigits: 10, maxDigits: 10, placeholder: "(555) 555-5555" },
+  { code: "+351", label: "🇵🇹 +351", minDigits: 9, maxDigits: 9, placeholder: "912 345 678" },
+  { code: "+34", label: "🇪🇸 +34", minDigits: 9, maxDigits: 9, placeholder: "612 345 678" },
+  { code: "+44", label: "🇬🇧 +44", minDigits: 10, maxDigits: 11, placeholder: "7911 123456" },
+  { code: "+33", label: "🇫🇷 +33", minDigits: 9, maxDigits: 9, placeholder: "6 12 34 56 78" },
+  { code: "+49", label: "🇩🇪 +49", minDigits: 10, maxDigits: 11, placeholder: "151 12345678" },
+  { code: "+39", label: "🇮🇹 +39", minDigits: 9, maxDigits: 10, placeholder: "312 345 6789" },
+  { code: "+81", label: "🇯🇵 +81", minDigits: 10, maxDigits: 11, placeholder: "90-1234-5678" },
 ];
 
 function getPhoneDigitCount(phone: string): number {
   return phone.replace(/\D/g, "").length;
 }
 
-function getExpectedDigits(countryCode: string): number {
-  return countryCodes.find(c => c.code === countryCode)?.digits || 9;
-}
-
-function getPlaceholder(countryCode: string): string {
-  return countryCodes.find(c => c.code === countryCode)?.placeholder || "Seu telefone";
+function getCountryConfig(countryCode: string) {
+  return countryCodes.find(c => c.code === countryCode) || { minDigits: 8, maxDigits: 11, placeholder: "Seu WhatsApp" };
 }
 
 interface AIDiagnostic {
@@ -137,6 +133,13 @@ interface AIDiagnostic {
   perspective: string;
   recommendation: string;
 }
+
+const loadingSteps = [
+  "Analisando suas respostas...",
+  "Cruzando padrões de negociação...",
+  "Identificando pontos de melhoria...",
+  "Gerando seu diagnóstico personalizado...",
+];
 
 const QuizFlow = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -152,10 +155,20 @@ const QuizFlow = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [aiDiagnostic, setAiDiagnostic] = useState<AIDiagnostic | null>(null);
   const [isLoadingAI, setIsLoadingAI] = useState(false);
+  const [loadingStepIndex, setLoadingStepIndex] = useState(0);
 
-  // After question 7 (index 6), show open question
-  // After open question, show question 8 (index 7)
-  // After question 8, show lead form
+  // Loading step animation
+  useEffect(() => {
+    if (!isLoadingAI) {
+      setLoadingStepIndex(0);
+      return;
+    }
+    const interval = setInterval(() => {
+      setLoadingStepIndex(prev => (prev < loadingSteps.length - 1 ? prev + 1 : prev));
+    }, 2200);
+    return () => clearInterval(interval);
+  }, [isLoadingAI]);
+
   const handleAnswer = (score: number, index: number) => {
     if (isTransitioning) return;
     setSelectedIndex(index);
@@ -164,7 +177,6 @@ const QuizFlow = () => {
     setTimeout(() => {
       setAnswers(newAnswers);
       if (currentQuestion === 6) {
-        // After question 7, show open question
         setShowOpenQuestion(true);
       } else if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
@@ -191,13 +203,11 @@ const QuizFlow = () => {
 
     if (showOpenQuestion) {
       setShowOpenQuestion(false);
-      // Don't pop answer, just go back to question 7
       setTimeout(() => setIsTransitioning(false), 200);
       return;
     }
 
     if (currentQuestion === 7 && !showOpenQuestion) {
-      // Going back from question 8 to open question
       setCurrentQuestion(6);
       setShowOpenQuestion(true);
       setAnswers(answers.slice(0, -1));
@@ -223,9 +233,20 @@ const QuizFlow = () => {
     setAiDiagnostic(null);
   };
 
+  const handlePhoneChange = (value: string) => {
+    // Only allow digits, spaces, parens, dashes
+    const cleaned = value.replace(/[^\d\s()\-]/g, "");
+    const digitsOnly = cleaned.replace(/\D/g, "");
+    const config = getCountryConfig(leadData.countryCode);
+    
+    // Limit digits to max allowed for the country
+    if (digitsOnly.length > config.maxDigits) return;
+    
+    setLeadData({ ...leadData, phone: cleaned });
+  };
+
   const handleLeadSubmit = useCallback(async () => {
-    // Validate phone digits
-    const expectedDigits = getExpectedDigits(leadData.countryCode);
+    const config = getCountryConfig(leadData.countryCode);
     const actualDigits = getPhoneDigitCount(leadData.phone);
 
     const result = leadSchema.safeParse(leadData);
@@ -238,19 +259,21 @@ const QuizFlow = () => {
       return;
     }
 
-    if (actualDigits < expectedDigits - 1 || actualDigits > expectedDigits + 1) {
-      setErrors({ phone: `Telefone deve ter ${expectedDigits} dígitos para ${leadData.countryCode}` });
+    if (actualDigits < config.minDigits || actualDigits > config.maxDigits) {
+      setErrors({ phone: `WhatsApp deve ter entre ${config.minDigits} e ${config.maxDigits} dígitos para ${leadData.countryCode}` });
       return;
     }
 
     setErrors({});
     setIsSubmitting(true);
     setIsLoadingAI(true);
+    setShowLeadForm(false);
+    setShowResult(true);
 
     const totalScore = answers.reduce((a, b) => a + b, 0);
     const profile = getProfileMeta(totalScore);
 
-    // Save lead to database
+    // Save lead
     try {
       await supabase.from("quiz_leads").insert({
         name: result.data.name,
@@ -261,11 +284,9 @@ const QuizFlow = () => {
         diagnostic_title: profile.title,
         open_response: openResponse,
       });
-    } catch {
-      // Don't block the result
-    }
+    } catch { /* silent */ }
 
-    // Call AI for personalized diagnostic
+    // Call AI
     try {
       const questionsWithAnswers = questions.map((q, i) => ({
         question: q.question,
@@ -304,26 +325,46 @@ const QuizFlow = () => {
 
     setIsSubmitting(false);
     setIsLoadingAI(false);
-    setShowLeadForm(false);
-    setShowResult(true);
   }, [leadData, answers, openResponse]);
 
   const totalScore = answers.reduce((a, b) => a + b, 0);
   const profile = getProfileMeta(totalScore);
-  const ProfileIcon = profile.icon;
 
-  const totalSteps = questions.length + 1; // +1 for open question
+  const totalSteps = questions.length + 1;
   const currentStep = showLeadForm
     ? totalSteps + 1
     : showOpenQuestion
       ? 8
       : currentQuestion < 7
         ? currentQuestion + 1
-        : currentQuestion + 2; // account for open question
+        : currentQuestion + 2;
   const progress = showLeadForm ? 100 : (currentStep / totalSteps) * 100;
 
   const whatsappUrl = `https://wa.me/5546999238882?text=${encodeURIComponent(`Olá! Fiz o diagnóstico de negociação e quero garantir minha sessão estratégica. Meu perfil: ${profile.title}.`)}`;
   const codigoWhatsappUrl = `https://wa.me/5546999238882?text=${encodeURIComponent("Olá! Quero saber mais sobre o Código da Negociação.")}`;
+
+  const getStaticDiagnostic = (): AIDiagnostic => {
+    if (totalScore <= 11) return {
+      observation: `Acabei de analisar suas respostas e o que eu vejo é claro: você está negociando no escuro. Sem preparo, sem método, sem controle do processo. Isso não é falta de inteligência, é falta de sistema.`,
+      perspective: `O que mais me chama atenção é que você está deixando dinheiro na mesa em cada conversa sem perceber. Cada "sim" rápido demais, cada preço que você não defende, é lucro que vai embora. E o pior: você nem sabe quanto está perdendo.`,
+      recommendation: `Você precisa de uma base sólida antes de qualquer coisa. Uma sessão estratégica comigo pode revelar exatamente onde estão os gaps e qual o caminho mais curto para você parar de perder dinheiro em negociações.`,
+    };
+    if (totalScore <= 18) return {
+      observation: `Analisei cada uma das suas respostas e o padrão é claro: você reage em vez de conduzir. Quando pressionado, cede. Quando desafiado, hesita. O resultado são acordos que parecem bons na hora, mas te custam caro depois.`,
+      perspective: `O interessante é que você já tem noção de que algo está errado. Já sabe que poderia fazer melhor. O que te falta não é vontade, é estrutura. Você precisa de técnica para sair da reação e entrar no controle da conversa.`,
+      recommendation: `Esse é o momento exato para dar o próximo passo. Uma sessão estratégica vai te mostrar como sair do modo reativo e começar a conduzir negociações com método, segurança e resultados reais.`,
+    };
+    if (totalScore <= 25) return {
+      observation: `Suas respostas mostram algo interessante: você já entende que negociar é uma habilidade, não um talento. Tem alguma base, sabe se posicionar em alguns momentos, mas falta consistência nos resultados.`,
+      perspective: `Você está naquele ponto em que tem potencial para dar um salto real, mas precisa de método. Nos momentos decisivos, a insegurança ainda aparece. E é justamente aí que o dinheiro grande se perde.`,
+      recommendation: `Você está pronto para o próximo nível. Uma sessão estratégica vai te dar clareza sobre o que ajustar no seu processo de negociação para fechar acordos melhores com mais frequência.`,
+    };
+    return {
+      observation: `Suas respostas revelam um negociador que já tem domínio. Você sabe conduzir, posicionar e fechar. Tem método e consciência do que está fazendo à mesa.`,
+      perspective: `O que eu vejo em negociadores do seu nível é que o próximo salto não vem de mais técnica, vem de refinamento estratégico. Maestria em negociações complexas, múltiplas partes, alto valor.`,
+      recommendation: `Para quem já está nesse patamar, o diferencial é mentoria individualizada. Uma sessão estratégica comigo pode ser o catalisador para resultados que poucos alcançam.`,
+    };
+  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -339,7 +380,7 @@ const QuizFlow = () => {
         <div className="w-full max-w-lg mx-auto px-5 pt-6">
           <div className="flex items-center justify-between mb-2">
             <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70">
-              {showLeadForm ? "Último passo" : showOpenQuestion ? "Sua vez de falar" : `${currentQuestion + 1} de ${questions.length}`}
+              {showLeadForm ? "Último passo" : showOpenQuestion ? "Reflexão pessoal" : `${currentQuestion + 1} de ${questions.length}`}
             </span>
           </div>
           <div className="h-1 w-full bg-secondary rounded-full overflow-hidden">
@@ -520,7 +561,7 @@ const QuizFlow = () => {
                   {errors.email && <p className="text-xs text-destructive mt-1">{errors.email}</p>}
                 </div>
                 <div>
-                  <label className="text-xs font-semibold text-foreground/70 mb-1.5 block">Seu telefone</label>
+                  <label className="text-xs font-semibold text-foreground/70 mb-1.5 block">Seu WhatsApp</label>
                   <div className="flex gap-2">
                     <select
                       value={leadData.countryCode}
@@ -534,13 +575,9 @@ const QuizFlow = () => {
                     <input
                       type="tel"
                       value={leadData.phone}
-                      onChange={(e) => {
-                        const val = e.target.value.replace(/[^\d\s()\-]/g, "");
-                        setLeadData({ ...leadData, phone: val });
-                      }}
-                      placeholder={getPlaceholder(leadData.countryCode)}
+                      onChange={(e) => handlePhoneChange(e.target.value)}
+                      placeholder={getCountryConfig(leadData.countryCode).placeholder}
                       className="flex-1 h-12 rounded-lg bg-card border border-border/50 px-4 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all"
-                      maxLength={20}
                     />
                   </div>
                   {errors.phone && <p className="text-xs text-destructive mt-1">{errors.phone}</p>}
@@ -578,141 +615,169 @@ const QuizFlow = () => {
               transition={{ duration: 0.3 }}
               className="w-full max-w-lg"
             >
-              {/* Profile header */}
-              <div className="text-center mb-8">
-                <motion.div
-                  initial={{ scale: 0.5, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  transition={{ delay: 0.1, type: "spring", stiffness: 250, damping: 20 }}
-                  className="flex items-center justify-center mb-4"
-                >
-                  <div className={`flex h-16 w-16 items-center justify-center rounded-xl bg-card border border-gold/20 shadow-gold ${profile.color}`}>
-                    <ProfileIcon className="h-8 w-8" />
-                  </div>
-                </motion.div>
-
-                <motion.h2
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="font-copperplate text-2xl font-bold text-gradient-gold mb-1 uppercase tracking-wide"
-                >
-                  {profile.title}
-                </motion.h2>
-                <motion.p
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                  className="text-xs text-muted-foreground"
-                >
-                  Pontuação: {totalScore}/32
-                </motion.p>
-              </div>
-
-              {/* AI Diagnostic or fallback */}
+              {/* Loading state */}
               {isLoadingAI ? (
-                <div className="text-center py-12">
-                  <Loader2 className="h-8 w-8 animate-spin text-gold mx-auto mb-4" />
-                  <p className="text-sm text-muted-foreground">Analisando suas respostas...</p>
-                </div>
-              ) : aiDiagnostic ? (
-                <div className="space-y-4 mb-8">
+                <div className="text-center py-16">
                   <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="bg-card border border-border/50 rounded-lg p-5"
-                  >
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70 mb-2">O que eu percebi sobre você</p>
-                    <p className="text-sm text-foreground/80 leading-relaxed">{aiDiagnostic.observation}</p>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4 }}
-                    className="bg-card border border-gold/20 rounded-lg p-5 glow-gold"
-                  >
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70 mb-2">O que eu penso sobre a sua situação</p>
-                    <p className="text-sm text-foreground/80 leading-relaxed">{aiDiagnostic.perspective}</p>
-                  </motion.div>
-
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 }}
-                    className="bg-card border border-border/50 rounded-lg p-5"
-                  >
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70 mb-2">O caminho que eu recomendo</p>
-                    <p className="text-sm text-foreground/80 leading-relaxed">{aiDiagnostic.recommendation}</p>
-                  </motion.div>
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                    className="flex h-16 w-16 items-center justify-center rounded-full border-2 border-gold/20 border-t-gold mx-auto mb-8"
+                  />
+                  <AnimatePresence mode="wait">
+                    <motion.p
+                      key={loadingStepIndex}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.3 }}
+                      className="text-sm text-foreground/70 font-medium"
+                    >
+                      {loadingSteps[loadingStepIndex]}
+                    </motion.p>
+                  </AnimatePresence>
+                  <div className="flex justify-center gap-1.5 mt-6">
+                    {loadingSteps.map((_, i) => (
+                      <div
+                        key={i}
+                        className={`h-1.5 w-1.5 rounded-full transition-colors duration-300 ${
+                          i <= loadingStepIndex ? "bg-gold" : "bg-secondary"
+                        }`}
+                      />
+                    ))}
+                  </div>
                 </div>
               ) : (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="bg-card border border-gold/20 rounded-lg p-6 mb-8 glow-gold"
-                >
-                  <p className="text-sm text-foreground leading-relaxed">
-                    {totalScore <= 11 && "Você negocia no instinto, sem preparo, sem método, sem controle. Isso significa que está deixando dinheiro na mesa em cada conversa. Não é falta de inteligência, é falta de sistema. Uma conversa estratégica pode revelar exatamente onde você está perdendo e como reverter isso."}
-                    {totalScore > 11 && totalScore <= 18 && "Você reage em vez de conduzir. Quando pressionado, cede. Quando desafiado, hesita. O resultado são acordos que parecem bons, mas te custam caro. Você precisa de estrutura e técnica para sair da reação e entrar no controle."}
-                    {totalScore > 18 && totalScore <= 25 && "Você já sabe que negociar é uma habilidade. Tem alguma base, mas falta método, consistência e a frieza necessária nos momentos decisivos. Está no ponto exato para dar um salto real."}
-                    {totalScore > 25 && "Você já tem domínio. Sabe conduzir, posicionar e fechar. Mas quer mais: maestria, resultados que poucos alcançam. Uma mentoria pode ser o catalisador para o seu próximo nível."}
-                  </p>
-                </motion.div>
-              )}
+                <>
+                  {/* Profile header */}
+                  <div className="text-center mb-8">
+                    <motion.div
+                      initial={{ scale: 0.5, opacity: 0 }}
+                      animate={{ scale: 1, opacity: 1 }}
+                      transition={{ delay: 0.1, type: "spring", stiffness: 250, damping: 20 }}
+                      className="flex items-center justify-center mb-4"
+                    >
+                      <div className={`flex h-16 w-16 items-center justify-center rounded-full ${profile.borderColor} border-2 bg-card shadow-gold`}>
+                        <span className="font-copperplate text-2xl font-bold text-gradient-gold">{totalScore}</span>
+                      </div>
+                    </motion.div>
 
-              {/* CTA: Garantir sessão estratégica */}
-              <motion.a
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-4 rounded-lg bg-gradient-gold-deep text-primary-foreground font-bold text-sm shadow-gold-intense hover:opacity-90 active:scale-[0.98] transition-all duration-200 mb-6"
-              >
-                <Target className="h-5 w-5" />
-                Garantir minha sessão estratégica
-              </motion.a>
+                    <motion.h2
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                      className="font-copperplate text-2xl font-bold text-gradient-gold mb-1 uppercase tracking-wide"
+                    >
+                      {profile.title}
+                    </motion.h2>
+                    <motion.p
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.3 }}
+                      className="text-xs text-muted-foreground"
+                    >
+                      Pontuação: {totalScore}/32
+                    </motion.p>
+                  </div>
 
-              {/* Soft CTA for Código da Negociação */}
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 }}
-                className="bg-card border border-border/50 rounded-lg p-5 mb-6"
-              >
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold/60 mb-2">Próximo nível</p>
-                <p className="text-sm text-foreground/80 leading-relaxed mb-4">
-                  O Código da Negociação é um programa de 90 dias que transforma a forma como você negocia. 
-                  Método comprovado, técnicas de elite e acompanhamento direto do Ivo Brasil.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <a
-                    href={codigoWhatsappUrl}
+                  {/* Diagnostic cards - AI or fallback */}
+                  {(() => {
+                    const diagnostic = aiDiagnostic || getStaticDiagnostic();
+                    return (
+                      <div className="space-y-4 mb-8">
+                        <motion.div
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.3 }}
+                          className="bg-card border border-border/50 rounded-lg p-5"
+                        >
+                          <div className="flex items-center gap-2 mb-3">
+                            <Eye className="h-4 w-4 text-gold" />
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70">O que eu percebi sobre você</p>
+                          </div>
+                          <p className="text-sm text-foreground/80 leading-relaxed">{diagnostic.observation}</p>
+                        </motion.div>
+
+                        <motion.div
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.4 }}
+                          className="bg-card border border-gold/20 rounded-lg p-5"
+                        >
+                          <div className="flex items-center gap-2 mb-3">
+                            <Lightbulb className="h-4 w-4 text-gold" />
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70">Minha análise da sua situação</p>
+                          </div>
+                          <p className="text-sm text-foreground/80 leading-relaxed">{diagnostic.perspective}</p>
+                        </motion.div>
+
+                        <motion.div
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.5 }}
+                          className="bg-card border border-border/50 rounded-lg p-5"
+                        >
+                          <div className="flex items-center gap-2 mb-3">
+                            <Route className="h-4 w-4 text-gold" />
+                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70">O caminho que eu recomendo</p>
+                          </div>
+                          <p className="text-sm text-foreground/80 leading-relaxed">{diagnostic.recommendation}</p>
+                        </motion.div>
+                      </div>
+                    );
+                  })()}
+
+                  {/* CTA: Garantir sessão estratégica */}
+                  <motion.a
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 }}
+                    href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border border-gold/30 text-gold text-xs font-bold hover:bg-gold/5 transition-colors"
+                    className="flex items-center justify-center gap-2 w-full py-4 rounded-lg bg-gradient-gold-deep text-primary-foreground font-bold text-sm shadow-gold-intense hover:opacity-90 active:scale-[0.98] transition-all duration-200 mb-6"
                   >
-                    Quero saber mais
-                    <ArrowRight className="h-3 w-3" />
-                  </a>
-                  <Link
-                    to="/codigo-da-negociacao"
-                    className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border border-border/50 text-foreground/70 text-xs font-semibold hover:bg-card/80 transition-colors"
-                  >
-                    Ver programa completo
-                  </Link>
-                </div>
-              </motion.div>
+                    <Target className="h-5 w-5" />
+                    Garantir minha sessão estratégica
+                  </motion.a>
 
-              <div className="text-center">
-                <button onClick={restart} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
-                  Refazer o diagnóstico
-                </button>
-              </div>
+                  {/* Soft CTA for Código da Negociação */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 }}
+                    className="bg-card border border-border/50 rounded-lg p-5 mb-6"
+                  >
+                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold/60 mb-2 font-copperplate">Próximo nível</p>
+                    <p className="text-sm text-foreground/80 leading-relaxed mb-4">
+                      O Código da Negociação é um programa de 90 dias que transforma a forma como você negocia. 
+                      Método comprovado, técnicas de elite e acompanhamento direto de quem já conduziu mais de 22 bilhões de reais em negociações.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-2">
+                      <a
+                        href={codigoWhatsappUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border border-gold/30 text-gold text-xs font-bold hover:bg-gold/5 transition-colors"
+                      >
+                        Quero saber mais
+                        <ArrowRight className="h-3 w-3" />
+                      </a>
+                      <Link
+                        to="/codigo-da-negociacao"
+                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg border border-border/50 text-foreground/70 text-xs font-semibold hover:bg-card/80 transition-colors"
+                      >
+                        Ver programa completo
+                      </Link>
+                    </div>
+                  </motion.div>
+
+                  <div className="text-center">
+                    <button onClick={restart} className="text-xs text-muted-foreground hover:text-foreground transition-colors">
+                      Refazer o diagnóstico
+                    </button>
+                  </div>
+                </>
+              )}
             </motion.div>
           )}
         </AnimatePresence>

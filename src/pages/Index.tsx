@@ -19,20 +19,20 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background relative">
-      {/* Fixed parallax background */}
+      {/* Fixed parallax background - centered like portrait */}
       <div className="fixed inset-0 z-0">
         <img
           src={ivoHero}
           alt="Ivo Brasil"
-          className="w-full h-full object-cover object-[center_15%]"
+          className="w-full h-full object-cover object-[center_20%] md:object-[center_25%]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/30" />
       </div>
 
       <div className="relative z-10 w-full max-w-md mx-auto">
         {/* Hero section - transparent so parallax shows */}
-        <div className="relative h-[65vh] min-h-[450px] max-h-[580px]">
-          <div className="absolute inset-0 bg-gradient-hero" />
+        <div className="relative h-[60vh] min-h-[420px] max-h-[540px]">
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
 
           {/* Content overlay */}
           <div className="relative z-10 h-full flex flex-col justify-end">
