@@ -517,7 +517,7 @@ const QuizFlow = () => {
       )}
 
       {/* Persistent diagnostic title during quiz */}
-      {!showResult && !showLeadForm && (
+      {!showResult && (
         <div className="max-w-lg mx-auto px-5 pt-5">
           <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-gold/60 mb-1">
             {DIAGNOSTIC_TITLE}
