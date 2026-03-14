@@ -625,18 +625,20 @@ const StatCard = ({
   <motion.div
     initial={{ opacity: 0, y: 8 }}
     animate={{ opacity: 1, y: 0 }}
-    className={`rounded-xl border p-4 ${accent ? "border-gold/30 bg-gold/5" : "border-border/50 bg-card"}`}
+    className={`rounded-xl border p-5 transition-all hover:shadow-md ${accent ? "border-gold/30 bg-gradient-to-br from-gold/[0.08] to-transparent" : "border-border/50 bg-card hover:border-border"}`}
   >
-    <div className="flex items-center justify-between mb-1">
-      <div className="flex items-center gap-2 min-w-0">
-        <Icon className={`h-4 w-4 shrink-0 ${accent ? "text-gold" : "text-muted-foreground"}`} />
-        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground truncate">{label}</span>
+    <div className="flex items-center justify-between mb-2">
+      <div className="flex items-center gap-2.5 min-w-0">
+        <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${accent ? "bg-gold/15" : "bg-secondary"}`}>
+          <Icon className={`h-4 w-4 ${accent ? "text-gold" : "text-muted-foreground"}`} />
+        </div>
+        <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground truncate">{label}</span>
       </div>
       {hint && (
         <Popover>
           <PopoverTrigger asChild>
             <button className="shrink-0 ml-1">
-              <Info className="h-3.5 w-3.5 text-muted-foreground/40" />
+              <Info className="h-3.5 w-3.5 text-muted-foreground/40 hover:text-muted-foreground transition-colors" />
             </button>
           </PopoverTrigger>
           <PopoverContent side="bottom" align="end" className="w-52 p-3">
@@ -645,7 +647,7 @@ const StatCard = ({
         </Popover>
       )}
     </div>
-    <p className={`font-black ${small ? "text-sm leading-tight" : "text-2xl"} ${accent ? "text-gold" : "text-foreground"}`}>
+    <p className={`font-black ${small ? "text-base leading-tight" : "text-3xl"} ${accent ? "text-gradient-gold" : "text-foreground"}`}>
       {value}
     </p>
   </motion.div>
