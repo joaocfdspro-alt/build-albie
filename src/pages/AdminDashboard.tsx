@@ -491,7 +491,7 @@ const AdminDashboard = () => {
         <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6"><MapaContent /></main>
       )}
 
-      <D7Footer />
+      <D7Footer minimal />
 
       <AlertDialog open={!!deleteConfirmId} onOpenChange={(open) => { if (!open) setDeleteConfirmId(null); }}>
         <AlertDialogContent>

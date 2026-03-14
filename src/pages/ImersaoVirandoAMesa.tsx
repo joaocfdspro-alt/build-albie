@@ -171,7 +171,7 @@ const ImersaoVirandoAMesa = () => {
         )}
       </div>
 
-      <D7Footer />
+      <D7Footer minimal />
     </div>
   );
 };

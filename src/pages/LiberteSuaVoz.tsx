@@ -543,7 +543,7 @@ const LiberteSuaVoz = () => {
         <MessageCircle className="h-6 w-6" />
       </a>
 
-      <D7Footer />
+      <D7Footer minimal />
       </div>{/* end solid bg wrapper */}
     </div>
   );
