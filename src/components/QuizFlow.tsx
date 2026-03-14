@@ -784,42 +784,39 @@ const QuizFlow = () => {
                   </div>
 
                   {/* Diagnostic cards */}
-                  {(() => {
-                    const diagnostic = aiDiagnostic || getStaticDiagnostic();
-                    return (
-                      <div className="space-y-4 mb-8">
-                        <motion.div
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.3 }}
-                          className="bg-card border border-border/50 rounded-lg p-5"
-                        >
-                          <div className="flex items-center gap-2 mb-3">
-                            <Eye className="h-4 w-4 text-gold" />
-                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70 font-copperplate">O que eu percebi sobre você</p>
-                          </div>
-                          <p className="text-sm text-foreground/80 leading-relaxed">{diagnostic.observation}</p>
-                        </motion.div>
+                  <div className="space-y-4 mb-8">
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="bg-card border border-border/50 rounded-lg p-5"
+                    >
+                      <div className="flex items-center gap-2 mb-3">
+                        <Eye className="h-4 w-4 text-gold" />
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70 font-copperplate">O que eu percebi sobre você</p>
+                      </div>
+                      <p className="text-sm text-foreground/80 leading-relaxed">{diagnostic.observation}</p>
+                    </motion.div>
 
-                        <motion.div
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.4 }}
-                          className="bg-card border border-gold/20 rounded-lg p-5"
-                        >
-                          <div className="flex items-center gap-2 mb-3">
-                            <Lightbulb className="h-4 w-4 text-gold" />
-                            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70 font-copperplate">Minha análise da sua situação</p>
-                          </div>
-                          <p className="text-sm text-foreground/80 leading-relaxed">{diagnostic.perspective}</p>
-                        </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                      className="bg-card border border-gold/20 rounded-lg p-5"
+                    >
+                      <div className="flex items-center gap-2 mb-3">
+                        <Lightbulb className="h-4 w-4 text-gold" />
+                        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70 font-copperplate">Minha análise da sua situação</p>
+                      </div>
+                      <p className="text-sm text-foreground/80 leading-relaxed">{diagnostic.perspective}</p>
+                    </motion.div>
 
-                        <motion.div
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: 0.5 }}
-                          className="bg-card border border-border/50 rounded-lg p-5"
-                        >
+                    <motion.div
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="bg-card border border-border/50 rounded-lg p-5"
+                    >
                           <div className="flex items-center gap-2 mb-3">
                             <Route className="h-4 w-4 text-gold" />
                             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold/70 font-copperplate">O caminho que eu recomendo</p>
