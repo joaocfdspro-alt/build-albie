@@ -3,11 +3,11 @@ import { motion } from "framer-motion";
 
 interface DiagnosticChartProps { leads: { diagnostic_title: string }[]; }
 
-const DIAGNOSTIC_COLORS: Record<string, { bar: string; text: string; bg: string }> = {
-  "Negociador Intuitivo": { bar: "bg-red-500", text: "text-red-400", bg: "bg-red-500/10" },
-  "Negociador Reativo": { bar: "bg-amber-500", text: "text-amber-400", bg: "bg-amber-500/10" },
-  "Negociador Consciente": { bar: "bg-blue-500", text: "text-blue-400", bg: "bg-blue-500/10" },
-  "Negociador Estratégico": { bar: "bg-emerald-500", text: "text-emerald-400", bg: "bg-emerald-500/10" },
+const DIAGNOSTIC_COLORS: Record<string, { bar: string; text: string }> = {
+  "Negociador Intuitivo": { bar: "bg-red-500", text: "text-red-600 dark:text-red-400" },
+  "Negociador Reativo": { bar: "bg-amber-500", text: "text-amber-600 dark:text-amber-400" },
+  "Negociador Consciente": { bar: "bg-blue-500", text: "text-blue-600 dark:text-blue-400" },
+  "Negociador Estratégico": { bar: "bg-emerald-500", text: "text-emerald-600 dark:text-emerald-400" },
 };
 
 export function DiagnosticChart({ leads }: DiagnosticChartProps) {
@@ -22,25 +22,30 @@ export function DiagnosticChart({ leads }: DiagnosticChartProps) {
   if (data.length === 0) return null;
 
   return (
-    <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="rounded-xl border border-border/50 bg-card p-5">
+    <div className="rounded-lg border border-border bg-card p-5">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Distribuição de Perfis</h3>
-        <span className="text-[10px] text-muted-foreground">{leads.length} leads</span>
+        <h3 className="text-xs font-semibold text-foreground">Distribuição de Perfis</h3>
+        <span className="text-[11px] text-muted-foreground">{leads.length} leads</span>
       </div>
       <div className="space-y-3">
         {data.map((item, i) => {
-          const colors = DIAGNOSTIC_COLORS[item.label] || { bar: "bg-muted", text: "text-foreground", bg: "bg-muted/10" };
+          const colors = DIAGNOSTIC_COLORS[item.label] || { bar: "bg-muted-foreground", text: "text-foreground" };
           return (
-            <motion.div key={item.label} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.08 }}>
-              <div className="flex items-center justify-between mb-1.5">
-                <span className={`text-xs font-semibold ${colors.text}`}>{item.label}</span>
-                <div className="flex items-center gap-2"><span className="text-xs font-bold text-foreground">{item.count}</span><span className={`text-[10px] font-bold px-1.5 py-0.5 rounded ${colors.bg} ${colors.text}`}>{item.percent}%</span></div>
+            <motion.div key={item.label} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.06 }}>
+              <div className="flex items-center justify-between mb-1">
+                <span className={`text-xs font-medium ${colors.text}`}>{item.label}</span>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs font-semibold text-foreground">{item.count}</span>
+                  <span className="text-[10px] text-muted-foreground">{item.percent}%</span>
+                </div>
               </div>
-              <div className="h-2 rounded-full bg-secondary overflow-hidden"><motion.div className={`h-full rounded-full ${colors.bar}`} initial={{ width: 0 }} animate={{ width: `${item.percent}%` }} transition={{ duration: 0.6, delay: i * 0.08, ease: "easeOut" }} /></div>
+              <div className="h-2 rounded-full bg-secondary overflow-hidden">
+                <motion.div className={`h-full rounded-full ${colors.bar}`} initial={{ width: 0 }} animate={{ width: `${item.percent}%` }} transition={{ duration: 0.5, delay: i * 0.06, ease: "easeOut" }} />
+              </div>
             </motion.div>
           );
         })}
       </div>
-    </motion.div>
+    </div>
   );
 }
