@@ -63,8 +63,8 @@ const sections: Section[] = [
       },
       {
         label: "WhatsApp",
-        url: "https://api.whatsapp.com/send/?phone=5527992936922&text&type=phone_number&app_absent=0",
-        why: "Link direto para conversa no WhatsApp com o número (27) 99293-6922. Aparece nos botões de CTA e no rodapé.",
+        url: "https://wa.me/5546999238882",
+        why: "Link direto para conversa no WhatsApp com o número (46) 99923-8882. Aparece nos botões de CTA e no rodapé.",
       },
     ],
   },
