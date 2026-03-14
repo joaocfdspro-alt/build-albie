@@ -291,10 +291,10 @@ export const MapaContent = () => {
           <div className="space-y-2">
             <p className="font-bold text-foreground">WhatsApp:</p>
             <p className="text-muted-foreground">
-              Número: <span className="text-foreground">(27) 99293-6922</span>
+              Número: <span className="text-foreground">(46) 99923-8882</span>
             </p>
             <p className="text-muted-foreground">
-              Link: <span className="text-foreground break-all">api.whatsapp.com/send/?phone=5527992936922</span>
+              Link: <span className="text-foreground break-all">wa.me/5546999238882</span>
             </p>
           </div>
           <div className="space-y-2">
