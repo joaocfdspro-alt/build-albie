@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Download, ExternalLink, Info, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import D7Footer from "@/components/D7Footer";
 
 const siteUrl = "https://ivobrasil.com.br";
 const mapaUrl = `${siteUrl}/mapa`;
