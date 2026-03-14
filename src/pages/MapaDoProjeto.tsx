@@ -109,8 +109,8 @@ const sections: Section[] = [
       },
       {
         label: "WhatsApp de dúvidas",
-        url: "https://api.whatsapp.com/send/?phone=5527992936922&text&type=phone_number&app_absent=0",
-        why: "Botão que abre conversa no WhatsApp com o número (27) 99293-6922 para tirar dúvidas antes de comprar.",
+        url: "https://wa.me/5546999238882?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20C%C3%B3digo%20da%20Negocia%C3%A7%C3%A3o.",
+        why: "Botão que abre conversa no WhatsApp com o número (46) 99923-8882 para tirar dúvidas antes de comprar.",
       },
     ],
   },
