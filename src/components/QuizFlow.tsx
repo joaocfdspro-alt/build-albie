@@ -905,7 +905,7 @@ const QuizFlow = () => {
               )}
             </motion.div>
           )}
-        </AnimatePresence>
+        </div>
       </div>
 
       {/* Footer */}
