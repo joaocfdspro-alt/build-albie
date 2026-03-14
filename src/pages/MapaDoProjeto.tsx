@@ -282,7 +282,6 @@ export const MapaContent = () => {
               Código da Negociação →{" "}
               <span className="text-foreground break-all">checkout4.xgrow.com/pt/2ad70720...</span>
             </p>
-            </p>
             <p className="text-muted-foreground">
               O Negociador →{" "}
               <span className="text-foreground break-all">ivobrasil.com.br/onegociador/</span>
