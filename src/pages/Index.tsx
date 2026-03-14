@@ -19,20 +19,34 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background relative">
-      {/* Fixed parallax background - centered like portrait */}
-      <div className="fixed inset-0 z-0">
-        <img
-          src={ivoHero}
-          alt="Ivo Brasil"
-          className="w-full h-full object-cover object-[center_20%] md:object-[center_25%]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/30" />
+      {/* Black sides + centered column with parallax bg */}
+      <div className="fixed inset-0 z-0 flex justify-center">
+        <div className="relative w-full max-w-md">
+          <img
+            src={ivoHero}
+            alt="Ivo Brasil"
+            className="w-full h-full object-cover object-[center_15%] blur-[1px] scale-105"
+          />
+          {/* Side fades to black */}
+          <div className="absolute inset-y-0 -left-4 w-16 bg-gradient-to-r from-background to-transparent" />
+          <div className="absolute inset-y-0 -right-4 w-16 bg-gradient-to-l from-background to-transparent" />
+          {/* Bottom fade */}
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background/20" />
+          {/* Subtle gold tint on edges */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[hsl(38_36%_62%/0.04)] via-transparent to-transparent" />
+        </div>
+      </div>
+
+      {/* Ensure black on the sides outside center column */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute inset-y-0 left-0 w-[calc(50%-224px)] bg-background" />
+        <div className="absolute inset-y-0 right-0 w-[calc(50%-224px)] bg-background" />
       </div>
 
       <div className="relative z-10 w-full max-w-md mx-auto">
         {/* Hero section - transparent so parallax shows */}
-        <div className="relative h-[60vh] min-h-[420px] max-h-[540px]">
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+        <div className="relative h-[65vh] min-h-[460px] max-h-[580px]">
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
 
           {/* Content overlay */}
           <div className="relative z-10 h-full flex flex-col justify-end">
@@ -43,7 +57,7 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="absolute top-6 left-0 right-0 flex justify-center"
             >
-              <IvoLogo size="lg" />
+              <IvoLogo size="xl" />
             </motion.div>
 
             {/* Hero text */}
