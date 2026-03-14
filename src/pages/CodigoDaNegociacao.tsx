@@ -259,8 +259,11 @@ const CodigoDaNegociacao = () => {
                     </div>
                   </div>
                   <div className="text-center md:text-left">
-                    <p className="font-copperplate text-3xl md:text-4xl font-bold text-gradient-gold mb-1">R$ 997,00</p>
-                    <p className="text-sm text-muted-foreground mb-6">Pagamento único ou parcele no cartão</p>
+                    <div className="border border-border/60 rounded-md p-5 mb-6 bg-background/40">
+                      <p className="font-copperplate text-3xl md:text-4xl font-bold text-gradient-gold mb-2">R$ 997,00</p>
+                      <p className="text-lg font-bold text-foreground">À vista ou 10x de R$ 116,42</p>
+                      <p className="text-sm text-muted-foreground mt-2">Crédito · PIX · Múltiplos cartões</p>
+                    </div>
                     <CtaButton className="w-full md:w-auto" onClick={handleCtaClick} />
                     <p className="text-[11px] text-muted-foreground mt-3">Garantia incondicional de 7 dias</p>
                   </div>
