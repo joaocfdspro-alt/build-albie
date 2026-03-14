@@ -319,7 +319,7 @@ const MapaDoProjeto = () => {
   const handlePrint = () => window.print();
 
   return (
-    <div className={`min-h-screen bg-background ${lightMode ? "admin-light" : ""} print:admin-light`}>
+    <div className={`min-h-screen flex flex-col bg-background ${lightMode ? "admin-light" : ""} print:admin-light`}>
       {/* Nav */}
       <nav className="border-b border-border/50 bg-background/80 backdrop-blur-md sticky top-0 z-50 print:hidden">
         <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -347,9 +347,11 @@ const MapaDoProjeto = () => {
         </div>
       </nav>
 
-      <main className="max-w-4xl mx-auto px-6 py-10 print:py-6 print:px-4">
+      <main className="max-w-4xl mx-auto px-6 py-10 print:py-6 print:px-4 flex-1">
         <MapaContent />
       </main>
+
+      <D7Footer minimal />
     </div>
   );
 };

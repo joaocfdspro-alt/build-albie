@@ -470,7 +470,7 @@ const SuaPrimeiraPalestra = () => {
           </div>
         </section>
 
-        <D7Footer />
+        <D7Footer minimal />
       </div>
 
       {/* WhatsApp Float */}
