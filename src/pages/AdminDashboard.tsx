@@ -197,7 +197,7 @@ const AdminDashboard = () => {
   const diagnosticOptions = [...new Set(leads.map(l => l.diagnostic_title))];
 
   return (
-    <div className={`min-h-screen bg-background ${lightMode ? "admin-light" : ""}`}>
+    <div className={`min-h-screen flex flex-col bg-background ${lightMode ? "admin-light" : ""}`}>
       {showTutorial && <OnboardingTutorial onDismiss={() => setShowTutorial(false)} />}
 
       {/* Header */}
