@@ -455,6 +455,9 @@ const AdminDashboard = () => {
                             score={lead.total_score}
                             diagnostic={lead.diagnostic_title}
                             onClose={() => setExpandedLead(null)}
+                            phone={lead.phone}
+                            countryCode={lead.country_code}
+                            openResponse={lead.open_response}
                             mobile
                           />
                         </div>
