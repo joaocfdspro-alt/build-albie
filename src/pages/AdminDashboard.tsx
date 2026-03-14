@@ -316,6 +316,16 @@ const AdminDashboard = () => {
                 <option key={d} value={d}>{d}</option>
               ))}
             </select>
+            <select
+              value={dateFilter}
+              onChange={(e) => setDateFilter(e.target.value as "all" | "today" | "7d" | "30d")}
+              className="h-9 rounded-lg bg-secondary border border-border/50 px-3 text-xs text-foreground focus:outline-none focus:border-gold/40 transition-all appearance-none cursor-pointer"
+            >
+              <option value="all">Todo período</option>
+              <option value="today">Hoje</option>
+              <option value="7d">Últimos 7 dias</option>
+              <option value="30d">Últimos 30 dias</option>
+            </select>
           </div>
           <div className="flex items-center gap-2">
             {showArchived ? (
