@@ -67,6 +67,7 @@ const AdminDashboard = () => {
   const [expandedLead, setExpandedLead] = useState<string | null>(null);
   const [showArchived, setShowArchived] = useState(false);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [dateFilter, setDateFilter] = useState<"all" | "today" | "7d" | "30d">("all");
   useEffect(() => {
     if (!authLoading && (!user || !isAdmin)) {
       navigate("/admin/login");
