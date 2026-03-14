@@ -138,11 +138,149 @@ const loadingSteps = [
   "Analisando suas respostas...",
   "Cruzando padrões de negociação...",
   "Identificando pontos de melhoria...",
-  "Gerando seu diagnóstico personalizado...",
+  "Consolidando seu plano de ação...",
 ];
 
 const DIAGNOSTIC_TITLE = "Diagnóstico Executivo Exclusivo";
 const DIAGNOSTIC_SUBTITLE = "8 perguntas estratégicas para revelar onde você está perdendo dinheiro";
+
+interface DiagnosticCategory {
+  key: string;
+  label: string;
+  score: number;
+  insight: string;
+  action: string;
+}
+
+const categoryRules = [
+  {
+    key: "preparacao",
+    label: "preparo estratégico",
+    indexes: [0],
+    insights: [
+      "falta uma rotina de preparo antes das conversas decisivas",
+      "você inicia reuniões sem um roteiro claro de margem e concessão",
+      "existe espaço para fortalecer seu plano antes de sentar à mesa",
+    ],
+    actions: [
+      "estruturar um checklist de preparação em três blocos: objetivo, limites e alternativas",
+      "definir previamente BATNA, âncora e critério de concessão para cada proposta",
+      "entrar em cada negociação com cenário A, B e C para não decidir sob pressão",
+    ],
+  },
+  {
+    key: "pressao",
+    label: "controle sob pressão",
+    indexes: [1, 3],
+    insights: [
+      "a pressão da contraparte ainda muda seu ritmo de decisão",
+      "o momento de objeção intensa ainda desorganiza sua condução",
+      "em cenários tensos você acaba acelerando concessões importantes",
+    ],
+    actions: [
+      "usar pausas táticas, perguntas de precisão e silêncio estratégico antes de responder",
+      "treinar frases de reposicionamento para manter firmeza sem elevar o tom",
+      "responder objeções com estrutura: reconhecer, investigar e redirecionar",
+    ],
+  },
+  {
+    key: "valor",
+    label: "defesa de valor",
+    indexes: [2, 6],
+    insights: [
+      "seu valor ainda não está sendo defendido com consistência",
+      "você comunica preço antes de consolidar percepção de valor",
+      "há sinais de desconto prematuro quando a conversa aperta",
+    ],
+    actions: [
+      "apresentar valor em camadas antes de discutir preço final",
+      "amarrar cada proposta a ganho financeiro ou operacional mensurável",
+      "usar concessões condicionais para evitar cortes unilaterais",
+    ],
+  },
+  {
+    key: "presenca",
+    label: "presença de liderança",
+    indexes: [4, 5, 7],
+    insights: [
+      "sua postura ainda oscila quando enfrenta interlocutores mais duros",
+      "há potencial para elevar autoridade sem perder conexão humana",
+      "você já tem base técnica, mas precisa impor mais direção na conversa",
+    ],
+    actions: [
+      "conduzir abertura e fechamento com frases de comando objetivas",
+      "trabalhar respiração, ritmo de fala e enquadramento da reunião",
+      "encerrar cada rodada com próximos passos e compromisso explícito",
+    ],
+  },
+] as const;
+
+function buildAdaptiveDiagnostic(params: {
+  name: string;
+  totalScore: number;
+  answers: number[];
+  openResponse: string;
+  seed: number;
+}): AIDiagnostic {
+  const identitySeed = `${params.name}|${params.openResponse}|${params.answers.join("")}|${params.seed}`
+    .split("")
+    .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+
+  const pick = (items: readonly string[], offset: number) => items[(identitySeed + offset) % items.length];
+
+  const categories: DiagnosticCategory[] = categoryRules.map((rule, index) => {
+    const score =
+      rule.indexes.reduce((sum, i) => sum + (params.answers[i] || 0), 0) / Math.max(rule.indexes.length, 1);
+
+    return {
+      key: rule.key,
+      label: rule.label,
+      score,
+      insight: pick(rule.insights, index + 2),
+      action: pick(rule.actions, index + 11),
+    };
+  });
+
+  const weakest = [...categories].sort((a, b) => a.score - b.score).slice(0, 2);
+  const strongest = [...categories].sort((a, b) => b.score - a.score)[0];
+
+  const profileOpeners =
+    params.totalScore <= 11
+      ? [
+          "Pelo seu padrão de respostas, hoje você negocia com muita intuição e pouca estrutura.",
+          "Seu diagnóstico mostra que você está em uma fase de reconstrução da base negocial.",
+          "As respostas indicam que você tem potencial, mas está operando sem método consistente.",
+        ]
+      : params.totalScore <= 18
+        ? [
+            "Seu resultado mostra um perfil reativo, com boa leitura de cenário, mas baixa sustentação tática.",
+            "Existe consciência do problema, porém ainda falta consistência na execução em momentos críticos.",
+            "Você já percebe onde perde dinheiro, mas ainda reage mais do que conduz.",
+          ]
+        : params.totalScore <= 25
+          ? [
+              "Seu diagnóstico revela uma base sólida e potencial real para avançar de nível.",
+              "Você já tem repertório, mas ainda precisa de regularidade para transformar técnica em resultado recorrente.",
+              "As respostas mostram evolução clara e margem para refinamento estratégico.",
+            ]
+          : [
+              "Seu resultado mostra um perfil avançado, com sinais claros de domínio tático.",
+              "Você já opera acima da média e está em fase de refinamento para negociações maiores.",
+              "As respostas apontam maturidade negocial e abertura para ajustes de alta performance.",
+            ];
+
+  const openResponseSummary = params.openResponse.trim().length > 12
+    ? `No seu relato final, ficou evidente um senso de urgência real para corrigir esse padrão.`
+    : "Mesmo com resposta aberta curta, seu padrão de decisão já trouxe sinais suficientes para um plano objetivo.";
+
+  const observation = `${pick(profileOpeners, 19)} Hoje, o principal gargalo está em ${weakest[0].label}, onde ${weakest[0].insight}. Também aparece um segundo ponto em ${weakest[1].label}, que reforça esse mesmo cenário. ${openResponseSummary}`;
+
+  const perspective = `O que eu vejo em você é capacidade de evolução rápida, desde que exista método e repetição guiada. Seu melhor ativo agora está em ${strongest.label}, e isso precisa ser usado como alavanca para recuperar margem nas próximas negociações. Se ajustar os dois pontos críticos, sua curva de resultado muda em semanas e não em anos.`;
+
+  const recommendation = `Meu caminho recomendado é direto: nos próximos 30 dias, foque em ${weakest[0].action}. Em paralelo, execute ${weakest[1].action} para estabilizar seu posicionamento nas conversas de maior valor. Com esse plano, você sai do improviso e passa a conduzir negociações com controle, previsibilidade e lucro.`;
+
+  return { observation, perspective, recommendation };
+}
 
 const QuizFlow = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
