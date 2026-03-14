@@ -6,18 +6,17 @@ import {
   ChevronDown, ChevronUp, BarChart3, Clock, Loader2,
   UserPlus, Mail, Phone, Award, Calendar, ArrowUpDown,
   RefreshCw, LayoutDashboard, UserCog, Eye, Info,
-  Archive, Trash2, ArchiveRestore, MoreVertical, Map
+  Archive, Trash2, ArchiveRestore, MoreVertical, Map,
+  ExternalLink, MessageSquare
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
-import IvoLogo from "@/components/IvoLogo";
 import { ThemeToggle } from "@/components/admin/ThemeToggle";
 import { InviteAdminPanel } from "@/components/admin/InviteAdminPanel";
 import { OnboardingTutorial, HelpButton } from "@/components/admin/OnboardingTutorial";
 import { InfoPopover, ScoreInfoContent, DiagnosticInfoContent } from "@/components/admin/InfoPopovers";
 import { LeadDetailPanel } from "@/components/admin/LeadDetailPanel";
 import { DiagnosticChart } from "@/components/admin/DiagnosticChart";
-import D7Footer from "@/components/D7Footer";
 import { MapaContent } from "@/pages/MapaDoProjeto";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
@@ -45,12 +44,27 @@ interface Lead {
 type SortKey = "created_at" | "name" | "total_score" | "diagnostic_title";
 type SortDir = "asc" | "desc";
 
-const diagnosticColors: Record<string, string> = {
-  "Negociador Intuitivo": "bg-red-500/15 text-red-400 border-red-500/20",
-  "Negociador Reativo": "bg-amber-500/15 text-amber-400 border-amber-500/20",
-  "Negociador Consciente": "bg-blue-500/15 text-blue-400 border-blue-500/20",
-  "Negociador Estratégico": "bg-emerald-500/15 text-emerald-400 border-emerald-500/20",
+const diagnosticBadge: Record<string, string> = {
+  "Negociador Intuitivo": "bg-red-50 text-red-700 border-red-200 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/20",
+  "Negociador Reativo": "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20",
+  "Negociador Consciente": "bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20",
+  "Negociador Estratégico": "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20",
 };
+
+const scoreBarColor: Record<string, string> = {
+  "Negociador Intuitivo": "bg-red-500",
+  "Negociador Reativo": "bg-amber-500",
+  "Negociador Consciente": "bg-blue-500",
+  "Negociador Estratégico": "bg-emerald-500",
+};
+
+function buildWhatsAppUrl(phone: string, countryCode: string, name: string) {
+  const cleanPhone = phone.replace(/\D/g, "");
+  const cleanCode = countryCode.replace("+", "");
+  const fullNumber = `${cleanCode}${cleanPhone}`;
+  const text = encodeURIComponent(`Olá ${name}! Aqui é do time do Ivo Brasil. Vi que você fez nosso diagnóstico de negociação e gostaria de conversar sobre como podemos ajudar você a negociar melhor.`);
+  return `https://wa.me/${fullNumber}?text=${text}`;
+}
 
 const AdminDashboard = () => {
   const { user, loading: authLoading, isAdmin, signOut } = useAuth();
@@ -68,27 +82,20 @@ const AdminDashboard = () => {
   const [showArchived, setShowArchived] = useState(false);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [dateFilter, setDateFilter] = useState<"all" | "today" | "7d" | "30d">("all");
+
   useEffect(() => {
-    if (!authLoading && (!user || !isAdmin)) {
-      navigate("/admin/login");
-    }
+    if (!authLoading && (!user || !isAdmin)) navigate("/admin/login");
   }, [authLoading, user, isAdmin, navigate]);
 
   const fetchLeads = async () => {
     setLoading(true);
-    const { data } = await supabase
-      .from("quiz_leads")
-      .select("*")
-      .order("created_at", { ascending: false });
+    const { data } = await supabase.from("quiz_leads").select("*").order("created_at", { ascending: false });
     setLeads((data as Lead[]) ?? []);
     setLoading(false);
   };
 
-  useEffect(() => {
-    if (isAdmin) fetchLeads();
-  }, [isAdmin]);
+  useEffect(() => { if (isAdmin) fetchLeads(); }, [isAdmin]);
 
-  // Realtime subscription
   useEffect(() => {
     if (!isAdmin) return;
     const channel = supabase
@@ -102,27 +109,18 @@ const AdminDashboard = () => {
 
   const filtered = useMemo(() => {
     let result = leads.filter(l => showArchived ? l.archived_at !== null : l.archived_at === null);
-    // Date filter
     if (dateFilter !== "all") {
-      const now = new Date();
       const cutoff = new Date();
       if (dateFilter === "today") cutoff.setHours(0, 0, 0, 0);
-      else if (dateFilter === "7d") cutoff.setDate(now.getDate() - 7);
-      else if (dateFilter === "30d") cutoff.setDate(now.getDate() - 30);
+      else if (dateFilter === "7d") cutoff.setDate(cutoff.getDate() - 7);
+      else if (dateFilter === "30d") cutoff.setDate(cutoff.getDate() - 30);
       result = result.filter(l => new Date(l.created_at) >= cutoff);
     }
     if (search) {
       const q = search.toLowerCase();
-      result = result.filter(
-        (l) =>
-          l.name.toLowerCase().includes(q) ||
-          l.email.toLowerCase().includes(q) ||
-          l.phone.includes(q)
-      );
+      result = result.filter(l => l.name.toLowerCase().includes(q) || l.email.toLowerCase().includes(q) || l.phone.includes(q));
     }
-    if (filterDiagnostic !== "all") {
-      result = result.filter((l) => l.diagnostic_title === filterDiagnostic);
-    }
+    if (filterDiagnostic !== "all") result = result.filter(l => l.diagnostic_title === filterDiagnostic);
     result = [...result].sort((a, b) => {
       let cmp = 0;
       if (sortKey === "created_at") cmp = new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
@@ -139,16 +137,10 @@ const AdminDashboard = () => {
   const stats = useMemo(() => {
     const active = activeLeads;
     const total = active.length;
-    const today = active.filter(
-      (l) => new Date(l.created_at).toDateString() === new Date().toDateString()
-    ).length;
+    const today = active.filter(l => new Date(l.created_at).toDateString() === new Date().toDateString()).length;
     const avgScore = total ? Math.round(active.reduce((s, l) => s + l.total_score, 0) / total) : 0;
-    const byDiag = active.reduce((acc, l) => {
-      acc[l.diagnostic_title] = (acc[l.diagnostic_title] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-    const topDiag = Object.entries(byDiag).sort((a, b) => b[1] - a[1])[0];
-    return { total, today, avgScore, topDiag };
+    const hot = active.filter(l => l.total_score >= 19).length;
+    return { total, today, avgScore, hot };
   }, [activeLeads]);
 
   const archiveLead = async (id: string, e: React.MouseEvent) => {
@@ -182,16 +174,8 @@ const AdminDashboard = () => {
 
   const exportCSV = () => {
     const headers = ["Nome", "E-mail", "Telefone", "Código País", "Pontuação", "Diagnóstico", "Data"];
-    const rows = filtered.map((l) => [
-      l.name,
-      l.email,
-      l.phone,
-      l.country_code,
-      l.total_score,
-      l.diagnostic_title,
-      new Date(l.created_at).toLocaleString("pt-BR"),
-    ]);
-    const csv = [headers, ...rows].map((r) => r.map((v) => `"${v}"`).join(",")).join("\n");
+    const rows = filtered.map(l => [l.name, l.email, l.phone, l.country_code, l.total_score, l.diagnostic_title, new Date(l.created_at).toLocaleString("pt-BR")]);
+    const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(",")).join("\n");
     const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
@@ -201,72 +185,58 @@ const AdminDashboard = () => {
     URL.revokeObjectURL(url);
   };
 
-  const formatDate = (d: string) => {
-    const date = new Date(d);
-    return date.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
-  };
-
-  const formatTime = (d: string) => {
-    return new Date(d).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
-  };
+  const formatDate = (d: string) => new Date(d).toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
+  const formatTime = (d: string) => new Date(d).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
 
   if (authLoading || (!isAdmin && user)) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <Loader2 className="h-6 w-6 animate-spin text-gold" />
-      </div>
-    );
+    return <div className="min-h-screen bg-background flex items-center justify-center"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>;
   }
 
-  const diagnosticOptions = [...new Set(leads.map((l) => l.diagnostic_title))];
+  const diagnosticOptions = [...new Set(leads.map(l => l.diagnostic_title))];
 
   return (
     <div className={`min-h-screen bg-background ${lightMode ? "admin-light" : ""}`}>
       {showTutorial && <OnboardingTutorial onDismiss={() => setShowTutorial(false)} />}
-      {/* Top bar */}
-      <header className="sticky top-0 z-50 bg-card/90 backdrop-blur-xl border-b border-border/40 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <IvoLogo size="sm" />
-            <div className="h-5 w-px bg-border/40" />
-            <span className="text-[11px] font-black uppercase tracking-[0.25em] text-gold/70 font-copperplate">Painel Comercial</span>
-          </div>
+
+      {/* Header */}
+      <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-lg border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
           <div className="flex items-center gap-3">
+            <div className="h-7 w-7 rounded-lg bg-foreground flex items-center justify-center">
+              <span className="text-background text-[10px] font-black">IB</span>
+            </div>
+            <span className="text-sm font-semibold text-foreground tracking-tight">Painel Comercial</span>
+          </div>
+          <div className="flex items-center gap-2">
             <HelpButton onClick={() => setShowTutorial(true)} />
             <ThemeToggle light={lightMode} onToggle={() => {
               const next = !lightMode;
               setLightMode(next);
               localStorage.setItem("admin-theme", next ? "light" : "dark");
             }} />
-            <div className="hidden sm:flex items-center gap-2 bg-secondary/50 rounded-lg px-3 py-1.5 border border-border/30">
-              <div className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-[11px] text-muted-foreground font-medium">{user?.email}</span>
+            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-md bg-secondary/60 border border-border">
+              <div className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              <span className="text-[11px] text-muted-foreground">{user?.email}</span>
             </div>
-            <button
-              onClick={signOut}
-              className="h-9 px-4 rounded-lg text-xs font-semibold text-muted-foreground hover:text-foreground hover:bg-secondary/80 border border-border/30 transition-all flex items-center gap-1.5"
-            >
+            <button onClick={signOut} className="h-8 px-3 rounded-md text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary border border-border transition-colors flex items-center gap-1.5">
               <LogOut className="h-3.5 w-3.5" /> Sair
             </button>
           </div>
         </div>
         {/* Tabs */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex gap-0.5 -mb-px">
+          <div className="flex gap-0 -mb-px">
             {([
               { key: "leads" as const, icon: LayoutDashboard, label: "Leads" },
               { key: "team" as const, icon: UserCog, label: "Equipe" },
               { key: "mapa" as const, icon: Map, label: "Mapa" },
             ]).map(tab => (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                className={`h-10 px-5 text-xs font-bold rounded-t-lg transition-all flex items-center gap-2 border-b-2 ${
+              <button key={tab.key} onClick={() => setActiveTab(tab.key)}
+                className={`h-10 px-4 text-xs font-medium transition-all flex items-center gap-1.5 border-b-2 ${
                   activeTab === tab.key
-                    ? "bg-background text-gold border-gold"
-                    : "text-muted-foreground hover:text-foreground border-transparent hover:border-border/30"
-                }`}
-              >
+                    ? "text-foreground border-foreground"
+                    : "text-muted-foreground hover:text-foreground border-transparent"
+                }`}>
                 <tab.icon className="h-3.5 w-3.5" /> {tab.label}
               </button>
             ))}
@@ -275,352 +245,258 @@ const AdminDashboard = () => {
       </header>
 
       {activeTab === "leads" ? (
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-6">
-        {/* Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-          <StatCard icon={Users} label="Total de Leads" value={stats.total} hint="Pessoas que completaram o quiz" />
-          <StatCard icon={UserPlus} label="Novos Hoje" value={stats.today} accent hint="Leads captados nas últimas 24h" />
-          <StatCard icon={BarChart3} label="Score Médio" value={`${stats.avgScore}/32`} hint="Quanto maior, mais pronto pra comprar" />
-          <StatCard
-            icon={Award}
-            label="Perfil Mais Comum"
-            value={stats.topDiag ? stats.topDiag[0] : "—"}
-            small
-            hint={stats.topDiag ? `${stats.topDiag[1]} leads com esse perfil` : "Aguardando dados"}
-          />
-        </div>
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-5">
+          {/* Stats row */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+            <StatCard icon={Users} label="Total Leads" value={stats.total} />
+            <StatCard icon={UserPlus} label="Hoje" value={stats.today} accent />
+            <StatCard icon={BarChart3} label="Score Médio" value={`${stats.avgScore}/32`} />
+            <StatCard icon={TrendingUp} label="Leads Quentes" value={stats.hot} accent />
+          </div>
 
-        {/* Diagnostic Distribution Chart */}
-        <DiagnosticChart leads={activeLeads} />
+          {/* Chart */}
+          <DiagnosticChart leads={activeLeads} />
 
-        {/* Toolbar */}
-        <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
-          <div className="flex items-center gap-2 flex-1 w-full sm:w-auto">
-            <div className="relative flex-1 sm:max-w-xs">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Buscar por nome, e-mail ou telefone..."
-                className="w-full h-9 rounded-lg bg-secondary border border-border/50 pl-9 pr-3 text-xs text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/40 transition-all"
-              />
+          {/* Toolbar */}
+          <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
+            <div className="flex items-center gap-2 flex-1 w-full sm:w-auto">
+              <div className="relative flex-1 sm:max-w-xs">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+                <input type="text" value={search} onChange={(e) => setSearch(e.target.value)}
+                  placeholder="Buscar nome, e-mail ou telefone..."
+                  className="w-full h-9 rounded-md bg-card border border-border pl-9 pr-3 text-xs text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 focus:border-ring transition-all" />
+              </div>
+              <select value={filterDiagnostic} onChange={(e) => setFilterDiagnostic(e.target.value)}
+                className="h-9 rounded-md bg-card border border-border px-3 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 cursor-pointer">
+                <option value="all">Todos os perfis</option>
+                {diagnosticOptions.map(d => <option key={d} value={d}>{d}</option>)}
+              </select>
+              <select value={dateFilter} onChange={(e) => setDateFilter(e.target.value as typeof dateFilter)}
+                className="h-9 rounded-md bg-card border border-border px-3 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20 cursor-pointer">
+                <option value="all">Todo período</option>
+                <option value="today">Hoje</option>
+                <option value="7d">7 dias</option>
+                <option value="30d">30 dias</option>
+              </select>
             </div>
-            <select
-              value={filterDiagnostic}
-              onChange={(e) => setFilterDiagnostic(e.target.value)}
-              className="h-9 rounded-lg bg-secondary border border-border/50 px-3 text-xs text-foreground focus:outline-none focus:border-gold/40 transition-all appearance-none cursor-pointer"
-            >
-              <option value="all">Todos os diagnósticos</option>
-              {diagnosticOptions.map((d) => (
-                <option key={d} value={d}>{d}</option>
-              ))}
-            </select>
-            <select
-              value={dateFilter}
-              onChange={(e) => setDateFilter(e.target.value as "all" | "today" | "7d" | "30d")}
-              className="h-9 rounded-lg bg-secondary border border-border/50 px-3 text-xs text-foreground focus:outline-none focus:border-gold/40 transition-all appearance-none cursor-pointer"
-            >
-              <option value="all">Todo período</option>
-              <option value="today">Hoje</option>
-              <option value="7d">Últimos 7 dias</option>
-              <option value="30d">Últimos 30 dias</option>
-            </select>
-          </div>
-          <div className="flex items-center gap-2">
-            {showArchived ? (
-              <button
-                onClick={() => setShowArchived(false)}
-                className="h-9 px-3 rounded-lg border text-xs transition-all flex items-center gap-1.5 bg-secondary border-border/50 text-foreground hover:bg-secondary/80"
-              >
-                <ArchiveRestore className="h-3.5 w-3.5" />
-                ← Voltar aos Leads Ativos
+            <div className="flex items-center gap-2">
+              <button onClick={() => setShowArchived(!showArchived)}
+                className={`h-9 px-3 rounded-md border text-xs font-medium transition-colors flex items-center gap-1.5 ${showArchived ? "bg-secondary text-foreground border-border" : "bg-card text-muted-foreground border-border hover:text-foreground"}`}>
+                {showArchived ? <><ArchiveRestore className="h-3.5 w-3.5" /> Ativos</> : <><Archive className="h-3.5 w-3.5" /> Arquivados {archivedCount > 0 && `(${archivedCount})`}</>}
               </button>
-            ) : (
-              <button
-                onClick={() => setShowArchived(true)}
-                className="h-9 px-3 rounded-lg border border-border/50 text-xs transition-all flex items-center gap-1.5 bg-secondary text-muted-foreground hover:text-foreground"
-              >
-                <Archive className="h-3.5 w-3.5" />
-                Arquivados{archivedCount > 0 ? ` (${archivedCount})` : ""}
+              <button onClick={fetchLeads} className="h-9 px-3 rounded-md bg-card border border-border text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5">
+                <RefreshCw className="h-3.5 w-3.5" />
               </button>
-            )}
-            <button
-              onClick={fetchLeads}
-              className="h-9 px-3 rounded-lg bg-secondary border border-border/50 text-xs text-muted-foreground hover:text-foreground transition-all flex items-center gap-1.5"
-            >
-              <RefreshCw className="h-3.5 w-3.5" /> Atualizar
-            </button>
-            <button
-              onClick={exportCSV}
-              className="h-9 px-4 rounded-lg bg-gradient-gold-deep text-primary-foreground text-xs font-bold hover:opacity-90 transition-opacity flex items-center gap-1.5"
-            >
-              <Download className="h-3.5 w-3.5" /> Exportar CSV
-            </button>
+              <button onClick={exportCSV} className="h-9 px-4 rounded-md bg-foreground text-background text-xs font-semibold hover:opacity-90 transition-opacity flex items-center gap-1.5">
+                <Download className="h-3.5 w-3.5" /> Exportar
+              </button>
+            </div>
           </div>
-        </div>
 
-        {/* Count */}
-        <p className="text-xs text-muted-foreground">
-          {filtered.length} {filtered.length === 1 ? "lead" : "leads"} encontrado{filtered.length !== 1 ? "s" : ""}
-        </p>
+          <p className="text-xs text-muted-foreground">{filtered.length} lead{filtered.length !== 1 ? "s" : ""}</p>
 
-        {/* Leads list */}
-        {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="h-6 w-6 animate-spin text-gold" />
-          </div>
-        ) : filtered.length === 0 ? (
-          <div className="text-center py-20 text-muted-foreground">
-            <Users className="h-10 w-10 mx-auto mb-3 opacity-30" />
-            <p className="text-sm">Nenhum lead encontrado</p>
-          </div>
-        ) : (
-          <>
-            {/* Mobile: Card layout */}
-            <div className="md:hidden space-y-3">
-              {filtered.map((lead, i) => (
-                <motion.div
-                  key={lead.id}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: Math.min(i * 0.03, 0.4) }}
-                  className={`rounded-xl border border-border/50 bg-card p-4 space-y-3 cursor-pointer active:scale-[0.98] transition-all ${expandedLead === lead.id ? "border-gold/30" : ""}`}
-                  onClick={() => setExpandedLead(expandedLead === lead.id ? null : lead.id)}
-                >
-                  {/* Top: name + badge */}
-                    <div className="flex items-start justify-between gap-2">
+          {/* Content */}
+          {loading ? (
+            <div className="flex items-center justify-center py-20"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
+          ) : filtered.length === 0 ? (
+            <div className="text-center py-20 text-muted-foreground">
+              <Users className="h-8 w-8 mx-auto mb-3 opacity-30" />
+              <p className="text-sm">Nenhum lead encontrado</p>
+            </div>
+          ) : (
+            <>
+              {/* Mobile cards */}
+              <div className="md:hidden space-y-2">
+                {filtered.map((lead, i) => (
+                  <motion.div key={lead.id} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: Math.min(i * 0.02, 0.3) }}
+                    className={`rounded-lg border bg-card p-3.5 cursor-pointer transition-all ${expandedLead === lead.id ? "border-ring/40 shadow-sm" : "border-border hover:border-border/80"}`}
+                    onClick={() => setExpandedLead(expandedLead === lead.id ? null : lead.id)}>
+                    <div className="flex items-start justify-between gap-2 mb-2">
                       <div className="min-w-0 flex-1">
-                        <p className="font-bold text-foreground text-sm truncate">{lead.name}</p>
+                        <p className="font-semibold text-foreground text-sm truncate">{lead.name}</p>
                         <p className="text-[11px] text-muted-foreground truncate mt-0.5">{lead.email}</p>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <span className={`shrink-0 inline-flex px-2 py-0.5 rounded-full text-[9px] font-bold border ${diagnosticColors[lead.diagnostic_title] || "bg-secondary text-foreground border-border"}`}>
-                          {lead.diagnostic_title}
+                        <span className={`shrink-0 inline-flex px-2 py-0.5 rounded text-[9px] font-semibold border ${diagnosticBadge[lead.diagnostic_title] || "bg-secondary text-foreground border-border"}`}>
+                          {lead.diagnostic_title.replace("Negociador ", "")}
                         </span>
-                        <ChevronDown className={`h-3.5 w-3.5 shrink-0 transition-transform duration-200 ${expandedLead === lead.id ? "rotate-180 text-gold" : "text-muted-foreground/40"}`} />
+                        <ChevronDown className={`h-3.5 w-3.5 shrink-0 transition-transform duration-200 ${expandedLead === lead.id ? "rotate-180 text-foreground" : "text-muted-foreground/40"}`} />
                       </div>
                     </div>
-                  {/* Bottom: score + phone + date */}
-                  <div className="flex items-center justify-between text-[11px]">
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-1.5">
-                        <div className="w-10 h-1.5 rounded-full bg-secondary overflow-hidden">
-                          <div className="h-full bg-gradient-gold rounded-full" style={{ width: `${(lead.total_score / 32) * 100}%` }} />
+                    <div className="flex items-center justify-between text-[11px]">
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-1.5">
+                          <div className="w-10 h-1.5 rounded-full bg-secondary overflow-hidden">
+                            <div className={`h-full rounded-full ${scoreBarColor[lead.diagnostic_title] || "bg-muted-foreground"}`} style={{ width: `${(lead.total_score / 32) * 100}%` }} />
+                          </div>
+                          <span className="font-mono font-bold text-foreground text-xs">{lead.total_score}</span>
                         </div>
-                        <span className="font-mono font-bold text-foreground text-xs">{lead.total_score}/32</span>
+                        <span className="text-muted-foreground flex items-center gap-1">
+                          <Phone className="h-3 w-3" /> {lead.phone}
+                        </span>
                       </div>
-                      <span className="text-muted-foreground flex items-center gap-1">
-                        <Phone className="h-3 w-3" /> {lead.phone}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 text-[10px]">
-                      <span className="text-muted-foreground">{formatDate(lead.created_at)}</span>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <button onClick={(e) => e.stopPropagation()} className="ml-auto p-1.5 rounded-lg hover:bg-secondary text-muted-foreground/50 hover:text-foreground transition-colors">
-                            <MoreVertical className="h-4 w-4" />
-                          </button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="w-44">
-                          {!lead.archived_at ? (
-                            <DropdownMenuItem onClick={(e) => { archiveLead(lead.id, e as any); }}>
-                              <Archive className="h-3.5 w-3.5 mr-2" /> Arquivar
+                      <div className="flex items-center gap-2">
+                        <span className="text-muted-foreground text-[10px]">{formatDate(lead.created_at)}</span>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <button onClick={(e) => e.stopPropagation()} className="p-1 rounded hover:bg-secondary text-muted-foreground/50 hover:text-foreground transition-colors">
+                              <MoreVertical className="h-3.5 w-3.5" />
+                            </button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end" className="w-44">
+                            {!lead.archived_at ? (
+                              <DropdownMenuItem onClick={(e) => archiveLead(lead.id, e as any)}><Archive className="h-3.5 w-3.5 mr-2" /> Arquivar</DropdownMenuItem>
+                            ) : (
+                              <DropdownMenuItem onClick={(e) => restoreLead(lead.id, e as any)}><ArchiveRestore className="h-3.5 w-3.5 mr-2" /> Restaurar</DropdownMenuItem>
+                            )}
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={(e) => { e.stopPropagation(); setDeleteConfirmId(lead.id); }} className="text-destructive focus:text-destructive">
+                              <Trash2 className="h-3.5 w-3.5 mr-2" /> Excluir
                             </DropdownMenuItem>
-                          ) : (
-                            <DropdownMenuItem onClick={(e) => { restoreLead(lead.id, e as any); }}>
-                              <ArchiveRestore className="h-3.5 w-3.5 mr-2" /> Restaurar
-                            </DropdownMenuItem>
-                          )}
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={(e) => { e.stopPropagation(); setDeleteConfirmId(lead.id); }} className="text-destructive focus:text-destructive">
-                            <Trash2 className="h-3.5 w-3.5 mr-2" /> Excluir definitivamente
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
                     </div>
-                  </div>
-                  {/* Expanded: strategy panel inline */}
-                  <AnimatePresence>
-                    {expandedLead === lead.id && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="pt-3 border-t border-border/30">
-                          <LeadDetailPanel
-                            name={lead.name}
-                            score={lead.total_score}
-                            diagnostic={lead.diagnostic_title}
-                            onClose={() => setExpandedLead(null)}
-                            phone={lead.phone}
-                            countryCode={lead.country_code}
-                            openResponse={lead.open_response}
-                            mobile
-                          />
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Desktop: Table layout */}
-            <div className="hidden md:block rounded-xl border border-border/50 overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-xs">
-                  <thead>
-                    <tr className="bg-secondary/50 border-b border-border/50">
-                      <th className="text-left px-4 py-3 font-semibold text-muted-foreground">
-                        <button onClick={() => toggleSort("name")} className="flex items-center gap-1 hover:text-foreground transition-colors">
-                          <Mail className="h-3 w-3" /> Nome / Contato <SortIcon col="name" />
-                        </button>
-                      </th>
-                      <th className="text-left px-4 py-3 font-semibold text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <button onClick={() => toggleSort("total_score")} className="flex items-center gap-1 hover:text-foreground transition-colors">
-                            <BarChart3 className="h-3 w-3" /> Score <SortIcon col="total_score" />
-                          </button>
-                          <InfoPopover><ScoreInfoContent /></InfoPopover>
-                        </div>
-                      </th>
-                      <th className="text-left px-4 py-3 font-semibold text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <button onClick={() => toggleSort("diagnostic_title")} className="flex items-center gap-1 hover:text-foreground transition-colors">
-                            <Award className="h-3 w-3" /> Diagnóstico <SortIcon col="diagnostic_title" />
-                          </button>
-                          <InfoPopover><DiagnosticInfoContent /></InfoPopover>
-                        </div>
-                      </th>
-                      <th className="text-left px-4 py-3 font-semibold text-muted-foreground">
-                        <button onClick={() => toggleSort("created_at")} className="flex items-center gap-1 hover:text-foreground transition-colors">
-                          <Calendar className="h-3 w-3" /> Data <SortIcon col="created_at" />
-                        </button>
-                      </th>
-                      <th className="text-right px-4 py-3 font-semibold text-muted-foreground text-[10px]">Ações</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filtered.map((lead, i) => (
-                      <React.Fragment key={lead.id}>
-                        <motion.tr
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: Math.min(i * 0.02, 0.5) }}
-                          className={`border-b border-border/30 hover:bg-secondary/30 transition-colors cursor-pointer ${expandedLead === lead.id ? "bg-secondary/20" : ""}`}
-                          onClick={() => setExpandedLead(expandedLead === lead.id ? null : lead.id)}
-                        >
-                          <td className="px-4 py-3">
-                            <div>
-                              <p className="font-semibold text-foreground text-sm">{lead.name}</p>
-                              <p className="text-muted-foreground flex items-center gap-1 mt-0.5">
-                                <Mail className="h-3 w-3" /> {lead.email}
-                              </p>
-                              <p className="text-muted-foreground flex items-center gap-1 mt-0.5">
-                                <Phone className="h-3 w-3" /> {lead.country_code} {lead.phone}
-                              </p>
-                            </div>
-                          </td>
-                          <td className="px-4 py-3">
-                            <div className="flex items-center gap-2">
-                              <div className="w-12 h-1.5 rounded-full bg-secondary overflow-hidden">
-                                <div
-                                  className="h-full bg-gradient-gold rounded-full"
-                                  style={{ width: `${(lead.total_score / 32) * 100}%` }}
-                                />
-                              </div>
-                              <span className="font-mono font-bold text-foreground">{lead.total_score}</span>
-                            </div>
-                          </td>
-                          <td className="px-4 py-3">
-                            <div className="flex items-center gap-2">
-                              <span className={`inline-flex px-2.5 py-1 rounded-full text-[10px] font-bold border ${diagnosticColors[lead.diagnostic_title] || "bg-secondary text-foreground border-border"}`}>
-                                {lead.diagnostic_title}
-                              </span>
-                              <Eye className={`h-3.5 w-3.5 transition-colors ${expandedLead === lead.id ? "text-gold" : "text-muted-foreground/30"}`} />
-                            </div>
-                          </td>
-                          <td className="px-4 py-3">
-                            <div>
-                              <p className="text-foreground/80">{formatDate(lead.created_at)}</p>
-                              <p className="text-muted-foreground flex items-center gap-1 mt-0.5">
-                                <Clock className="h-3 w-3" /> {formatTime(lead.created_at)}
-                              </p>
-                            </div>
-                          </td>
-                          <td className="px-4 py-3">
-                            <div className="flex items-center justify-end">
-                              <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                  <button onClick={(e) => e.stopPropagation()} className="p-1.5 rounded-lg hover:bg-secondary text-muted-foreground/40 hover:text-foreground transition-colors">
-                                    <MoreVertical className="h-4 w-4" />
-                                  </button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end" className="w-44">
-                                  {!lead.archived_at ? (
-                                    <DropdownMenuItem onClick={(e) => { archiveLead(lead.id, e as any); }}>
-                                      <Archive className="h-3.5 w-3.5 mr-2" /> Arquivar
-                                    </DropdownMenuItem>
-                                  ) : (
-                                    <DropdownMenuItem onClick={(e) => { restoreLead(lead.id, e as any); }}>
-                                      <ArchiveRestore className="h-3.5 w-3.5 mr-2" /> Restaurar
-                                    </DropdownMenuItem>
-                                  )}
-                                  <DropdownMenuSeparator />
-                                  <DropdownMenuItem onClick={(e) => { e.stopPropagation(); setDeleteConfirmId(lead.id); }} className="text-destructive focus:text-destructive">
-                                    <Trash2 className="h-3.5 w-3.5 mr-2" /> Excluir definitivamente
-                                  </DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                            </div>
-                          </td>
-                        </motion.tr>
-                        <AnimatePresence>
-                          {expandedLead === lead.id && (
-                            <LeadDetailPanel
-                              name={lead.name}
-                              score={lead.total_score}
-                              diagnostic={lead.diagnostic_title}
-                              onClose={() => setExpandedLead(null)}
-                              phone={lead.phone}
-                              countryCode={lead.country_code}
-                              openResponse={lead.open_response}
-                            />
-                          )}
-                        </AnimatePresence>
-                      </React.Fragment>
-                    ))}
-                  </tbody>
-                </table>
+                    <AnimatePresence>
+                      {expandedLead === lead.id && (
+                        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="overflow-hidden">
+                          <div className="pt-3 mt-3 border-t border-border">
+                            <LeadDetailPanel name={lead.name} score={lead.total_score} diagnostic={lead.diagnostic_title} onClose={() => setExpandedLead(null)} phone={lead.phone} countryCode={lead.country_code} openResponse={lead.open_response} mobile />
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                ))}
               </div>
-            </div>
-          </>
-        )}
-      </main>
-      ) : activeTab === "team" ? (
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
-        <InviteAdminPanel />
-      </main>
-      ) : (
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
-        <MapaContent />
-      </main>
-      )}
-      {/* Footer */}
-      <div className={lightMode ? "admin-light" : ""}>
-        <D7Footer />
-      </div>
 
-      {/* Global delete confirmation dialog */}
+              {/* Desktop table */}
+              <div className="hidden md:block rounded-lg border border-border overflow-hidden bg-card">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="border-b border-border bg-secondary/30">
+                        <th className="text-left px-4 py-3 font-medium text-muted-foreground">
+                          <button onClick={() => toggleSort("name")} className="flex items-center gap-1 hover:text-foreground transition-colors">
+                            Nome / Contato <SortIcon col="name" />
+                          </button>
+                        </th>
+                        <th className="text-left px-4 py-3 font-medium text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <button onClick={() => toggleSort("total_score")} className="flex items-center gap-1 hover:text-foreground transition-colors">
+                              Score <SortIcon col="total_score" />
+                            </button>
+                            <InfoPopover><ScoreInfoContent /></InfoPopover>
+                          </div>
+                        </th>
+                        <th className="text-left px-4 py-3 font-medium text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <button onClick={() => toggleSort("diagnostic_title")} className="flex items-center gap-1 hover:text-foreground transition-colors">
+                              Perfil <SortIcon col="diagnostic_title" />
+                            </button>
+                            <InfoPopover><DiagnosticInfoContent /></InfoPopover>
+                          </div>
+                        </th>
+                        <th className="text-left px-4 py-3 font-medium text-muted-foreground">
+                          <button onClick={() => toggleSort("created_at")} className="flex items-center gap-1 hover:text-foreground transition-colors">
+                            Data <SortIcon col="created_at" />
+                          </button>
+                        </th>
+                        <th className="text-center px-4 py-3 font-medium text-muted-foreground">WhatsApp</th>
+                        <th className="text-right px-4 py-3 font-medium text-muted-foreground">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filtered.map((lead, i) => {
+                        const waUrl = buildWhatsAppUrl(lead.phone, lead.country_code, lead.name);
+                        return (
+                          <React.Fragment key={lead.id}>
+                            <motion.tr initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: Math.min(i * 0.015, 0.4) }}
+                              className={`border-b border-border/50 hover:bg-secondary/20 transition-colors cursor-pointer ${expandedLead === lead.id ? "bg-secondary/10" : ""}`}
+                              onClick={() => setExpandedLead(expandedLead === lead.id ? null : lead.id)}>
+                              <td className="px-4 py-3">
+                                <p className="font-medium text-foreground text-sm">{lead.name}</p>
+                                <p className="text-muted-foreground mt-0.5">{lead.email}</p>
+                                <p className="text-muted-foreground mt-0.5">{lead.country_code} {lead.phone}</p>
+                              </td>
+                              <td className="px-4 py-3">
+                                <div className="flex items-center gap-2">
+                                  <div className="w-12 h-1.5 rounded-full bg-secondary overflow-hidden">
+                                    <div className={`h-full rounded-full ${scoreBarColor[lead.diagnostic_title] || "bg-muted-foreground"}`} style={{ width: `${(lead.total_score / 32) * 100}%` }} />
+                                  </div>
+                                  <span className="font-mono font-semibold text-foreground">{lead.total_score}</span>
+                                </div>
+                              </td>
+                              <td className="px-4 py-3">
+                                <span className={`inline-flex px-2 py-0.5 rounded text-[10px] font-semibold border ${diagnosticBadge[lead.diagnostic_title] || "bg-secondary text-foreground border-border"}`}>
+                                  {lead.diagnostic_title}
+                                </span>
+                              </td>
+                              <td className="px-4 py-3">
+                                <p className="text-foreground/80">{formatDate(lead.created_at)}</p>
+                                <p className="text-muted-foreground flex items-center gap-1 mt-0.5"><Clock className="h-3 w-3" /> {formatTime(lead.created_at)}</p>
+                              </td>
+                              <td className="px-4 py-3 text-center">
+                                <a href={waUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
+                                  className="inline-flex items-center gap-1 h-7 px-2.5 rounded-md text-[10px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 dark:text-emerald-400 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:hover:bg-emerald-500/20 transition-colors">
+                                  <ExternalLink className="h-3 w-3" /> Contato
+                                </a>
+                              </td>
+                              <td className="px-4 py-3">
+                                <div className="flex items-center justify-end gap-1">
+                                  <button onClick={(e) => { e.stopPropagation(); setExpandedLead(expandedLead === lead.id ? null : lead.id); }}
+                                    className={`p-1.5 rounded-md transition-colors ${expandedLead === lead.id ? "bg-secondary text-foreground" : "text-muted-foreground/40 hover:text-foreground hover:bg-secondary"}`}>
+                                    <Eye className="h-3.5 w-3.5" />
+                                  </button>
+                                  <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                      <button onClick={(e) => e.stopPropagation()} className="p-1.5 rounded-md text-muted-foreground/40 hover:text-foreground hover:bg-secondary transition-colors">
+                                        <MoreVertical className="h-3.5 w-3.5" />
+                                      </button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end" className="w-44">
+                                      {!lead.archived_at ? (
+                                        <DropdownMenuItem onClick={(e) => archiveLead(lead.id, e as any)}><Archive className="h-3.5 w-3.5 mr-2" /> Arquivar</DropdownMenuItem>
+                                      ) : (
+                                        <DropdownMenuItem onClick={(e) => restoreLead(lead.id, e as any)}><ArchiveRestore className="h-3.5 w-3.5 mr-2" /> Restaurar</DropdownMenuItem>
+                                      )}
+                                      <DropdownMenuSeparator />
+                                      <DropdownMenuItem onClick={(e) => { e.stopPropagation(); setDeleteConfirmId(lead.id); }} className="text-destructive focus:text-destructive">
+                                        <Trash2 className="h-3.5 w-3.5 mr-2" /> Excluir
+                                      </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                  </DropdownMenu>
+                                </div>
+                              </td>
+                            </motion.tr>
+                            <AnimatePresence>
+                              {expandedLead === lead.id && (
+                                <LeadDetailPanel name={lead.name} score={lead.total_score} diagnostic={lead.diagnostic_title} onClose={() => setExpandedLead(null)} phone={lead.phone} countryCode={lead.country_code} openResponse={lead.open_response} />
+                              )}
+                            </AnimatePresence>
+                          </React.Fragment>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </>
+          )}
+        </main>
+      ) : activeTab === "team" ? (
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6"><InviteAdminPanel /></main>
+      ) : (
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6"><MapaContent /></main>
+      )}
+
       <AlertDialog open={!!deleteConfirmId} onOpenChange={(open) => { if (!open) setDeleteConfirmId(null); }}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Excluir permanentemente?</AlertDialogTitle>
             <AlertDialogDescription>
-              O lead "{leads.find(l => l.id === deleteConfirmId)?.name}" será removido de forma definitiva. Essa ação não pode ser desfeita.
+              O lead "{leads.find(l => l.id === deleteConfirmId)?.name}" será removido definitivamente. Essa ação não pode ser desfeita.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -635,50 +511,16 @@ const AdminDashboard = () => {
   );
 };
 
-const StatCard = ({
-  icon: Icon,
-  label,
-  value,
-  accent,
-  small,
-  hint,
-}: {
-  icon: React.ElementType;
-  label: string;
-  value: string | number;
-  accent?: boolean;
-  small?: boolean;
-  hint?: string;
-}) => (
-  <motion.div
-    initial={{ opacity: 0, y: 8 }}
-    animate={{ opacity: 1, y: 0 }}
-    className={`rounded-xl border p-5 transition-all hover:shadow-md ${accent ? "border-gold/30 bg-gradient-to-br from-gold/[0.08] to-transparent" : "border-border/50 bg-card hover:border-border"}`}
-  >
-    <div className="flex items-center justify-between mb-2">
-      <div className="flex items-center gap-2.5 min-w-0">
-        <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${accent ? "bg-gold/15" : "bg-secondary"}`}>
-          <Icon className={`h-4 w-4 ${accent ? "text-gold" : "text-muted-foreground"}`} />
-        </div>
-        <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-muted-foreground truncate">{label}</span>
+function StatCard({ icon: Icon, label, value, accent }: { icon: React.ElementType; label: string; value: string | number; accent?: boolean }) {
+  return (
+    <div className={`rounded-lg border p-4 ${accent ? "border-foreground/10 bg-foreground/[0.03]" : "border-border bg-card"}`}>
+      <div className="flex items-center gap-2 mb-2">
+        <Icon className="h-4 w-4 text-muted-foreground" />
+        <span className="text-[11px] font-medium text-muted-foreground">{label}</span>
       </div>
-      {hint && (
-        <Popover>
-          <PopoverTrigger asChild>
-            <button className="shrink-0 ml-1">
-              <Info className="h-3.5 w-3.5 text-muted-foreground/40 hover:text-muted-foreground transition-colors" />
-            </button>
-          </PopoverTrigger>
-          <PopoverContent side="bottom" align="end" className="w-52 p-3">
-            <p className="text-[11px] text-popover-foreground leading-relaxed">{hint}</p>
-          </PopoverContent>
-        </Popover>
-      )}
+      <p className="text-2xl font-bold text-foreground tracking-tight">{value}</p>
     </div>
-    <p className={`font-black ${small ? "text-base leading-tight" : "text-3xl"} ${accent ? "text-gradient-gold" : "text-foreground"}`}>
-      {value}
-    </p>
-  </motion.div>
-);
+  );
+}
 
 export default AdminDashboard;
