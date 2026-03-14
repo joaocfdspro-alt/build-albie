@@ -244,10 +244,34 @@ const CodigoDaNegociacao = () => {
           </div>
         </section>
 
-        {/* Pricing */}
+        {/* Para quem é */}
         <section className="bg-background">
           <div className="max-w-4xl mx-auto px-6 py-16 lg:py-24">
-            <div className="bg-card border border-gold/20 rounded-lg p-8 md:p-12 relative overflow-hidden">
+            <div className="text-center mb-10">
+              <h2 className="font-copperplate text-2xl md:text-3xl font-bold tracking-wide uppercase mb-3">
+                Para quem é <span className="text-gradient-gold">este programa?</span>
+              </h2>
+              <div className="w-16 h-[2px] bg-gradient-gold mx-auto mt-4" />
+            </div>
+            <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+              {targetAudience.map((item, i) => (
+                <div key={i} className={`flex items-start gap-3 p-4 rounded-lg border ${item.yes ? "border-gold/20 bg-gold/[0.03]" : "border-border/30 bg-card/30"}`}>
+                  {item.yes ? (
+                    <CheckCircle2 className="h-5 w-5 text-gold shrink-0 mt-0.5" />
+                  ) : (
+                    <X className="h-5 w-5 text-muted-foreground/50 shrink-0 mt-0.5" />
+                  )}
+                  <p className={`text-sm leading-relaxed ${item.yes ? "text-foreground/90" : "text-muted-foreground/60"}`}>{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Pricing */}
+        <section className="bg-card/30 border-y border-border/50">
+          <div className="max-w-4xl mx-auto px-6 py-16 lg:py-24">
+            <div className="bg-card border border-gold/20 rounded-xl p-8 md:p-12 relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-gold/[0.03] to-transparent" />
               <div className="relative z-10">
                 <div className="grid md:grid-cols-2 gap-10 items-center">
@@ -262,14 +286,20 @@ const CodigoDaNegociacao = () => {
                       ))}
                     </div>
                   </div>
-                  <div className="text-center md:text-left">
-                    <div className="border border-border/60 rounded-md p-5 mb-6 bg-background/40">
-                      <p className="font-copperplate text-3xl md:text-4xl font-bold text-gradient-gold mb-2">R$ 997,00</p>
-                      <p className="text-lg font-bold text-foreground">À vista ou 10x de R$ 116,42</p>
-                      <p className="text-sm text-muted-foreground mt-2">Crédito · PIX · Múltiplos cartões</p>
+                  <div className="text-center">
+                    <div className="border border-gold/30 rounded-xl p-6 mb-6 bg-background/40 relative overflow-hidden">
+                      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-gold" />
+                      <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold/60 mb-3">Investimento</p>
+                      <p className="text-sm text-muted-foreground line-through mb-1">De R$ 1.497,00</p>
+                      <p className="font-copperplate text-4xl md:text-5xl font-bold text-gradient-gold mb-1">R$ 997</p>
+                      <p className="text-lg font-bold text-foreground">ou 10x de R$ 116,42</p>
+                      <p className="text-xs text-muted-foreground mt-3">Crédito · PIX · Múltiplos cartões</p>
+                      <div className="mt-4 flex items-center justify-center gap-2 text-xs text-gold/80">
+                        <Shield className="h-4 w-4" />
+                        <span className="font-semibold">Garantia incondicional de 7 dias</span>
+                      </div>
                     </div>
-                    <CtaButton className="w-full md:w-auto" onClick={handleCtaClick} />
-                    <p className="text-[11px] text-muted-foreground mt-3">Garantia incondicional de 7 dias</p>
+                    <CtaButton className="w-full" text="Garantir minha vaga" onClick={handleCtaClick} />
                   </div>
                 </div>
               </div>
