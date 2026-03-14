@@ -494,7 +494,7 @@ const QuizFlow = () => {
       {/* Header */}
       <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-md border-b border-border/30">
         <div className="max-w-lg mx-auto px-5 py-4 flex items-center justify-center">
-          <IvoLogo size="md" />
+          <IvoLogo size="lg" />
         </div>
       </div>
 
