@@ -63,8 +63,8 @@ const sections: Section[] = [
       },
       {
         label: "WhatsApp",
-        url: "https://api.whatsapp.com/send/?phone=5527992936922&text&type=phone_number&app_absent=0",
-        why: "Link direto para conversa no WhatsApp com o número (27) 99293-6922. Aparece nos botões de CTA e no rodapé.",
+        url: "https://wa.me/5546999238882",
+        why: "Link direto para conversa no WhatsApp com o número (46) 99923-8882. Aparece nos botões de CTA e no rodapé.",
       },
     ],
   },
@@ -103,14 +103,14 @@ const sections: Section[] = [
       "Página de vendas do programa principal de 90 dias para se tornar um negociador estratégico. R$997. Contém hero, módulos, depoimentos, FAQ e botões de compra.",
     items: [
       {
-        label: "Link de checkout",
-        url: "#",
-        why: "Link de pagamento do programa Código da Negociação. Ao clicar em qualquer botão de compra, a pessoa vai direto para o checkout. (Link a definir pelo Ivo)",
+        label: "Link de checkout (Xgrow)",
+        url: "https://checkout4.xgrow.com/pt/2ad70720-887e-4cc1-b2db-2854a18e029f/MTAyOTY1",
+        why: "Link de pagamento do programa Código da Negociação na plataforma Xgrow. Ao clicar em qualquer botão de compra, a pessoa preenche nome, e-mail e telefone e vai direto para o checkout.",
       },
       {
         label: "WhatsApp de dúvidas",
-        url: "https://api.whatsapp.com/send/?phone=5527992936922&text&type=phone_number&app_absent=0",
-        why: "Botão que abre conversa no WhatsApp com o número (27) 99293-6922 para tirar dúvidas antes de comprar.",
+        url: "https://wa.me/5546999238882?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20C%C3%B3digo%20da%20Negocia%C3%A7%C3%A3o.",
+        why: "Botão que abre conversa no WhatsApp com o número (46) 99923-8882 para tirar dúvidas antes de comprar.",
       },
     ],
   },
@@ -127,8 +127,8 @@ const sections: Section[] = [
       },
       {
         label: "WhatsApp de dúvidas",
-        url: "https://api.whatsapp.com/send/?phone=5527992936922&text&type=phone_number&app_absent=0",
-        why: "Botão que abre conversa no WhatsApp com o número (27) 99293-6922.",
+        url: "https://wa.me/5546999238882?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20curso%20O%20Negociador.",
+        why: "Botão que abre conversa no WhatsApp com o número (46) 99923-8882.",
       },
     ],
   },
@@ -280,7 +280,7 @@ export const MapaContent = () => {
             <p className="font-bold text-foreground">Links de checkout:</p>
             <p className="text-muted-foreground">
               Código da Negociação →{" "}
-              <span className="text-foreground break-all">A definir</span>
+              <span className="text-foreground break-all">checkout4.xgrow.com/pt/2ad70720...</span>
             </p>
             <p className="text-muted-foreground">
               O Negociador →{" "}
@@ -290,10 +290,10 @@ export const MapaContent = () => {
           <div className="space-y-2">
             <p className="font-bold text-foreground">WhatsApp:</p>
             <p className="text-muted-foreground">
-              Número: <span className="text-foreground">(27) 99293-6922</span>
+              Número: <span className="text-foreground">(46) 99923-8882</span>
             </p>
             <p className="text-muted-foreground">
-              Link: <span className="text-foreground break-all">api.whatsapp.com/send/?phone=5527992936922</span>
+              Link: <span className="text-foreground break-all">wa.me/5546999238882</span>
             </p>
           </div>
           <div className="space-y-2">

@@ -25,7 +25,7 @@ import D7Footer from "@/components/D7Footer";
 import { supabase } from "@/integrations/supabase/client";
 import ivoHero from "@/assets/ivo-hero.jpg";
 
-const checkoutUrl = "#"; // Link Xgrow a ser definido
+const checkoutUrl = "https://checkout4.xgrow.com/pt/2ad70720-887e-4cc1-b2db-2854a18e029f/MTAyOTY1";
 const whatsappUrl = "https://wa.me/5546999238882?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20C%C3%B3digo%20da%20Negocia%C3%A7%C3%A3o.";
 
 const modules = [
@@ -113,12 +113,7 @@ const CodigoDaNegociacao = () => {
 
     setIsSubmitting(false);
     setShowLeadModal(false);
-    // Redirect to checkout
-    if (checkoutUrl !== "#") {
-      window.open(checkoutUrl, "_blank");
-    } else {
-      window.open(whatsappUrl, "_blank");
-    }
+    window.open(checkoutUrl, "_blank");
   };
 
   return (
@@ -143,7 +138,7 @@ const CodigoDaNegociacao = () => {
       <section className="relative min-h-[75vh] md:min-h-[85vh]">
         <div className="fixed top-0 left-0 right-0 h-[75vh] md:h-[85vh] z-0">
           <div className="absolute inset-0 bg-background" />
-          <img src={ivoHero} alt="Ivo Brasil" className="absolute inset-0 w-full h-full object-cover object-[center_4%] md:object-[center_8%] opacity-40" />
+          <img src={ivoHero} alt="Ivo Brasil" className="absolute inset-0 w-full h-full object-cover object-top opacity-40" />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent md:via-background/60" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/50" />
         </div>
