@@ -27,7 +27,8 @@ Deno.serve(async (req) => {
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const adminClient = createClient(supabaseUrl, serviceRoleKey);
 
-    // Create user
+    // Try to create user, or update if exists
+    let userId: string;
     const { data: newUser, error: createError } = await adminClient.auth.admin.createUser({
       email,
       password,
@@ -35,17 +36,27 @@ Deno.serve(async (req) => {
     });
 
     if (createError) {
-      return new Response(JSON.stringify({ error: createError.message }), {
-        status: 400,
-        headers: corsHeaders,
-      });
+      if (createError.message.includes("already been registered")) {
+        // User exists — find and update password
+        const { data: { users } } = await adminClient.auth.admin.listUsers();
+        const existing = users?.find((u: any) => u.email === email);
+        if (!existing) {
+          return new Response(JSON.stringify({ error: "User not found" }), { status: 400, headers: corsHeaders });
+        }
+        await adminClient.auth.admin.updateUserById(existing.id, { password, email_confirm: true });
+        userId = existing.id;
+      } else {
+        return new Response(JSON.stringify({ error: createError.message }), { status: 400, headers: corsHeaders });
+      }
+    } else {
+      userId = newUser.user.id;
     }
 
-    // Assign admin role
-    await adminClient.from("user_roles").insert({
-      user_id: newUser.user.id,
+    // Ensure admin role
+    await adminClient.from("user_roles").upsert({
+      user_id: userId,
       role: "admin",
-    });
+    }, { onConflict: "user_id,role" });
 
     return new Response(
       JSON.stringify({ success: true, message: "Admin user created" }),
