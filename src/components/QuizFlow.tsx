@@ -448,11 +448,27 @@ const QuizFlow = () => {
     }
 
     if (insertedLead) {
+      // Send admin notification email
       try {
-        const { error: notifyError } = await supabase.functions.invoke("notify-new-lead", {
-          body: { record: insertedLead, send_lead_copy: true },
+        await supabase.functions.invoke("notify-new-lead", {
+          body: { record: insertedLead },
         });
-        setEmailCopyNotice(notifyError ? "pending" : "sent");
+      } catch (e) {
+        console.error("Admin notify error (non-blocking):", e);
+      }
+
+      // Send diagnostic email to the user
+      try {
+        const { error: userEmailError } = await supabase.functions.invoke("send-user-diagnostic", {
+          body: {
+            to: result.data.email,
+            name: result.data.name,
+            totalScore,
+            diagnosticTitle: profile.title,
+            aiDiagnostic: generatedDiagnostic,
+          },
+        });
+        setEmailCopyNotice(userEmailError ? "pending" : "sent");
       } catch {
         setEmailCopyNotice("pending");
       }
