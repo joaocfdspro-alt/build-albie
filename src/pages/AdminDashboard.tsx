@@ -43,6 +43,16 @@ interface Lead {
   ai_diagnostic: Record<string, string> | null;
 }
 
+interface SimpleLead {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  country_code?: string;
+  created_at: string;
+  source?: string | null;
+}
+
 type SortKey = "created_at" | "name" | "total_score" | "diagnostic_title";
 type SortDir = "asc" | "desc";
 
