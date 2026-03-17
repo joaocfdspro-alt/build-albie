@@ -259,6 +259,93 @@ ${lead.open_response ? `
 </html>`;
 }
 
+function buildCodigoLeadEmailHtml(lead: any): string {
+  const whatsappNumber = `${lead.country_code?.replace('+', '') || '55'}${lead.phone?.replace(/\D/g, '')}`;
+  const createdAt = new Date(lead.created_at || Date.now()).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+
+  return `
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<body style="margin:0;padding:0;background:#0d0b09;font-family:'Helvetica Neue',Arial,sans-serif;">
+<table width="100%" cellpadding="0" cellspacing="0" style="background:#0d0b09;padding:24px 0;">
+<tr><td align="center">
+<table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;background:#141110;border-radius:16px;overflow:hidden;border:1px solid #2a231c;">
+
+<!-- Header -->
+<tr><td style="background:linear-gradient(135deg,#1a1512,#2a231c);padding:32px 40px;">
+  <table width="100%" cellpadding="0" cellspacing="0">
+    <tr>
+      <td>
+        <p style="margin:0;font-size:11px;text-transform:uppercase;letter-spacing:3px;color:#c9952e;font-weight:700;">Ivo Brasil · Código da Negociação</p>
+        <h1 style="margin:8px 0 0;font-size:22px;color:#ffffff;font-weight:800;line-height:1.3;">Novo Interessado no Programa</h1>
+      </td>
+      <td align="right" valign="top">
+        <div style="background:#ede9fe;color:#7c3aed;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:800;display:inline-block;">
+          🎯 Código
+        </div>
+      </td>
+    </tr>
+  </table>
+</td></tr>
+
+<!-- Contact Info -->
+<tr><td style="padding:28px 40px 0;">
+  <p style="margin:0 0 12px;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#8b7a6b;font-weight:700;">Dados do Interessado</p>
+  <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #2a231c;border-radius:12px;overflow:hidden;">
+    <tr>
+      <td style="padding:14px 20px;border-bottom:1px solid #2a231c;background:#1a1512;">
+        <p style="margin:0;font-size:10px;color:#8b7a6b;text-transform:uppercase;letter-spacing:1px;">Nome</p>
+        <p style="margin:4px 0 0;font-size:15px;font-weight:700;color:#ffffff;">${escapeHtml(lead.name)}</p>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:14px 20px;border-bottom:1px solid #2a231c;">
+        <p style="margin:0;font-size:10px;color:#8b7a6b;text-transform:uppercase;letter-spacing:1px;">E-mail</p>
+        <p style="margin:4px 0 0;font-size:14px;"><a href="mailto:${lead.email}" style="color:#c9952e;text-decoration:none;font-weight:600;">${escapeHtml(lead.email)}</a></p>
+      </td>
+    </tr>
+    <tr>
+      <td style="padding:14px 20px;background:#1a1512;">
+        <p style="margin:0;font-size:10px;color:#8b7a6b;text-transform:uppercase;letter-spacing:1px;">WhatsApp</p>
+        <p style="margin:4px 0 0;font-size:14px;"><a href="https://wa.me/${whatsappNumber}" style="color:#16a34a;text-decoration:none;font-weight:600;">${lead.country_code || '+55'} ${lead.phone}</a></p>
+      </td>
+    </tr>
+  </table>
+</td></tr>
+
+<!-- Action suggestion -->
+<tr><td style="padding:24px 40px 0;">
+  <div style="background:#1a1512;border:1px solid #2a231c;border-radius:12px;padding:20px 24px;">
+    <p style="margin:0;font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#c9952e;font-weight:700;">Ação Recomendada</p>
+    <p style="margin:6px 0 0;font-size:13px;color:#e8ddd0;line-height:1.5;">Este lead demonstrou interesse direto no Código da Negociação. Entrar em contato o mais breve possível pelo WhatsApp para apresentar o programa e condições.</p>
+  </div>
+</td></tr>
+
+<!-- CTAs -->
+<tr><td style="padding:28px 40px;" align="center">
+  <a href="https://wa.me/${whatsappNumber}?text=${encodeURIComponent(`Olá ${lead.name.split(' ')[0]}! Vi que você demonstrou interesse no Código da Negociação. Posso te ajudar?`)}" style="display:inline-block;background:#16a34a;color:#ffffff;padding:14px 32px;border-radius:12px;text-decoration:none;font-weight:700;font-size:13px;margin-right:12px;">
+    💬 Falar no WhatsApp
+  </a>
+  <a href="${ADMIN_PANEL_URL}" style="display:inline-block;background:linear-gradient(135deg,#c9952e,#a07822);color:#ffffff;padding:14px 32px;border-radius:12px;text-decoration:none;font-weight:700;font-size:13px;">
+    Painel Admin
+  </a>
+  <p style="margin:12px 0 0;font-size:11px;color:#8b7a6b;">Responda rápido — leads quentes convertem mais</p>
+</td></tr>
+
+<!-- Footer -->
+<tr><td style="background:#1a1512;padding:20px 40px;border-top:1px solid #2a231c;" align="center">
+  <p style="margin:0;font-size:10px;color:#8b7a6b;">Ivo Brasil · Código da Negociação · ${createdAt}</p>
+  <p style="margin:4px 0 0;font-size:9px;color:#5a4f42;">E-mail gerado automaticamente · Desenvolvido por D7 Company</p>
+</td></tr>
+
+</table>
+</td></tr>
+</table>
+</body>
+</html>`;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -267,6 +354,7 @@ Deno.serve(async (req) => {
   try {
     const payload = await req.json();
     const lead = payload.record;
+    const source = payload.source || "quiz"; // "quiz" or "codigo"
 
     if (!lead) {
       return new Response(JSON.stringify({ error: "No record" }), {
@@ -283,12 +371,20 @@ Deno.serve(async (req) => {
       });
     }
 
-    // Generate AI summary for admin email
-    const aiSummary = await generateAISummary(lead);
+    let emailSubject: string;
+    let emailBody: string;
 
-    const temp = getTemperature(lead.total_score);
-    const emailSubject = `Novo Lead: ${lead.name} — ${lead.diagnostic_title} (${temp.label})`;
-    const emailBody = buildAdminEmailHtml(lead, aiSummary);
+    if (source === "codigo") {
+      const firstName = lead.name?.split(" ")[0] || "Alguém";
+      emailSubject = `🎯 Novo Interessado: ${firstName} quer o Código da Negociação`;
+      emailBody = buildCodigoLeadEmailHtml(lead);
+    } else {
+      // Quiz lead (original behavior)
+      const aiSummary = await generateAISummary(lead);
+      const temp = getTemperature(lead.total_score);
+      emailSubject = `Novo Lead: ${lead.name} — ${lead.diagnostic_title} (${temp.label})`;
+      emailBody = buildAdminEmailHtml(lead, aiSummary);
+    }
 
     const targetEmails = payload._test_override_emails && Array.isArray(payload._test_override_emails)
       ? payload._test_override_emails

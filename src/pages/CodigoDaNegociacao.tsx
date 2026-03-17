@@ -70,10 +70,28 @@ const stats = [
   { icon: TrendingUp, value: "Vale", label: "E grandes corporações" },
 ];
 
+const countryCodes = [
+  { code: "+55", label: "🇧🇷 +55", minDigits: 10, maxDigits: 11, placeholder: "(99) 99999-9999" },
+  { code: "+1", label: "🇺🇸 +1", minDigits: 10, maxDigits: 10, placeholder: "(555) 555-5555" },
+  { code: "+351", label: "🇵🇹 +351", minDigits: 9, maxDigits: 9, placeholder: "912 345 678" },
+  { code: "+595", label: "🇵🇾 +595", minDigits: 9, maxDigits: 10, placeholder: "981 234 567" },
+  { code: "+54", label: "🇦🇷 +54", minDigits: 10, maxDigits: 10, placeholder: "11 2345-6789" },
+  { code: "+598", label: "🇺🇾 +598", minDigits: 8, maxDigits: 8, placeholder: "94 123 456" },
+];
+
+function getCountryConfig(countryCode: string) {
+  return countryCodes.find(c => c.code === countryCode) || { minDigits: 8, maxDigits: 11, placeholder: "Seu WhatsApp" };
+}
+
+function getPhoneDigitCount(phone: string) {
+  return phone.replace(/\D/g, "").length;
+}
+
 const leadSchema = z.object({
   name: z.string().trim().min(2, "Nome muito curto").max(100),
-  email: z.string().trim().email("E-mail inválido").max(255),
-  phone: z.string().trim().min(8, "Telefone inválido").max(20),
+  email: z.string().trim().email("Informe um e-mail válido. Verifique se não há erros de digitação.").max(255),
+  phone: z.string().trim().min(8, "WhatsApp inválido").max(20),
+  countryCode: z.string().trim().min(2).max(5),
 });
 
 const CtaButton = ({ className = "", text = "Quero negociar melhor", onClick }: { className?: string; text?: string; onClick?: () => void }) => (
@@ -90,7 +108,7 @@ const CtaButton = ({ className = "", text = "Quero negociar melhor", onClick }: 
 const CodigoDaNegociacao = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [showLeadModal, setShowLeadModal] = useState(false);
-  const [leadData, setLeadData] = useState({ name: "", email: "", phone: "" });
+  const [leadData, setLeadData] = useState({ name: "", email: "", phone: "", countryCode: "+55" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -98,7 +116,18 @@ const CodigoDaNegociacao = () => {
     setShowLeadModal(true);
   };
 
+  const handlePhoneChange = (value: string) => {
+    const cleaned = value.replace(/[^\d\s()\-]/g, "");
+    const digitsOnly = cleaned.replace(/\D/g, "");
+    const config = getCountryConfig(leadData.countryCode);
+    if (digitsOnly.length > config.maxDigits) return;
+    setLeadData({ ...leadData, phone: cleaned });
+  };
+
   const handleLeadSubmit = async () => {
+    const config = getCountryConfig(leadData.countryCode);
+    const actualDigits = getPhoneDigitCount(leadData.phone);
+
     const result = leadSchema.safeParse(leadData);
     if (!result.success) {
       const fieldErrors: Record<string, string> = {};
@@ -108,16 +137,30 @@ const CodigoDaNegociacao = () => {
       setErrors(fieldErrors);
       return;
     }
+
+    if (actualDigits < config.minDigits || actualDigits > config.maxDigits) {
+      setErrors({ phone: `WhatsApp deve ter entre ${config.minDigits} e ${config.maxDigits} dígitos para ${leadData.countryCode}` });
+      return;
+    }
+
     setErrors({});
     setIsSubmitting(true);
 
     try {
-      await supabase.from("codigo_leads").insert({
+      const { data: insertedLead } = await supabase.from("codigo_leads").insert({
         name: result.data.name,
         email: result.data.email,
         phone: result.data.phone,
+        country_code: result.data.countryCode,
         source: "codigo-da-negociacao",
-      });
+      }).select().single();
+
+      // Notify admins
+      if (insertedLead) {
+        supabase.functions.invoke("notify-new-lead", {
+          body: { record: insertedLead, source: "codigo" },
+        }).catch(() => {});
+      }
     } catch { /* silent */ }
 
     setIsSubmitting(false);
@@ -388,11 +431,11 @@ const CodigoDaNegociacao = () => {
             </button>
 
             <div className="text-center mb-6">
-              <h3 className="font-copperplate text-lg font-bold uppercase tracking-wide mb-1">
-                Garanta sua vaga
+              <h3 className="font-copperplate text-lg font-bold uppercase tracking-wide mb-2">
+                Garanta a melhor condição
               </h3>
-              <p className="text-xs text-muted-foreground">
-                Preencha seus dados e avance para o checkout
+              <p className="text-xs text-muted-foreground leading-relaxed max-w-xs mx-auto">
+                Preencha seus dados para entrar como prioridade e garantir acesso exclusivo. Fique tranquilo: <span className="text-foreground/80 font-medium">não enviamos spam</span>.
               </p>
             </div>
 
@@ -403,7 +446,7 @@ const CodigoDaNegociacao = () => {
                   type="text"
                   value={leadData.name}
                   onChange={(e) => setLeadData({ ...leadData, name: e.target.value })}
-                  placeholder="Seu nome"
+                  placeholder="Seu nome completo"
                   className="w-full h-11 rounded-lg bg-background border border-border/50 px-4 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all"
                   maxLength={100}
                 />
@@ -422,18 +465,25 @@ const CodigoDaNegociacao = () => {
                 {errors.email && <p className="text-xs text-destructive mt-1">{errors.email}</p>}
               </div>
               <div>
-                <label className="text-xs font-semibold text-foreground/70 mb-1 block">Telefone</label>
-                <input
-                  type="tel"
-                  value={leadData.phone}
-                  onChange={(e) => {
-                    const val = e.target.value.replace(/[^\d\s()\-]/g, "");
-                    setLeadData({ ...leadData, phone: val });
-                  }}
-                  placeholder="(99) 99999-9999"
-                  className="w-full h-11 rounded-lg bg-background border border-border/50 px-4 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all"
-                  maxLength={20}
-                />
+                <label className="text-xs font-semibold text-foreground/70 mb-1 block">WhatsApp</label>
+                <div className="flex gap-2">
+                  <select
+                    value={leadData.countryCode}
+                    onChange={(e) => setLeadData({ ...leadData, countryCode: e.target.value, phone: "" })}
+                    className="h-11 rounded-lg bg-background border border-border/50 px-3 text-sm text-foreground focus:outline-none focus:border-gold/50 transition-all appearance-none cursor-pointer"
+                  >
+                    {countryCodes.map((c) => (
+                      <option key={c.code} value={c.code}>{c.label}</option>
+                    ))}
+                  </select>
+                  <input
+                    type="tel"
+                    value={leadData.phone}
+                    onChange={(e) => handlePhoneChange(e.target.value)}
+                    placeholder={getCountryConfig(leadData.countryCode).placeholder}
+                    className="flex-1 h-11 rounded-lg bg-background border border-border/50 px-4 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all"
+                  />
+                </div>
                 {errors.phone && <p className="text-xs text-destructive mt-1">{errors.phone}</p>}
               </div>
             </div>
@@ -455,7 +505,7 @@ const CodigoDaNegociacao = () => {
             </motion.button>
 
             <p className="text-[10px] text-muted-foreground/50 text-center mt-3">
-              Seus dados estão seguros. Garantia de 7 dias.
+              🔒 Seus dados estão seguros e protegidos. Garantia de 7 dias.
             </p>
           </motion.div>
         </div>
