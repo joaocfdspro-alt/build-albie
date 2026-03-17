@@ -158,7 +158,7 @@ Deno.serve(async (req) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Ivo Brasil <noreply@ivobrasil.com.br>",
+        from: "Ivo Brasil <noreply@hub.ivobrasil.com.br>",
         to: [payload.to],
         subject: `${firstName}, seu Diagnóstico de Negociação está pronto`,
         html: htmlBody,

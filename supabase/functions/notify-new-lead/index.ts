@@ -402,7 +402,7 @@ Deno.serve(async (req) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "Ivo Brasil <noreply@ivobrasil.com.br>",
+          from: "Ivo Brasil <noreply@hub.ivobrasil.com.br>",
           to: [email],
           subject: emailSubject,
           html: emailBody,

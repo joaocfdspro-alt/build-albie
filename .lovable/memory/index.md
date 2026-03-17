@@ -30,10 +30,9 @@ Number: (46) 99923-8882 → wa.me/5546999238882
 
 ## Email notifications (Resend)
 - Recipients: 0019.andrematheus@gmail.com, ledioprofissional@gmail.com
-- From: Ivo Brasil <noreply@ivobrasil.com.br>
+- From: Ivo Brasil <noreply@hub.ivobrasil.com.br>
+- Domain hub.ivobrasil.com.br verified in Resend
 - RESEND_API_KEY configured in secrets
-- Need to add Ivo's email(s) as recipients (pending from client)
-- Domain ivobrasil.com.br needs DNS verification in Resend for custom sender
 
 ## Admin panel
 - Redesigned with modern SaaS aesthetic (neutral, no gold accents)
@@ -42,6 +41,4 @@ Number: (46) 99923-8882 → wa.me/5546999238882
 
 ## Pending items
 - Background image adjustments: user gave up, don't touch unless asked
-- Notify edge function: emails arrive but need Ivo's actual recipient emails
-- Resend domain verification for ivobrasil.com.br (DNS records needed)
 - Mentoria links TBD from client
