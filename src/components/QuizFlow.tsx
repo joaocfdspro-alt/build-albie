@@ -18,7 +18,7 @@ const questions: Question[] = [
       { text: "Não me preparo, vou no instinto e na hora improviso.", score: 1 },
       { text: "Penso sobre o que quero, mas sem um método definido.", score: 2 },
       { text: "Pesquiso a outra parte e defino limites, mas falta estratégia.", score: 3 },
-      { text: "Tenho framework completo com BATNA, âncoras e plano B.", score: 4 },
+      { text: "Tenho framework completo com alternativas, âncoras e plano B.", score: 4 },
     ],
   },
   {
