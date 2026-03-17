@@ -431,11 +431,11 @@ const CodigoDaNegociacao = () => {
             </button>
 
             <div className="text-center mb-6">
-              <h3 className="font-copperplate text-lg font-bold uppercase tracking-wide mb-1">
-                Garanta sua vaga
+              <h3 className="font-copperplate text-lg font-bold uppercase tracking-wide mb-2">
+                Garanta a melhor condição
               </h3>
-              <p className="text-xs text-muted-foreground">
-                Preencha seus dados e avance para o checkout
+              <p className="text-xs text-muted-foreground leading-relaxed max-w-xs mx-auto">
+                Preencha seus dados para entrar como prioridade e garantir acesso exclusivo. Fique tranquilo: <span className="text-foreground/80 font-medium">não enviamos spam</span>.
               </p>
             </div>
 
@@ -446,7 +446,7 @@ const CodigoDaNegociacao = () => {
                   type="text"
                   value={leadData.name}
                   onChange={(e) => setLeadData({ ...leadData, name: e.target.value })}
-                  placeholder="Seu nome"
+                  placeholder="Seu nome completo"
                   className="w-full h-11 rounded-lg bg-background border border-border/50 px-4 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all"
                   maxLength={100}
                 />
@@ -465,18 +465,25 @@ const CodigoDaNegociacao = () => {
                 {errors.email && <p className="text-xs text-destructive mt-1">{errors.email}</p>}
               </div>
               <div>
-                <label className="text-xs font-semibold text-foreground/70 mb-1 block">Telefone</label>
-                <input
-                  type="tel"
-                  value={leadData.phone}
-                  onChange={(e) => {
-                    const val = e.target.value.replace(/[^\d\s()\-]/g, "");
-                    setLeadData({ ...leadData, phone: val });
-                  }}
-                  placeholder="(99) 99999-9999"
-                  className="w-full h-11 rounded-lg bg-background border border-border/50 px-4 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all"
-                  maxLength={20}
-                />
+                <label className="text-xs font-semibold text-foreground/70 mb-1 block">WhatsApp</label>
+                <div className="flex gap-2">
+                  <select
+                    value={leadData.countryCode}
+                    onChange={(e) => setLeadData({ ...leadData, countryCode: e.target.value, phone: "" })}
+                    className="h-11 rounded-lg bg-background border border-border/50 px-3 text-sm text-foreground focus:outline-none focus:border-gold/50 transition-all appearance-none cursor-pointer"
+                  >
+                    {countryCodes.map((c) => (
+                      <option key={c.code} value={c.code}>{c.label}</option>
+                    ))}
+                  </select>
+                  <input
+                    type="tel"
+                    value={leadData.phone}
+                    onChange={(e) => handlePhoneChange(e.target.value)}
+                    placeholder={getCountryConfig(leadData.countryCode).placeholder}
+                    className="flex-1 h-11 rounded-lg bg-background border border-border/50 px-4 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-gold/50 focus:shadow-gold transition-all"
+                  />
+                </div>
                 {errors.phone && <p className="text-xs text-destructive mt-1">{errors.phone}</p>}
               </div>
             </div>
@@ -498,7 +505,7 @@ const CodigoDaNegociacao = () => {
             </motion.button>
 
             <p className="text-[10px] text-muted-foreground/50 text-center mt-3">
-              Seus dados estão seguros. Garantia de 7 dias.
+              🔒 Seus dados estão seguros e protegidos. Garantia de 7 dias.
             </p>
           </motion.div>
         </div>
