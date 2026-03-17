@@ -24,14 +24,8 @@ function escapeHtml(text: string): string {
     .replace(/"/g, "&quot;");
 }
 
-function getDiagnosticStyle(title: string): { color: string; bgColor: string; borderColor: string; emoji: string } {
-  const map: Record<string, { color: string; bgColor: string; borderColor: string; emoji: string }> = {
-    "Negociador Intuitivo": { color: "#dc2626", bgColor: "#fef2f2", borderColor: "#fecaca", emoji: "🔴" },
-    "Negociador Reativo": { color: "#d97706", bgColor: "#fffbeb", borderColor: "#fde68a", emoji: "🟡" },
-    "Negociador Consciente": { color: "#2563eb", bgColor: "#eff6ff", borderColor: "#bfdbfe", emoji: "🔵" },
-    "Negociador Estratégico": { color: "#16a34a", bgColor: "#f0fdf4", borderColor: "#bbf7d0", emoji: "🟢" },
-  };
-  return map[title] || { color: "#6b7280", bgColor: "#f9fafb", borderColor: "#e5e7eb", emoji: "⚪" };
+function getDiagnosticStyle(_title: string): { bgColor: string; borderColor: string } {
+  return { bgColor: "#1a1512", borderColor: "#c9952e" };
 }
 
 function getCtaByScore(score: number): { text: string; url: string; description: string } {
@@ -63,13 +57,13 @@ function buildUserEmailHtml(payload: DiagnosticPayload): string {
     <!-- Header -->
     <div style="text-align:center;margin-bottom:40px;">
       <div style="margin:0 auto;padding:12px 0 20px 0;border-bottom:1px solid #2a231c;">
-        <p style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#c9952e;margin:0;font-weight:700;">Ivo Brasil</p>
+        <img src="https://yuhvemldykhmwjkabkdg.supabase.co/storage/v1/object/public/email-assets/logo-hrz-dark.png" alt="Ivo Brasil" style="height:40px;width:auto;margin:0 auto 12px auto;display:block;" />
         <p style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#8b7a6b;margin:6px 0 0 0;">Estrategista em Negociações Complexas</p>
       </div>
       <p style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#8b7a6b;margin:20px 0 12px 0;">Seu Diagnóstico de Negociação</p>
       <h1 style="font-size:26px;font-weight:800;color:#ffffff;margin:0 0 12px 0;line-height:1.3;">${escapeHtml(payload.diagnosticTitle)}</h1>
-      <div style="display:inline-block;background:${diagStyle.bgColor};color:${diagStyle.color};border:1px solid ${diagStyle.borderColor};padding:6px 18px;border-radius:20px;font-size:12px;font-weight:700;">
-        ${diagStyle.emoji} ${escapeHtml(payload.diagnosticTitle)}
+      <div style="display:inline-block;background:${diagStyle.bgColor};color:#c9952e;border:1px solid ${diagStyle.borderColor};padding:6px 18px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:1px;">
+        ${escapeHtml(payload.diagnosticTitle)}
       </div>
     </div>
 
