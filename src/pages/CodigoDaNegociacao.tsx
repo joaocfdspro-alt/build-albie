@@ -498,11 +498,11 @@ const CodigoDaNegociacao = () => {
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : (
                 <>
-                  Garantir minha vaga
-                  <ArrowRight className="h-4 w-4" />
-                </>
-              )}
-            </motion.button>
+                    Garanta o seu acesso
+                    <ArrowRight className="h-4 w-4" />
+                  </>
+                )}
+              </motion.button>
 
             <p className="text-[10px] text-muted-foreground/50 text-center mt-3">
               🔒 Seus dados estão seguros e protegidos. Garantia de 7 dias.
