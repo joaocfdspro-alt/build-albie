@@ -54,7 +54,7 @@ const questions: Question[] = [
       { text: "Evito confronto e cedo para manter a relação.", score: 1 },
       { text: "Fico tenso e perco o controle emocional.", score: 2 },
       { text: "Me posiciono, mas sinto insegurança interna.", score: 3 },
-      { text: "Controlo o tom, uso rapport e conduzo com estratégia.", score: 4 },
+      { text: "Controlo o tom, uso conexão genuína e conduzo com estratégia.", score: 4 },
     ],
   },
   {
