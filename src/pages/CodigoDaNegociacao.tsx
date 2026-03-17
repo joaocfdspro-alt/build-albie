@@ -94,7 +94,7 @@ const leadSchema = z.object({
   countryCode: z.string().trim().min(2).max(5),
 });
 
-const CtaButton = ({ className = "", text = "Quero negociar melhor", onClick }: { className?: string; text?: string; onClick?: () => void }) => (
+const CtaButton = ({ className = "", text = "Garanta o seu acesso", onClick }: { className?: string; text?: string; onClick?: () => void }) => (
   <Button
     size="lg"
     onClick={onClick}
