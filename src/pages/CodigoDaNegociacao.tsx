@@ -116,7 +116,18 @@ const CodigoDaNegociacao = () => {
     setShowLeadModal(true);
   };
 
+  const handlePhoneChange = (value: string) => {
+    const cleaned = value.replace(/[^\d\s()\-]/g, "");
+    const digitsOnly = cleaned.replace(/\D/g, "");
+    const config = getCountryConfig(leadData.countryCode);
+    if (digitsOnly.length > config.maxDigits) return;
+    setLeadData({ ...leadData, phone: cleaned });
+  };
+
   const handleLeadSubmit = async () => {
+    const config = getCountryConfig(leadData.countryCode);
+    const actualDigits = getPhoneDigitCount(leadData.phone);
+
     const result = leadSchema.safeParse(leadData);
     if (!result.success) {
       const fieldErrors: Record<string, string> = {};
@@ -126,16 +137,30 @@ const CodigoDaNegociacao = () => {
       setErrors(fieldErrors);
       return;
     }
+
+    if (actualDigits < config.minDigits || actualDigits > config.maxDigits) {
+      setErrors({ phone: `WhatsApp deve ter entre ${config.minDigits} e ${config.maxDigits} dígitos para ${leadData.countryCode}` });
+      return;
+    }
+
     setErrors({});
     setIsSubmitting(true);
 
     try {
-      await supabase.from("codigo_leads").insert({
+      const { data: insertedLead } = await supabase.from("codigo_leads").insert({
         name: result.data.name,
         email: result.data.email,
         phone: result.data.phone,
+        country_code: result.data.countryCode,
         source: "codigo-da-negociacao",
-      });
+      }).select().single();
+
+      // Notify admins
+      if (insertedLead) {
+        supabase.functions.invoke("notify-new-lead", {
+          body: { record: insertedLead, source: "codigo" },
+        }).catch(() => {});
+      }
     } catch { /* silent */ }
 
     setIsSubmitting(false);
