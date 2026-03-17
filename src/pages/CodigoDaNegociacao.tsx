@@ -108,7 +108,7 @@ const CtaButton = ({ className = "", text = "Quero negociar melhor", onClick }: 
 const CodigoDaNegociacao = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [showLeadModal, setShowLeadModal] = useState(false);
-  const [leadData, setLeadData] = useState({ name: "", email: "", phone: "" });
+  const [leadData, setLeadData] = useState({ name: "", email: "", phone: "", countryCode: "+55" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
