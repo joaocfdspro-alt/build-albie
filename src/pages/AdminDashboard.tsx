@@ -43,6 +43,16 @@ interface Lead {
   ai_diagnostic: Record<string, string> | null;
 }
 
+interface SimpleLead {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  country_code?: string;
+  created_at: string;
+  source?: string | null;
+}
+
 type SortKey = "created_at" | "name" | "total_score" | "diagnostic_title";
 type SortDir = "asc" | "desc";
 
@@ -77,13 +87,17 @@ const AdminDashboard = () => {
   const [sortKey, setSortKey] = useState<SortKey>("created_at");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
   const [filterDiagnostic, setFilterDiagnostic] = useState<string>("all");
-  const [activeTab, setActiveTab] = useState<"leads" | "team" | "mapa">("leads");
+  const [activeTab, setActiveTab] = useState<"leads" | "codigo" | "imersao" | "team" | "mapa">("leads");
   const [lightMode, setLightMode] = useState(() => localStorage.getItem("admin-theme") !== "dark");
   const [showTutorial, setShowTutorial] = useState(() => localStorage.getItem("admin-tutorial-dismissed") !== "true");
   const [expandedLead, setExpandedLead] = useState<string | null>(null);
   const [showArchived, setShowArchived] = useState(false);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [dateFilter, setDateFilter] = useState<"all" | "today" | "7d" | "30d">("all");
+  const [codigoLeads, setCodigoLeads] = useState<SimpleLead[]>([]);
+  const [imersaoLeads, setImersaoLeads] = useState<SimpleLead[]>([]);
+  const [loadingCodigo, setLoadingCodigo] = useState(true);
+  const [loadingImersao, setLoadingImersao] = useState(true);
 
   useEffect(() => {
     if (!authLoading && (!user || !isAdmin)) navigate("/admin/login");
@@ -96,7 +110,21 @@ const AdminDashboard = () => {
     setLoading(false);
   };
 
-  useEffect(() => { if (isAdmin) fetchLeads(); }, [isAdmin]);
+  useEffect(() => { if (isAdmin) { fetchLeads(); fetchCodigoLeads(); fetchImersaoLeads(); } }, [isAdmin]);
+
+  const fetchCodigoLeads = async () => {
+    setLoadingCodigo(true);
+    const { data } = await supabase.from("codigo_leads").select("*").order("created_at", { ascending: false });
+    setCodigoLeads((data as SimpleLead[]) ?? []);
+    setLoadingCodigo(false);
+  };
+
+  const fetchImersaoLeads = async () => {
+    setLoadingImersao(true);
+    const { data } = await supabase.from("immersion_waitlist").select("*").order("created_at", { ascending: false });
+    setImersaoLeads((data as SimpleLead[]) ?? []);
+    setLoadingImersao(false);
+  };
 
   useEffect(() => {
     if (!isAdmin) return;
@@ -225,19 +253,27 @@ const AdminDashboard = () => {
         </div>
         {/* Tabs */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex gap-0 -mb-px">
+          <div className="flex gap-0 -mb-px overflow-x-auto">
             {([
-              { key: "leads" as const, icon: LayoutDashboard, label: "Leads" },
+              { key: "leads" as const, icon: LayoutDashboard, label: "Quiz" },
+              { key: "codigo" as const, icon: Award, label: "Código" },
+              { key: "imersao" as const, icon: Users, label: "Imersão" },
               { key: "team" as const, icon: UserCog, label: "Equipe" },
               { key: "mapa" as const, icon: Map, label: "Mapa" },
             ]).map(tab => (
               <button key={tab.key} onClick={() => setActiveTab(tab.key)}
-                className={`h-10 px-4 text-xs font-medium transition-all flex items-center gap-1.5 border-b-2 ${
+                className={`h-10 px-4 text-xs font-medium transition-all flex items-center gap-1.5 border-b-2 whitespace-nowrap ${
                   activeTab === tab.key
                     ? "text-foreground border-foreground"
                     : "text-muted-foreground hover:text-foreground border-transparent"
                 }`}>
                 <tab.icon className="h-3.5 w-3.5" /> {tab.label}
+                {tab.key === "codigo" && codigoLeads.length > 0 && (
+                  <span className="ml-1 text-[9px] bg-gold/20 text-gold px-1.5 py-0.5 rounded-full font-bold">{codigoLeads.length}</span>
+                )}
+                {tab.key === "imersao" && imersaoLeads.length > 0 && (
+                  <span className="ml-1 text-[9px] bg-gold/20 text-gold px-1.5 py-0.5 rounded-full font-bold">{imersaoLeads.length}</span>
+                )}
               </button>
             ))}
           </div>
@@ -485,6 +521,14 @@ const AdminDashboard = () => {
             </>
           )}
         </main>
+      ) : activeTab === "codigo" ? (
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+          <SimpleLeadTable title="Leads — Código da Negociação" leads={codigoLeads} loading={loadingCodigo} onRefresh={fetchCodigoLeads} formatDate={formatDate} formatTime={formatTime} />
+        </main>
+      ) : activeTab === "imersao" ? (
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+          <SimpleLeadTable title="Interessados — Imersão Virando a Mesa" leads={imersaoLeads} loading={loadingImersao} onRefresh={fetchImersaoLeads} formatDate={formatDate} formatTime={formatTime} />
+        </main>
       ) : activeTab === "team" ? (
         <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6"><InviteAdminPanel /></main>
       ) : (
@@ -521,6 +565,97 @@ function StatCard({ icon: Icon, label, value, accent }: { icon: React.ElementTyp
         <span className="text-[11px] font-medium text-muted-foreground">{label}</span>
       </div>
       <p className="text-2xl font-bold text-foreground tracking-tight">{value}</p>
+    </div>
+  );
+}
+
+
+function SimpleLeadTable({ title, leads, loading, onRefresh, formatDate, formatTime }: {
+  title: string;
+  leads: SimpleLead[];
+  loading: boolean;
+  onRefresh: () => void;
+  formatDate: (d: string) => string;
+  formatTime: (d: string) => string;
+}) {
+  const exportCSV = () => {
+    const headers = ["Nome", "E-mail", "Telefone", "Data"];
+    const rows = leads.map(l => [l.name, l.email, l.phone, new Date(l.created_at).toLocaleString("pt-BR")]);
+    const csv = [headers, ...rows].map(r => r.map(v => `"${v}"`).join(",")).join("\n");
+    const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${title.toLowerCase().replace(/\s+/g, "-")}-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-lg font-bold text-foreground">{title}</h2>
+          <p className="text-xs text-muted-foreground">{leads.length} registro{leads.length !== 1 ? "s" : ""}</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <button onClick={onRefresh} className="h-9 px-3 rounded-md bg-card border border-border text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1.5">
+            <RefreshCw className="h-3.5 w-3.5" />
+          </button>
+          <button onClick={exportCSV} className="h-9 px-4 rounded-md bg-foreground text-background text-xs font-semibold hover:opacity-90 transition-opacity flex items-center gap-1.5">
+            <Download className="h-3.5 w-3.5" /> Exportar
+          </button>
+        </div>
+      </div>
+
+      {loading ? (
+        <div className="flex items-center justify-center py-20"><Loader2 className="h-5 w-5 animate-spin text-muted-foreground" /></div>
+      ) : leads.length === 0 ? (
+        <div className="text-center py-20 text-muted-foreground">
+          <Users className="h-8 w-8 mx-auto mb-3 opacity-30" />
+          <p className="text-sm">Nenhum registro encontrado</p>
+        </div>
+      ) : (
+        <div className="rounded-lg border border-border overflow-hidden bg-card">
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs">
+              <thead>
+                <tr className="border-b border-border bg-secondary/30">
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">Nome</th>
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">E-mail</th>
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">Telefone</th>
+                  <th className="text-left px-4 py-3 font-medium text-muted-foreground">Data</th>
+                  <th className="text-center px-4 py-3 font-medium text-muted-foreground">WhatsApp</th>
+                </tr>
+              </thead>
+              <tbody>
+                {leads.map((lead) => {
+                  const cleanPhone = lead.phone.replace(/\D/g, "");
+                  const code = (lead.country_code || "+55").replace("+", "");
+                  const waUrl = `https://wa.me/${code}${cleanPhone}?text=${encodeURIComponent(`Olá ${lead.name}! Aqui é do time do Ivo Brasil.`)}`;
+                  return (
+                    <tr key={lead.id} className="border-b border-border/50 hover:bg-secondary/20 transition-colors">
+                      <td className="px-4 py-3 font-medium text-foreground text-sm">{lead.name}</td>
+                      <td className="px-4 py-3 text-muted-foreground">{lead.email}</td>
+                      <td className="px-4 py-3 text-muted-foreground">{lead.country_code || "+55"} {lead.phone}</td>
+                      <td className="px-4 py-3">
+                        <p className="text-foreground/80">{formatDate(lead.created_at)}</p>
+                        <p className="text-muted-foreground flex items-center gap-1 mt-0.5"><Clock className="h-3 w-3" /> {formatTime(lead.created_at)}</p>
+                      </td>
+                      <td className="px-4 py-3 text-center">
+                        <a href={waUrl} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}
+                          className="inline-flex items-center gap-1 h-7 px-2.5 rounded-md text-[10px] font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 dark:text-emerald-400 dark:bg-emerald-500/10 dark:border-emerald-500/20 dark:hover:bg-emerald-500/20 transition-colors">
+                          <ExternalLink className="h-3 w-3" /> Contato
+                        </a>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

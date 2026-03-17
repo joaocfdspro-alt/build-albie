@@ -94,7 +94,7 @@ const leadSchema = z.object({
   countryCode: z.string().trim().min(2).max(5),
 });
 
-const CtaButton = ({ className = "", text = "Quero negociar melhor", onClick }: { className?: string; text?: string; onClick?: () => void }) => (
+const CtaButton = ({ className = "", text = "Garanta o seu acesso", onClick }: { className?: string; text?: string; onClick?: () => void }) => (
   <Button
     size="lg"
     onClick={onClick}
@@ -182,7 +182,7 @@ const CodigoDaNegociacao = () => {
             <div className="w-px h-5 bg-border/50 hidden sm:block" />
             <IvoLogo size="sm" variant="icon" />
           </div>
-          <CtaButton className="h-10 px-6 text-xs" text="Garantir vaga" onClick={handleCtaClick} />
+          <CtaButton className="h-10 px-6 text-xs" onClick={handleCtaClick} />
         </div>
       </nav>
 
@@ -342,7 +342,7 @@ const CodigoDaNegociacao = () => {
                         <span className="font-semibold">Garantia incondicional de 7 dias</span>
                       </div>
                     </div>
-                    <CtaButton className="w-full" text="Garantir minha vaga" onClick={handleCtaClick} />
+                    <CtaButton className="w-full" onClick={handleCtaClick} />
                   </div>
                 </div>
               </div>
@@ -409,7 +409,7 @@ const CodigoDaNegociacao = () => {
           onClick={handleCtaClick}
           className="w-full h-12 text-sm font-bold tracking-wide bg-gradient-gold-deep hover:opacity-90 shadow-gold-intense rounded-lg gap-2 uppercase font-copperplate"
         >
-          Garantir minha vaga
+          Garanta o seu acesso
           <ArrowRight className="h-4 w-4" />
         </Button>
       </div>
@@ -432,10 +432,10 @@ const CodigoDaNegociacao = () => {
 
             <div className="text-center mb-6">
               <h3 className="font-copperplate text-lg font-bold uppercase tracking-wide mb-2">
-                Garanta seu acesso
+                Cadastre-se e garanta a prioridade
               </h3>
               <p className="text-xs text-muted-foreground leading-relaxed max-w-xs mx-auto">
-                Preencha seus dados abaixo para garantir prioridade no programa. Fique tranquilo: <span className="text-foreground/80 font-medium">não enviamos spam</span>.
+                Preencha seus dados para receber acesso prioritário ao programa. Fique tranquilo: <span className="text-foreground/80 font-medium">não enviamos spam</span>.
               </p>
             </div>
 
@@ -498,11 +498,11 @@ const CodigoDaNegociacao = () => {
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : (
                 <>
-                  Garantir minha vaga
-                  <ArrowRight className="h-4 w-4" />
-                </>
-              )}
-            </motion.button>
+                    Garanta o seu acesso
+                    <ArrowRight className="h-4 w-4" />
+                  </>
+                )}
+              </motion.button>
 
             <p className="text-[10px] text-muted-foreground/50 text-center mt-3">
               🔒 Seus dados estão seguros e protegidos. Garantia de 7 dias.

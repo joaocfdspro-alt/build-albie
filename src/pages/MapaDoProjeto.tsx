@@ -186,9 +186,9 @@ const sections: Section[] = [
       "Sempre que alguém completa o quiz, um e-mail HTML profissional é disparado automaticamente com o nome do lead, contato, resultado do diagnóstico, 'temperatura' do lead (frio a premium), análise comportamental, próximo passo sugerido e oferta recomendada.",
     items: [
       {
-        label: "Destinatários",
+        label: "Destinatários atuais",
         url: "",
-        why: "Os e-mails de notificação precisam ser configurados com os endereços da equipe do Ivo Brasil.",
+        why: "Os e-mails de notificação são enviados para: ledioprofissional@gmail.com e 0019.andrematheus@gmail.com. Novos admins recebem automaticamente ao serem adicionados.",
       },
     ],
   },
@@ -304,8 +304,9 @@ export const MapaContent = () => {
             <p className="text-foreground">LinkedIn: /in/ivobrasil/</p>
           </div>
           <div className="space-y-2">
-            <p className="font-bold text-foreground">E-mails de notificação:</p>
-            <p className="text-muted-foreground">A configurar com a equipe do Ivo</p>
+            <p className="font-bold text-foreground">E-mails de notificação (admins):</p>
+            <p className="text-foreground">ledioprofissional@gmail.com</p>
+            <p className="text-foreground">0019.andrematheus@gmail.com</p>
           </div>
         </div>
       </div>
