@@ -304,8 +304,9 @@ export const MapaContent = () => {
             <p className="text-foreground">LinkedIn: /in/ivobrasil/</p>
           </div>
           <div className="space-y-2">
-            <p className="font-bold text-foreground">E-mails de notificação:</p>
-            <p className="text-muted-foreground">A configurar com a equipe do Ivo</p>
+            <p className="font-bold text-foreground">E-mails de notificação (admins):</p>
+            <p className="text-foreground">ledioprofissional@gmail.com</p>
+            <p className="text-foreground">0019.andrematheus@gmail.com</p>
           </div>
         </div>
       </div>
