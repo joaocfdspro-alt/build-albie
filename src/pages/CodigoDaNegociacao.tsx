@@ -432,10 +432,10 @@ const CodigoDaNegociacao = () => {
 
             <div className="text-center mb-6">
               <h3 className="font-copperplate text-lg font-bold uppercase tracking-wide mb-2">
-                Garanta seu acesso
+                Cadastre-se e garanta a prioridade
               </h3>
               <p className="text-xs text-muted-foreground leading-relaxed max-w-xs mx-auto">
-                Preencha seus dados abaixo para garantir prioridade no programa. Fique tranquilo: <span className="text-foreground/80 font-medium">não enviamos spam</span>.
+                Preencha seus dados para receber acesso prioritário ao programa. Fique tranquilo: <span className="text-foreground/80 font-medium">não enviamos spam</span>.
               </p>
             </div>
 
