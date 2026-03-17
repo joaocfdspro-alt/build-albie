@@ -277,7 +277,7 @@ function buildAdaptiveDiagnostic(params: {
 
   const perspective = `O que eu vejo em você é capacidade de evolução rápida, desde que exista método e repetição guiada. Seu melhor ativo agora está em ${strongest.label}, e isso precisa ser usado como alavanca para recuperar margem nas próximas negociações. Se ajustar os dois pontos críticos, sua curva de resultado muda em semanas e não em anos.`;
 
-  const recommendation = `Meu caminho recomendado é direto: nos próximos 30 dias, foque em ${weakest[0].action}. Em paralelo, execute ${weakest[1].action} para estabilizar seu posicionamento nas conversas de maior valor. Com esse plano, você sai do improviso e passa a conduzir negociações com controle, previsibilidade e lucro.`;
+  const recommendation = `Meu caminho recomendado é direto: nos próximos 30 dias, foque em ${weakest[0].action}. Em paralelo, trabalhe em ${weakest[1].action} para estabilizar seu posicionamento nas conversas de maior valor. Com esse plano, você sai do improviso e passa a conduzir negociações com controle, previsibilidade e lucro.`;
 
   return { observation, perspective, recommendation };
 }
