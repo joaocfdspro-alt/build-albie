@@ -342,7 +342,7 @@ const CodigoDaNegociacao = () => {
                         <span className="font-semibold">Garantia incondicional de 7 dias</span>
                       </div>
                     </div>
-                    <CtaButton className="w-full" text="Garantir minha vaga" onClick={handleCtaClick} />
+                    <CtaButton className="w-full" onClick={handleCtaClick} />
                   </div>
                 </div>
               </div>
