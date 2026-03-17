@@ -186,9 +186,9 @@ const sections: Section[] = [
       "Sempre que alguém completa o quiz, um e-mail HTML profissional é disparado automaticamente com o nome do lead, contato, resultado do diagnóstico, 'temperatura' do lead (frio a premium), análise comportamental, próximo passo sugerido e oferta recomendada.",
     items: [
       {
-        label: "Destinatários",
+        label: "Destinatários atuais",
         url: "",
-        why: "Os e-mails de notificação precisam ser configurados com os endereços da equipe do Ivo Brasil.",
+        why: "Os e-mails de notificação são enviados para: ledioprofissional@gmail.com e 0019.andrematheus@gmail.com. Novos admins recebem automaticamente ao serem adicionados.",
       },
     ],
   },
