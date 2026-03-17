@@ -178,7 +178,7 @@ const categoryRules = [
       "em cenários tensos você acaba acelerando concessões importantes",
     ],
     actions: [
-      "usar pausas táticas, perguntas de precisão e silêncio estratégico antes de responder",
+      "aplicar perguntas de precisão e silêncio estratégico antes de responder",
       "treinar frases de reposicionamento para manter firmeza sem elevar o tom",
       "responder objeções com estrutura: reconhecer, investigar e redirecionar",
     ],
