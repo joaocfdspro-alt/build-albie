@@ -110,7 +110,21 @@ const AdminDashboard = () => {
     setLoading(false);
   };
 
-  useEffect(() => { if (isAdmin) fetchLeads(); }, [isAdmin]);
+  useEffect(() => { if (isAdmin) { fetchLeads(); fetchCodigoLeads(); fetchImersaoLeads(); } }, [isAdmin]);
+
+  const fetchCodigoLeads = async () => {
+    setLoadingCodigo(true);
+    const { data } = await supabase.from("codigo_leads").select("*").order("created_at", { ascending: false });
+    setCodigoLeads((data as SimpleLead[]) ?? []);
+    setLoadingCodigo(false);
+  };
+
+  const fetchImersaoLeads = async () => {
+    setLoadingImersao(true);
+    const { data } = await supabase.from("immersion_waitlist").select("*").order("created_at", { ascending: false });
+    setImersaoLeads((data as SimpleLead[]) ?? []);
+    setLoadingImersao(false);
+  };
 
   useEffect(() => {
     if (!isAdmin) return;
