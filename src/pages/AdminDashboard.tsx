@@ -253,19 +253,27 @@ const AdminDashboard = () => {
         </div>
         {/* Tabs */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex gap-0 -mb-px">
+          <div className="flex gap-0 -mb-px overflow-x-auto">
             {([
-              { key: "leads" as const, icon: LayoutDashboard, label: "Leads" },
+              { key: "leads" as const, icon: LayoutDashboard, label: "Quiz" },
+              { key: "codigo" as const, icon: Award, label: "Código" },
+              { key: "imersao" as const, icon: Users, label: "Imersão" },
               { key: "team" as const, icon: UserCog, label: "Equipe" },
               { key: "mapa" as const, icon: Map, label: "Mapa" },
             ]).map(tab => (
               <button key={tab.key} onClick={() => setActiveTab(tab.key)}
-                className={`h-10 px-4 text-xs font-medium transition-all flex items-center gap-1.5 border-b-2 ${
+                className={`h-10 px-4 text-xs font-medium transition-all flex items-center gap-1.5 border-b-2 whitespace-nowrap ${
                   activeTab === tab.key
                     ? "text-foreground border-foreground"
                     : "text-muted-foreground hover:text-foreground border-transparent"
                 }`}>
                 <tab.icon className="h-3.5 w-3.5" /> {tab.label}
+                {tab.key === "codigo" && codigoLeads.length > 0 && (
+                  <span className="ml-1 text-[9px] bg-gold/20 text-gold px-1.5 py-0.5 rounded-full font-bold">{codigoLeads.length}</span>
+                )}
+                {tab.key === "imersao" && imersaoLeads.length > 0 && (
+                  <span className="ml-1 text-[9px] bg-gold/20 text-gold px-1.5 py-0.5 rounded-full font-bold">{imersaoLeads.length}</span>
+                )}
               </button>
             ))}
           </div>
