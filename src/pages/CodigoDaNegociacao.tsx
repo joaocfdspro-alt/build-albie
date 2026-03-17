@@ -70,10 +70,28 @@ const stats = [
   { icon: TrendingUp, value: "Vale", label: "E grandes corporações" },
 ];
 
+const countryCodes = [
+  { code: "+55", label: "🇧🇷 +55", minDigits: 10, maxDigits: 11, placeholder: "(99) 99999-9999" },
+  { code: "+1", label: "🇺🇸 +1", minDigits: 10, maxDigits: 10, placeholder: "(555) 555-5555" },
+  { code: "+351", label: "🇵🇹 +351", minDigits: 9, maxDigits: 9, placeholder: "912 345 678" },
+  { code: "+595", label: "🇵🇾 +595", minDigits: 9, maxDigits: 10, placeholder: "981 234 567" },
+  { code: "+54", label: "🇦🇷 +54", minDigits: 10, maxDigits: 10, placeholder: "11 2345-6789" },
+  { code: "+598", label: "🇺🇾 +598", minDigits: 8, maxDigits: 8, placeholder: "94 123 456" },
+];
+
+function getCountryConfig(countryCode: string) {
+  return countryCodes.find(c => c.code === countryCode) || { minDigits: 8, maxDigits: 11, placeholder: "Seu WhatsApp" };
+}
+
+function getPhoneDigitCount(phone: string) {
+  return phone.replace(/\D/g, "").length;
+}
+
 const leadSchema = z.object({
   name: z.string().trim().min(2, "Nome muito curto").max(100),
-  email: z.string().trim().email("E-mail inválido").max(255),
-  phone: z.string().trim().min(8, "Telefone inválido").max(20),
+  email: z.string().trim().email("Informe um e-mail válido. Verifique se não há erros de digitação.").max(255),
+  phone: z.string().trim().min(8, "WhatsApp inválido").max(20),
+  countryCode: z.string().trim().min(2).max(5),
 });
 
 const CtaButton = ({ className = "", text = "Quero negociar melhor", onClick }: { className?: string; text?: string; onClick?: () => void }) => (
