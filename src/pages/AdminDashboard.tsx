@@ -87,7 +87,7 @@ const AdminDashboard = () => {
   const [sortKey, setSortKey] = useState<SortKey>("created_at");
   const [sortDir, setSortDir] = useState<SortDir>("desc");
   const [filterDiagnostic, setFilterDiagnostic] = useState<string>("all");
-  const [activeTab, setActiveTab] = useState<"leads" | "team" | "mapa">("leads");
+  const [activeTab, setActiveTab] = useState<"leads" | "codigo" | "imersao" | "team" | "mapa">("leads");
   const [lightMode, setLightMode] = useState(() => localStorage.getItem("admin-theme") !== "dark");
   const [showTutorial, setShowTutorial] = useState(() => localStorage.getItem("admin-tutorial-dismissed") !== "true");
   const [expandedLead, setExpandedLead] = useState<string | null>(null);
