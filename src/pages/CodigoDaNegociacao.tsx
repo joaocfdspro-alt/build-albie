@@ -182,7 +182,7 @@ const CodigoDaNegociacao = () => {
             <div className="w-px h-5 bg-border/50 hidden sm:block" />
             <IvoLogo size="sm" variant="icon" />
           </div>
-          <CtaButton className="h-10 px-6 text-xs" text="Garantir vaga" onClick={handleCtaClick} />
+          <CtaButton className="h-10 px-6 text-xs" onClick={handleCtaClick} />
         </div>
       </nav>
 
