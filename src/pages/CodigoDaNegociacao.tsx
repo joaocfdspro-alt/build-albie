@@ -409,7 +409,7 @@ const CodigoDaNegociacao = () => {
           onClick={handleCtaClick}
           className="w-full h-12 text-sm font-bold tracking-wide bg-gradient-gold-deep hover:opacity-90 shadow-gold-intense rounded-lg gap-2 uppercase font-copperplate"
         >
-          Garantir minha vaga
+          Garanta o seu acesso
           <ArrowRight className="h-4 w-4" />
         </Button>
       </div>

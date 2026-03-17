@@ -844,35 +844,6 @@ const QuizFlow = () => {
                         </motion.div>
                   </div>
 
-                  {/* Primary CTA: Conheça o Código da Negociação */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 }}
-                  >
-                    <Link
-                      to="/codigo-da-negociacao"
-                      className="flex items-center justify-center gap-2 w-full py-4 rounded-lg bg-gradient-gold-deep text-primary-foreground font-bold text-sm shadow-gold-intense hover:opacity-90 active:scale-[0.98] transition-all duration-200 mb-4"
-                    >
-                      <Target className="h-5 w-5" />
-                      Conheça o Código da Negociação
-                    </Link>
-                  </motion.div>
-
-                  {/* Secondary CTA: Talk to specialist */}
-                  <motion.a
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.65 }}
-                    href={codigoWhatsappUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full py-3 rounded-lg border border-gold/30 text-gold text-sm font-semibold hover:bg-gold/5 active:scale-[0.98] transition-all duration-200 mb-8"
-                  >
-                    Falar com especialista
-                    <ArrowRight className="h-4 w-4" />
-                  </motion.a>
-
                   {emailCopyNotice !== "idle" && (
                     <p className="text-[11px] text-center text-muted-foreground mb-6">
                       {emailCopyNotice === "sent"
@@ -885,8 +856,8 @@ const QuizFlow = () => {
                   <motion.div
                     initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.7 }}
-                    className="bg-card border border-border/50 rounded-lg p-5 mb-6"
+                    transition={{ delay: 0.6 }}
+                    className="bg-card border border-gold/20 rounded-lg p-5 mb-6"
                   >
                     <p className="text-xs font-bold uppercase tracking-[0.2em] text-gold/60 mb-2 font-copperplate">Próximo nível</p>
                     <p className="text-sm text-foreground/80 leading-relaxed mb-4">
@@ -895,10 +866,10 @@ const QuizFlow = () => {
                     </p>
                     <Link
                       to="/codigo-da-negociacao"
-                      className="flex items-center justify-center gap-2 w-full py-3 rounded-lg border border-gold/30 text-gold text-xs font-bold hover:bg-gold/5 transition-colors"
+                      className="flex items-center justify-center gap-2 w-full py-4 rounded-lg bg-gradient-gold-deep text-primary-foreground font-bold text-sm shadow-gold-intense hover:opacity-90 active:scale-[0.98] transition-all duration-200"
                     >
-                      Ver programa completo
-                      <ArrowRight className="h-3 w-3" />
+                      <Target className="h-5 w-5" />
+                      Garanta o seu acesso
                     </Link>
                   </motion.div>
 
