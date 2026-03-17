@@ -36,7 +36,7 @@ const questions: Question[] = [
       { text: "Cobro o mínimo possível para garantir a venda.", score: 1 },
       { text: "Defino um preço, mas baixo rápido se pressionado.", score: 2 },
       { text: "Pesquiso o mercado e defendo com argumentos.", score: 3 },
-      { text: "Uso âncora alta, justifico com valor e nego com margem calculada.", score: 4 },
+      { text: "Uso âncora alta, justifico com valor e nego com limite pré-estabelecido.", score: 4 },
     ],
   },
   {
