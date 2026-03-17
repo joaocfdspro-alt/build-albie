@@ -24,14 +24,8 @@ function escapeHtml(text: string): string {
     .replace(/"/g, "&quot;");
 }
 
-function getDiagnosticStyle(title: string): { color: string; bgColor: string; borderColor: string; emoji: string } {
-  const map: Record<string, { color: string; bgColor: string; borderColor: string; emoji: string }> = {
-    "Negociador Intuitivo": { color: "#dc2626", bgColor: "#fef2f2", borderColor: "#fecaca", emoji: "🔴" },
-    "Negociador Reativo": { color: "#d97706", bgColor: "#fffbeb", borderColor: "#fde68a", emoji: "🟡" },
-    "Negociador Consciente": { color: "#2563eb", bgColor: "#eff6ff", borderColor: "#bfdbfe", emoji: "🔵" },
-    "Negociador Estratégico": { color: "#16a34a", bgColor: "#f0fdf4", borderColor: "#bbf7d0", emoji: "🟢" },
-  };
-  return map[title] || { color: "#6b7280", bgColor: "#f9fafb", borderColor: "#e5e7eb", emoji: "⚪" };
+function getDiagnosticStyle(_title: string): { bgColor: string; borderColor: string } {
+  return { bgColor: "#1a1512", borderColor: "#c9952e" };
 }
 
 function getCtaByScore(score: number): { text: string; url: string; description: string } {
