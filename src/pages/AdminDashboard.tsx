@@ -521,6 +521,14 @@ const AdminDashboard = () => {
             </>
           )}
         </main>
+      ) : activeTab === "codigo" ? (
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+          <SimpleLeadTable title="Leads — Código da Negociação" leads={codigoLeads} loading={loadingCodigo} onRefresh={fetchCodigoLeads} formatDate={formatDate} formatTime={formatTime} />
+        </main>
+      ) : activeTab === "imersao" ? (
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+          <SimpleLeadTable title="Interessados — Imersão Virando a Mesa" leads={imersaoLeads} loading={loadingImersao} onRefresh={fetchImersaoLeads} formatDate={formatDate} formatTime={formatTime} />
+        </main>
       ) : activeTab === "team" ? (
         <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6"><InviteAdminPanel /></main>
       ) : (
