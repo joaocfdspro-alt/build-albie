@@ -105,18 +105,18 @@ function buildUserEmailHtml(payload: DiagnosticPayload): string {
       </p>
       <a href="${cta.url}"
          style="display:inline-block;background:linear-gradient(135deg,#c9952e,#a07822);color:#ffffff;padding:16px 40px;border-radius:12px;text-decoration:none;font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;box-shadow:0 4px 20px rgba(201,149,46,0.35);">
-        ${cta.text} →
+       ${cta.text}
       </a>
     </div>
 
     <!-- WhatsApp Secondary CTA -->
     <div style="text-align:center;margin-bottom:40px;padding:24px;background-color:#1a1512;border:1px solid #2a231c;border-radius:16px;">
-      <p style="font-size:14px;color:#e8ddd0;margin:0 0 16px 0;line-height:1.6;">
+      <p style="font-size:14px;color:#e8ddd0;margin:0 0 16px 0;line-height:1.6;font-family:'Helvetica Neue',Arial,sans-serif;">
         Prefere conversar diretamente? Fale comigo pelo WhatsApp:
       </p>
       <a href="https://wa.me/5546999238882?text=${encodeURIComponent(`Olá Ivo! Fiz o diagnóstico de negociação e meu perfil é ${payload.diagnosticTitle}. Quero dar o próximo passo.`)}"
-         style="display:inline-block;background:#16a34a;color:#ffffff;padding:14px 32px;border-radius:12px;text-decoration:none;font-size:12px;font-weight:700;letter-spacing:1px;">
-        💬 FALAR COM IVO NO WHATSAPP
+         style="display:inline-block;background:linear-gradient(135deg,#c9952e,#a07822);color:#ffffff;padding:14px 32px;border-radius:12px;text-decoration:none;font-size:12px;font-weight:800;letter-spacing:2px;text-transform:uppercase;font-family:'Helvetica Neue',Arial,sans-serif;box-shadow:0 4px 20px rgba(201,149,46,0.35);">
+        FALAR COM IVO NO WHATSAPP
       </a>
     </div>
 
