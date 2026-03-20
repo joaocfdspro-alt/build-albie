@@ -9,7 +9,7 @@ const NOTIFY_EMAILS = [
   "ledioprofissional@gmail.com",
 ];
 
-const ADMIN_PANEL_URL = "https://ivobrasil.lovable.app/admin";
+const ADMIN_PANEL_URL = "https://hub.ivobrasil.com.br/admin";
 
 function escapeHtml(text: string): string {
   return text
