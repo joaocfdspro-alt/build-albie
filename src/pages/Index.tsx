@@ -144,9 +144,11 @@ const Index = () => {
               icon={GraduationCap}
               title="Método O Negociador"
               subtitle="Treinamento com técnicas e estratégias práticas"
-              href="https://ivobrasil.com.br/onegociador/"
+              href="/o-negociador"
               variant="secondary"
               index={2}
+              isInternal
+              onClick={() => navigate("/o-negociador")}
             />
 
             <HubLink

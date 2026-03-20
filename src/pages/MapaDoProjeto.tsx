@@ -4,7 +4,7 @@ import { ArrowLeft, Download, ExternalLink, Info, Sun, Moon } from "lucide-react
 import { Button } from "@/components/ui/button";
 import D7Footer from "@/components/D7Footer";
 
-const siteUrl = "https://ivobrasil.com.br";
+const siteUrl = "https://hub.ivobrasil.com.br";
 const mapaUrl = `${siteUrl}/mapa`;
 
 interface Item {
@@ -122,9 +122,9 @@ const sections: Section[] = [
       "Página de vendas do curso O Negociador. Produto de entrada com técnicas práticas de negociação para quem está começando.",
     items: [
       {
-        label: "Link de checkout",
+        label: "Link de checkout (externo)",
         url: "https://ivobrasil.com.br/onegociador/",
-        why: "Link de pagamento do curso O Negociador. Redireciona para a página de checkout externa.",
+        why: "Link de pagamento externo do curso O Negociador no domínio principal ivobrasil.com.br.",
       },
       {
         label: "WhatsApp de dúvidas",
