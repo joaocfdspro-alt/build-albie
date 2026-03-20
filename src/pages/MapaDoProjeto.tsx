@@ -167,6 +167,28 @@ const sections: Section[] = [
     ],
   },
   {
+    title: "📚 Livros — Negociação sem Complicação",
+    fullUrl: livrosPageUrl,
+    description:
+      "Página de livros no site principal do Ivo Brasil. Contém links para compra do livro físico (Clube de Autores) e digital (Xgrow).",
+    items: [
+      {
+        label: "Página de livros",
+        url: livrosPageUrl,
+        why: "Página principal de livros no domínio ivobrasil.com.br.",
+      },
+      {
+        label: "Livro físico (Clube de Autores)",
+        url: livroFisicoUrl,
+        why: "Link de compra do livro físico 'Negociação sem Complicação' no Clube de Autores.",
+      },
+      {
+        label: "Livro digital (checkout Xgrow)",
+        url: livroDigitalUrl,
+        why: "Link de compra do livro digital na plataforma Xgrow.",
+      },
+    ],
+  },
     title: "🔥 Imersão Virando a Mesa",
     fullUrl: imersaoUrl,
     description:
