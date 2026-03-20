@@ -122,9 +122,9 @@ const sections: Section[] = [
       "Página de vendas do curso O Negociador. Produto de entrada com técnicas práticas de negociação para quem está começando.",
     items: [
       {
-        label: "Link de checkout",
+        label: "Link de checkout (externo)",
         url: "https://ivobrasil.com.br/onegociador/",
-        why: "Link de pagamento do curso O Negociador. Redireciona para a página de checkout externa.",
+        why: "Link de pagamento externo do curso O Negociador no domínio principal ivobrasil.com.br.",
       },
       {
         label: "WhatsApp de dúvidas",
