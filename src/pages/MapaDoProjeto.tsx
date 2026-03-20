@@ -4,8 +4,17 @@ import { ArrowLeft, Download, ExternalLink, Info, Sun, Moon } from "lucide-react
 import { Button } from "@/components/ui/button";
 import D7Footer from "@/components/D7Footer";
 
-const siteUrl = "https://hub.ivobrasil.com.br";
-const mapaUrl = `${siteUrl}/mapa`;
+const hubUrl = "https://hub.ivobrasil.com.br";
+const siteUrl = "https://ivobrasil.com.br";
+const mapaUrl = `${hubUrl}/mapa`;
+const codigoCheckoutUrl = "https://checkout4.xgrow.com/pt/2ad70720-887e-4cc1-b2db-2854a18e029f/MTAyOTY1";
+const oNegociadorUrl = `${siteUrl}/onegociador/`;
+const imersaoUrl = `${siteUrl}/imersao-virando-a-mesa/`;
+const livrosUrl = `${siteUrl}/livros/`;
+const mentoriasUrl = `${siteUrl}/mentorias/`;
+const whatsappUrl = "https://wa.me/5546999238882";
+const codigoWhatsappUrl = `${whatsappUrl}?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20C%C3%B3digo%20da%20Negocia%C3%A7%C3%A3o.`;
+const cursoWhatsappUrl = `${whatsappUrl}?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20curso%20O%20Negociador.`;
 
 interface Item {
   label: string;
@@ -23,29 +32,39 @@ interface Section {
 const sections: Section[] = [
   {
     title: "🏠 Página Inicial (Hub de Links)",
-    fullUrl: `${siteUrl}/`,
+    fullUrl: `${hubUrl}/`,
     description:
-      "É a porta de entrada do ecossistema do Ivo Brasil. Funciona como um Linktree premium e concentra todos os caminhos que a audiência pode percorrer. Quando o Ivo compartilha seu link principal em bio do Instagram, stories ou cartão de visita, é para cá que as pessoas vão.",
+      "É a porta de entrada do ecossistema do Ivo Brasil. Funciona como um hub de links e concentra somente as páginas criadas dentro do hub, além dos atalhos para as páginas externas do site principal.",
     items: [
       {
         label: "Diagnóstico de Negociação (Quiz)",
-        url: `${siteUrl}/quiz`,
+        url: `${hubUrl}/quiz`,
         why: "Link interno que leva ao quiz de 8 perguntas. Captura nome, e-mail e telefone do lead, classifica o perfil de negociação e gera dados estratégicos para a equipe.",
       },
       {
         label: "Código da Negociação (Programa de 90 dias)",
-        url: `${siteUrl}/codigo-da-negociacao`,
+        url: `${hubUrl}/codigo-da-negociacao`,
         why: "Link interno para a página de vendas do programa principal — 90 dias para se tornar um negociador estratégico (R$997).",
       },
       {
         label: "Curso O Negociador",
-        url: `${siteUrl}/o-negociador`,
-        why: "Link interno para a página de vendas do curso O Negociador. Produto de entrada com foco em técnicas práticas de negociação.",
+        url: oNegociadorUrl,
+        why: "Link externo para o curso O Negociador no site principal. Não existe mais uma página própria desse curso dentro do hub.",
       },
       {
         label: "Imersão Virando a Mesa",
-        url: `${siteUrl}/imersao-virando-a-mesa`,
-        why: "Link interno para a página da imersão presencial focada em técnicas de negociação para empresários, gestores e empreendedores.",
+        url: imersaoUrl,
+        why: "Link externo para a página da imersão no site principal. Não existe mais uma página própria da imersão dentro do hub.",
+      },
+      {
+        label: "Mentorias",
+        url: mentoriasUrl,
+        why: "Link externo para a página de mentorias no site principal do Ivo Brasil.",
+      },
+      {
+        label: "Livros",
+        url: livrosUrl,
+        why: "Link externo para a página de livros no site principal.",
       },
       {
         label: "Instagram @ivobrasil1",
@@ -64,14 +83,14 @@ const sections: Section[] = [
       },
       {
         label: "WhatsApp",
-        url: "https://wa.me/5546999238882",
+        url: whatsappUrl,
         why: "Link direto para conversa no WhatsApp com o número (46) 99923-8882. Aparece nos botões de CTA e no rodapé.",
       },
     ],
   },
   {
     title: "🧠 Diagnóstico de Perfil de Negociação (Quiz Interativo)",
-    fullUrl: `${siteUrl}/quiz`,
+    fullUrl: `${hubUrl}/quiz`,
     description:
       "Quiz de 8 perguntas que identifica o perfil de negociação da pessoa. Ao final, ela preenche nome, e-mail e telefone para ver o resultado. Esses dados ficam salvos no banco de dados e a equipe recebe um e-mail automático com o relatório estratégico do lead.",
     items: [
@@ -99,67 +118,67 @@ const sections: Section[] = [
   },
   {
     title: "📖 Código da Negociação — Página de Vendas",
-    fullUrl: `${siteUrl}/codigo-da-negociacao`,
+    fullUrl: `${hubUrl}/codigo-da-negociacao`,
     description:
       "Página de vendas do programa principal de 90 dias para se tornar um negociador estratégico. R$997. Contém hero, módulos, depoimentos, FAQ e botões de compra.",
     items: [
       {
         label: "Link de checkout (Xgrow)",
-        url: "https://checkout4.xgrow.com/pt/2ad70720-887e-4cc1-b2db-2854a18e029f/MTAyOTY1",
+        url: codigoCheckoutUrl,
         why: "Link de pagamento do programa Código da Negociação na plataforma Xgrow. Ao clicar em qualquer botão de compra, a pessoa preenche nome, e-mail e telefone e vai direto para o checkout.",
       },
       {
         label: "WhatsApp de dúvidas",
-        url: "https://wa.me/5546999238882?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20C%C3%B3digo%20da%20Negocia%C3%A7%C3%A3o.",
+        url: codigoWhatsappUrl,
         why: "Botão que abre conversa no WhatsApp com o número (46) 99923-8882 para tirar dúvidas antes de comprar.",
       },
     ],
   },
   {
     title: "🎤 Curso O Negociador — Página de Vendas",
-    fullUrl: `${siteUrl}/o-negociador`,
+    fullUrl: oNegociadorUrl,
     description:
-      "Página de vendas do curso O Negociador. Produto de entrada com técnicas práticas de negociação para quem está começando.",
+      "Página de vendas do curso O Negociador no site principal. O hub apenas aponta para essa URL externa.",
     items: [
       {
         label: "Link de checkout (externo)",
-        url: "https://ivobrasil.com.br/onegociador/",
+        url: oNegociadorUrl,
         why: "Link de pagamento externo do curso O Negociador no domínio principal ivobrasil.com.br.",
       },
       {
         label: "WhatsApp de dúvidas",
-        url: "https://wa.me/5546999238882?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20curso%20O%20Negociador.",
+        url: cursoWhatsappUrl,
         why: "Botão que abre conversa no WhatsApp com o número (46) 99923-8882.",
       },
     ],
   },
   {
     title: "🔥 Imersão Virando a Mesa",
-    fullUrl: `${siteUrl}/imersao-virando-a-mesa`,
+    fullUrl: imersaoUrl,
     description:
-      "Página da imersão presencial focada em técnicas avançadas de negociação para aumentar o faturamento de empresários, gestores e empreendedores. Contém formulário de lista de espera.",
+      "Página da imersão presencial no site principal do Ivo Brasil. O hub não mantém mais uma página própria dessa oferta.",
     items: [
       {
-        label: "Formulário de lista de espera",
-        url: "",
-        why: "Captura nome, e-mail e telefone de interessados na imersão. Os dados ficam salvos no banco de dados para a equipe entrar em contato.",
+        label: "Página externa oficial",
+        url: imersaoUrl,
+        why: "Destino oficial da imersão no domínio ivobrasil.com.br, com os botões e seções comerciais publicados fora do hub.",
       },
     ],
   },
   {
     title: "🔐 Painel Administrativo",
-    fullUrl: `${siteUrl}/admin`,
+    fullUrl: `${hubUrl}/admin`,
     description:
       "Dashboard exclusivo e protegido por login onde a equipe acompanha em tempo real todos os leads capturados pelo quiz. Mostra métricas (total, novos hoje, score médio, perfil mais comum), gráfico de distribuição, busca, filtros e exportação CSV. Também permite gerenciar a equipe de administradores.",
     items: [
       {
         label: "Página de login",
-        url: `${siteUrl}/admin/login`,
+        url: `${hubUrl}/admin/login`,
         why: "Acesso restrito — só entra quem tem e-mail e senha cadastrados como administrador.",
       },
       {
         label: "Dashboard principal",
-        url: `${siteUrl}/admin`,
+        url: `${hubUrl}/admin`,
         why: "Visão geral dos leads com cards de métricas, tabela completa, filtros por diagnóstico e busca por nome/e-mail/telefone.",
       },
       {
@@ -188,7 +207,7 @@ const sections: Section[] = [
       {
         label: "Destinatários atuais",
         url: "",
-        why: "Os e-mails de notificação são enviados para: ledioprofissional@gmail.com e 0019.andrematheus@gmail.com. Novos admins recebem automaticamente ao serem adicionados.",
+        why: "Os e-mails de notificação seguem a lista de administradores ativos do painel. Sempre que um novo admin é criado, ele passa a receber os avisos automaticamente.",
       },
     ],
   },
@@ -281,11 +300,27 @@ export const MapaContent = () => {
             <p className="font-bold text-foreground">Links de checkout:</p>
             <p className="text-muted-foreground">
               Código da Negociação →{" "}
-              <span className="text-foreground break-all">checkout4.xgrow.com/pt/2ad70720...</span>
+              <a href={codigoCheckoutUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
+                {codigoCheckoutUrl}
+              </a>
             </p>
             <p className="text-muted-foreground">
               O Negociador →{" "}
-              <span className="text-foreground break-all">ivobrasil.com.br/onegociador/</span>
+              <a href={oNegociadorUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
+                {oNegociadorUrl}
+              </a>
+            </p>
+            <p className="text-muted-foreground">
+              Imersão Virando a Mesa →{" "}
+              <a href={imersaoUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
+                {imersaoUrl}
+              </a>
+            </p>
+            <p className="text-muted-foreground">
+              Livros →{" "}
+              <a href={livrosUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
+                {livrosUrl}
+              </a>
             </p>
           </div>
           <div className="space-y-2">
@@ -305,8 +340,8 @@ export const MapaContent = () => {
           </div>
           <div className="space-y-2">
             <p className="font-bold text-foreground">E-mails de notificação (admins):</p>
-            <p className="text-foreground">ledioprofissional@gmail.com</p>
-            <p className="text-foreground">0019.andrematheus@gmail.com</p>
+            <p className="text-foreground">Dinâmicos conforme os administradores ativos</p>
+            <p className="text-muted-foreground">O mapa não fixa mais e-mails manuais para evitar divergência.</p>
           </div>
         </div>
       </div>

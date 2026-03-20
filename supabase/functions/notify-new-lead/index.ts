@@ -1,15 +1,53 @@
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
     "authorization, x-client-info, apikey, content-type",
 };
 
-const NOTIFY_EMAILS = [
-  "0019.andrematheus@gmail.com",
-  "ledioprofissional@gmail.com",
-];
-
 const ADMIN_PANEL_URL = "https://hub.ivobrasil.com.br/admin";
+
+async function getAdminNotificationEmails(): Promise<string[]> {
+  const supabaseUrl = Deno.env.get("SUPABASE_URL");
+  const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+
+  if (!supabaseUrl || !serviceRoleKey) {
+    return [];
+  }
+
+  try {
+    const adminClient = createClient(supabaseUrl, serviceRoleKey);
+
+    const { data: roles, error: rolesError } = await adminClient
+      .from("user_roles")
+      .select("user_id")
+      .eq("role", "admin");
+
+    if (rolesError || !roles?.length) {
+      console.error("Could not load admin roles:", rolesError);
+      return [];
+    }
+
+    const adminIds = new Set(roles.map((role) => role.user_id));
+    const { data: userPage, error: usersError } = await adminClient.auth.admin.listUsers({
+      page: 1,
+      perPage: 200,
+    });
+
+    if (usersError) {
+      console.error("Could not load admin users:", usersError);
+      return [];
+    }
+
+    return (userPage.users || [])
+      .filter((user) => adminIds.has(user.id) && user.email)
+      .map((user) => user.email as string);
+  } catch (error) {
+    console.error("Failed to resolve admin notification emails:", error);
+    return [];
+  }
+}
 
 function escapeHtml(text: string): string {
   return text
@@ -388,7 +426,14 @@ Deno.serve(async (req) => {
 
     const targetEmails = payload._test_override_emails && Array.isArray(payload._test_override_emails)
       ? payload._test_override_emails
-      : NOTIFY_EMAILS;
+      : await getAdminNotificationEmails();
+
+    if (!targetEmails.length) {
+      console.log("No admin notification emails found, skipping email send");
+      return new Response(JSON.stringify({ success: true, skipped: true, reason: "no_admin_emails" }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
     const results = [];
     for (let i = 0; i < targetEmails.length; i++) {
