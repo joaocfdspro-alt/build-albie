@@ -308,32 +308,44 @@ export const MapaContent = () => {
 
       {/* Summary */}
       <div className="bg-card border border-border/50 rounded-xl p-5">
-        <h3 className="text-sm font-black text-foreground mb-3">📋 Resumo rápido de contatos e destinos</h3>
+        <h3 className="text-sm font-black text-foreground mb-3">Resumo rapido de contatos e destinos</h3>
         <div className="grid sm:grid-cols-2 gap-3 text-xs">
           <div className="space-y-2">
             <p className="font-bold text-foreground">Links de checkout:</p>
             <p className="text-muted-foreground">
-              Código da Negociação →{" "}
+              Codigo da Negociacao (R$997) →{" "}
               <a href={codigoCheckoutUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
                 {codigoCheckoutUrl}
               </a>
             </p>
             <p className="text-muted-foreground">
-              O Negociador →{" "}
-              <a href={oNegociadorUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
-                {oNegociadorUrl}
+              O Negociador (R$697) →{" "}
+              <a href={oNegociadorCheckout697} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
+                {oNegociadorCheckout697}
               </a>
             </p>
             <p className="text-muted-foreground">
-              Imersão Virando a Mesa →{" "}
+              O Negociador (R$497) →{" "}
+              <a href={oNegociadorCheckout497} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
+                {oNegociadorCheckout497}
+              </a>
+            </p>
+            <p className="text-muted-foreground">
+              Livro Digital →{" "}
+              <a href={livroDigitalUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
+                {livroDigitalUrl}
+              </a>
+            </p>
+            <p className="text-muted-foreground">
+              Livro Fisico →{" "}
+              <a href={livroFisicoUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
+                {livroFisicoUrl}
+              </a>
+            </p>
+            <p className="text-muted-foreground">
+              Imersao Virando a Mesa →{" "}
               <a href={imersaoUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
                 {imersaoUrl}
-              </a>
-            </p>
-            <p className="text-muted-foreground">
-              Livros →{" "}
-              <a href={livrosUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
-                {livrosUrl}
               </a>
             </p>
           </div>
