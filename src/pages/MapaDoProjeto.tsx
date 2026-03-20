@@ -8,9 +8,13 @@ const hubUrl = "https://hub.ivobrasil.com.br";
 const siteUrl = "https://ivobrasil.com.br";
 const mapaUrl = `${hubUrl}/mapa`;
 const codigoCheckoutUrl = "https://checkout4.xgrow.com/pt/2ad70720-887e-4cc1-b2db-2854a18e029f/MTAyOTY1";
-const oNegociadorUrl = `${siteUrl}/onegociador/`;
+const oNegociadorPageUrl = `${siteUrl}/onegociador/`;
+const oNegociadorCheckout697 = "https://checkout4.xgrow.com/pt/2ad70720-887e-4cc1-b2db-2854a18e029f/Njk5NTE=";
+const oNegociadorCheckout497 = "https://checkout4.xgrow.com/pt/2ad70720-887e-4cc1-b2db-2854a18e029f/Njg0Nzk=";
 const imersaoUrl = `${siteUrl}/imersao-virando-a-mesa/`;
-const livrosUrl = `${siteUrl}/livros/`;
+const livrosPageUrl = `${siteUrl}/livros/`;
+const livroFisicoUrl = "https://clubedeautores.com.br/livro/negociacao-sem-complicacao";
+const livroDigitalUrl = "https://checkout4.xgrow.com/pt/2ad70720-887e-4cc1-b2db-2854a18e029f/NzU2NDg=";
 const mentoriasUrl = `${siteUrl}/mentorias/`;
 const whatsappUrl = "https://wa.me/5546999238882";
 const codigoWhatsappUrl = `${whatsappUrl}?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20C%C3%B3digo%20da%20Negocia%C3%A7%C3%A3o.`;
@@ -48,7 +52,7 @@ const sections: Section[] = [
       },
       {
         label: "Curso O Negociador",
-        url: oNegociadorUrl,
+        url: oNegociadorPageUrl,
         why: "Link externo para o curso O Negociador no site principal. Não existe mais uma página própria desse curso dentro do hub.",
       },
       {
@@ -63,7 +67,7 @@ const sections: Section[] = [
       },
       {
         label: "Livros",
-        url: livrosUrl,
+        url: livrosPageUrl,
         why: "Link externo para a página de livros no site principal.",
       },
       {
@@ -136,19 +140,52 @@ const sections: Section[] = [
   },
   {
     title: "🎤 Curso O Negociador — Página de Vendas",
-    fullUrl: oNegociadorUrl,
+    fullUrl: oNegociadorPageUrl,
     description:
-      "Página de vendas do curso O Negociador no site principal. O hub apenas aponta para essa URL externa.",
+      "Página de vendas do curso O Negociador no site principal (ivobrasil.com.br/onegociador/). O hub aponta para essa URL externa.",
     items: [
       {
-        label: "Link de checkout (externo)",
-        url: oNegociadorUrl,
-        why: "Link de pagamento externo do curso O Negociador no domínio principal ivobrasil.com.br.",
+        label: "Página do curso",
+        url: oNegociadorPageUrl,
+        why: "Página de vendas do curso O Negociador no domínio principal ivobrasil.com.br.",
+      },
+      {
+        label: "Checkout R$697",
+        url: oNegociadorCheckout697,
+        why: "Link de pagamento do curso O Negociador no valor de R$697 na plataforma Xgrow.",
+      },
+      {
+        label: "Checkout R$497",
+        url: oNegociadorCheckout497,
+        why: "Link de pagamento do curso O Negociador no valor de R$497 na plataforma Xgrow.",
       },
       {
         label: "WhatsApp de dúvidas",
         url: cursoWhatsappUrl,
         why: "Botão que abre conversa no WhatsApp com o número (46) 99923-8882.",
+      },
+    ],
+  },
+  {
+    title: "📚 Livros — Negociação sem Complicação",
+    fullUrl: livrosPageUrl,
+    description:
+      "Página de livros no site principal do Ivo Brasil. Contém links para compra do livro físico (Clube de Autores) e digital (Xgrow).",
+    items: [
+      {
+        label: "Página de livros",
+        url: livrosPageUrl,
+        why: "Página principal de livros no domínio ivobrasil.com.br.",
+      },
+      {
+        label: "Livro físico (Clube de Autores)",
+        url: livroFisicoUrl,
+        why: "Link de compra do livro físico 'Negociação sem Complicação' no Clube de Autores.",
+      },
+      {
+        label: "Livro digital (checkout Xgrow)",
+        url: livroDigitalUrl,
+        why: "Link de compra do livro digital na plataforma Xgrow.",
       },
     ],
   },
@@ -294,32 +331,44 @@ export const MapaContent = () => {
 
       {/* Summary */}
       <div className="bg-card border border-border/50 rounded-xl p-5">
-        <h3 className="text-sm font-black text-foreground mb-3">📋 Resumo rápido de contatos e destinos</h3>
+        <h3 className="text-sm font-black text-foreground mb-3">Resumo rapido de contatos e destinos</h3>
         <div className="grid sm:grid-cols-2 gap-3 text-xs">
           <div className="space-y-2">
             <p className="font-bold text-foreground">Links de checkout:</p>
             <p className="text-muted-foreground">
-              Código da Negociação →{" "}
+              Codigo da Negociacao (R$997) →{" "}
               <a href={codigoCheckoutUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
                 {codigoCheckoutUrl}
               </a>
             </p>
             <p className="text-muted-foreground">
-              O Negociador →{" "}
-              <a href={oNegociadorUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
-                {oNegociadorUrl}
+              O Negociador (R$697) →{" "}
+              <a href={oNegociadorCheckout697} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
+                {oNegociadorCheckout697}
               </a>
             </p>
             <p className="text-muted-foreground">
-              Imersão Virando a Mesa →{" "}
+              O Negociador (R$497) →{" "}
+              <a href={oNegociadorCheckout497} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
+                {oNegociadorCheckout497}
+              </a>
+            </p>
+            <p className="text-muted-foreground">
+              Livro Digital →{" "}
+              <a href={livroDigitalUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
+                {livroDigitalUrl}
+              </a>
+            </p>
+            <p className="text-muted-foreground">
+              Livro Fisico →{" "}
+              <a href={livroFisicoUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
+                {livroFisicoUrl}
+              </a>
+            </p>
+            <p className="text-muted-foreground">
+              Imersao Virando a Mesa →{" "}
               <a href={imersaoUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
                 {imersaoUrl}
-              </a>
-            </p>
-            <p className="text-muted-foreground">
-              Livros →{" "}
-              <a href={livrosUrl} target="_blank" rel="noopener noreferrer" className="text-foreground underline break-all">
-                {livrosUrl}
               </a>
             </p>
           </div>
