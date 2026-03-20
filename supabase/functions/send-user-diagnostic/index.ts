@@ -36,7 +36,7 @@ function getCtaByScore(score: number): { text: string; url: string; description:
   };
   return {
     text: "QUERO O CÓDIGO DA NEGOCIAÇÃO",
-    url: "https://ivobrasil.lovable.app/codigo-da-negociacao",
+    url: "https://hub.ivobrasil.com.br/codigo-da-negociacao",
     description: "O programa de 90 dias que vai transformar sua forma de negociar."
   };
 }
