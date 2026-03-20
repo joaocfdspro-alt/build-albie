@@ -52,7 +52,7 @@ const sections: Section[] = [
       },
       {
         label: "Curso O Negociador",
-        url: oNegociadorUrl,
+        url: oNegociadorPageUrl,
         why: "Link externo para o curso O Negociador no site principal. Não existe mais uma página própria desse curso dentro do hub.",
       },
       {
@@ -67,7 +67,7 @@ const sections: Section[] = [
       },
       {
         label: "Livros",
-        url: livrosUrl,
+        url: livrosPageUrl,
         why: "Link externo para a página de livros no site principal.",
       },
       {
