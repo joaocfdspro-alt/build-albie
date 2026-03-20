@@ -189,6 +189,7 @@ const sections: Section[] = [
       },
     ],
   },
+  {
     title: "🔥 Imersão Virando a Mesa",
     fullUrl: imersaoUrl,
     description:
