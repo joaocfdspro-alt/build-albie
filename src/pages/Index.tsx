@@ -142,13 +142,11 @@ const Index = () => {
 
             <HubLink
               icon={GraduationCap}
-              title="Método O Negociador"
+              title="Curso O Negociador"
               subtitle="Treinamento com técnicas e estratégias práticas"
-              href="/o-negociador"
+              href="https://ivobrasil.com.br/onegociador/"
               variant="secondary"
               index={2}
-              isInternal
-              onClick={() => navigate("/o-negociador")}
             />
 
             <HubLink
@@ -173,12 +171,9 @@ const Index = () => {
               icon={Flame}
               title="Imersão Virando a Mesa"
               subtitle="Imersão presencial para empresários e líderes"
-              href="/imersao-virando-a-mesa"
+              href="https://ivobrasil.com.br/imersao-virando-a-mesa/"
               variant="secondary"
               index={5}
-              isInternal
-              onClick={() => navigate("/imersao-virando-a-mesa")}
-              tag="Em breve"
             />
           </div>
 
