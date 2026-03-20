@@ -140,14 +140,24 @@ const sections: Section[] = [
   },
   {
     title: "🎤 Curso O Negociador — Página de Vendas",
-    fullUrl: oNegociadorUrl,
+    fullUrl: oNegociadorPageUrl,
     description:
-      "Página de vendas do curso O Negociador no site principal. O hub apenas aponta para essa URL externa.",
+      "Página de vendas do curso O Negociador no site principal (ivobrasil.com.br/onegociador/). O hub aponta para essa URL externa.",
     items: [
       {
-        label: "Link de checkout (externo)",
-        url: oNegociadorUrl,
-        why: "Link de pagamento externo do curso O Negociador no domínio principal ivobrasil.com.br.",
+        label: "Página do curso",
+        url: oNegociadorPageUrl,
+        why: "Página de vendas do curso O Negociador no domínio principal ivobrasil.com.br.",
+      },
+      {
+        label: "Checkout R$697",
+        url: oNegociadorCheckout697,
+        why: "Link de pagamento do curso O Negociador no valor de R$697 na plataforma Xgrow.",
+      },
+      {
+        label: "Checkout R$497",
+        url: oNegociadorCheckout497,
+        why: "Link de pagamento do curso O Negociador no valor de R$497 na plataforma Xgrow.",
       },
       {
         label: "WhatsApp de dúvidas",
