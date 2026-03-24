@@ -429,6 +429,7 @@ const QuizFlow = () => {
     setIsLoadingAI(true);
     setShowLeadForm(false);
     setShowResult(true);
+    fbqTrack("QuizComplete", { totalScore: answers.reduce((a, b) => a + b, 0) });
     setEmailCopyNotice("pending");
 
     const totalScore = answers.reduce((a, b) => a + b, 0);
