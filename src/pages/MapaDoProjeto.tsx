@@ -19,6 +19,7 @@ const mentoriasUrl = `${siteUrl}/mentorias/`;
 const whatsappUrl = "https://wa.me/5546999238882";
 const codigoWhatsappUrl = `${whatsappUrl}?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20C%C3%B3digo%20da%20Negocia%C3%A7%C3%A3o.`;
 const cursoWhatsappUrl = `${whatsappUrl}?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20curso%20O%20Negociador.`;
+const brandAssetsUrl = "https://drive.google.com/drive/u/1/folders/1yYOY-e1vJUFd6TOGdg4EiKv0hwFQI9Co";
 
 interface Item {
   label: string;
@@ -245,6 +246,19 @@ const sections: Section[] = [
         label: "Destinatários atuais",
         url: "",
         why: "Os e-mails de notificação seguem a lista de administradores ativos do painel. Sempre que um novo admin é criado, ele passa a receber os avisos automaticamente.",
+      },
+    ],
+  },
+  {
+    title: "🎨 Material de Apoio — Brand Assets",
+    fullUrl: brandAssetsUrl,
+    description:
+      "Pasta no Google Drive com todos os materiais de apoio para o time comercial: logotipos, imagens, fotos, brandbook e recursos visuais do Ivo Brasil. Disponível para ações comerciais, apresentações e materiais de divulgação.",
+    items: [
+      {
+        label: "Pasta Google Drive (logos, fotos, brandbook)",
+        url: brandAssetsUrl,
+        why: "Link direto para a pasta compartilhada com todo o material visual e de marca do Ivo Brasil. Útil para o time comercial montar apresentações, posts e materiais de apoio.",
       },
     ],
   },
