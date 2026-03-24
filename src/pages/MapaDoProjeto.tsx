@@ -249,6 +249,19 @@ const sections: Section[] = [
       },
     ],
   },
+  {
+    title: "🎨 Material de Apoio — Brand Assets",
+    fullUrl: brandAssetsUrl,
+    description:
+      "Pasta no Google Drive com todos os materiais de apoio para o time comercial: logotipos, imagens, fotos, brandbook e recursos visuais do Ivo Brasil. Disponível para ações comerciais, apresentações e materiais de divulgação.",
+    items: [
+      {
+        label: "Pasta Google Drive (logos, fotos, brandbook)",
+        url: brandAssetsUrl,
+        why: "Link direto para a pasta compartilhada com todo o material visual e de marca do Ivo Brasil. Útil para o time comercial montar apresentações, posts e materiais de apoio.",
+      },
+    ],
+  },
 ];
 
 /* ─── Shared content component (used in /mapa page and embedded in admin) ─── */
