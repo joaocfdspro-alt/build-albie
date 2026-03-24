@@ -282,6 +282,13 @@ function buildAdaptiveDiagnostic(params: {
   return { observation, perspective, recommendation };
 }
 
+// Helper to fire Meta Pixel events safely
+const fbqTrack = (eventName: string, params?: Record<string, unknown>) => {
+  if (typeof window !== "undefined" && (window as any).fbq) {
+    (window as any).fbq("trackCustom", eventName, params);
+  }
+};
+
 const QuizFlow = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
@@ -298,6 +305,18 @@ const QuizFlow = () => {
   const [isLoadingAI, setIsLoadingAI] = useState(false);
   const [loadingStepIndex, setLoadingStepIndex] = useState(0);
   const [emailCopyNotice, setEmailCopyNotice] = useState<"idle" | "sent" | "pending">("idle");
+
+  // Fire QuizStart on mount
+  useEffect(() => {
+    fbqTrack("QuizStart");
+  }, []);
+
+  // Fire QuizStep whenever currentQuestion changes
+  useEffect(() => {
+    if (!showLeadForm && !showResult && !showOpenQuestion) {
+      fbqTrack("QuizStep", { step: currentQuestion + 1, question: questions[currentQuestion]?.question });
+    }
+  }, [currentQuestion, showLeadForm, showResult, showOpenQuestion]);
 
   // Loading step animation
   useEffect(() => {
