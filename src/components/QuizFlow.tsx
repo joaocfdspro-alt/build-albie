@@ -339,10 +339,12 @@ const QuizFlow = () => {
       setAnswers(newAnswers);
       if (currentQuestion === 6) {
         setShowOpenQuestion(true);
+        fbqTrack("QuizOpenQuestion");
       } else if (currentQuestion < questions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
       } else {
         setShowLeadForm(true);
+        fbqTrack("QuizLeadForm");
       }
       setSelectedIndex(null);
       setTimeout(() => setIsTransitioning(false), 200);
