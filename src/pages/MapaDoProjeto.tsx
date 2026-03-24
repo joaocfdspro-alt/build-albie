@@ -251,14 +251,14 @@ const sections: Section[] = [
   },
   {
     title: "🎨 Material de Apoio — Brand Assets",
-    fullUrl: brandAssetsUrl,
+    fullUrl: "",
     description:
-      "Pasta no Google Drive com todos os materiais de apoio para o time comercial: logotipos, imagens, fotos, brandbook e recursos visuais do Ivo Brasil. Disponível para ações comerciais, apresentações e materiais de divulgação.",
+      "Pasta no Google Drive com logotipos, fotos, brandbook e recursos visuais do Ivo Brasil para o time comercial usar em ações, apresentações e materiais de divulgação.",
     items: [
       {
-        label: "Pasta Google Drive (logos, fotos, brandbook)",
+        label: "Acessar pasta de materiais (Google Drive)",
         url: brandAssetsUrl,
-        why: "Link direto para a pasta compartilhada com todo o material visual e de marca do Ivo Brasil. Útil para o time comercial montar apresentações, posts e materiais de apoio.",
+        why: "Logos, fotos, brandbook e todo o material visual da marca.",
       },
     ],
   },
@@ -317,7 +317,16 @@ export const MapaContent = () => {
           {section.fullUrl && (
             <p className="text-xs mb-3">
               <span className="text-muted-foreground">Link: </span>
-              <a href={section.fullUrl} target="_blank" rel="noopener noreferrer" className="text-gold underline break-all">
+              <a
+                href={section.fullUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gold underline break-all"
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.open(section.fullUrl, "_blank", "noopener,noreferrer");
+                }}
+              >
                 {section.fullUrl}
               </a>
             </p>
@@ -330,7 +339,16 @@ export const MapaContent = () => {
                 <p className="text-sm font-semibold text-foreground">{item.label}</p>
                 {item.url && (
                   <p className="text-xs text-gold mt-0.5">
-                    <a href={item.url} target="_blank" rel="noopener noreferrer" className="underline break-all inline-flex items-center gap-1">
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline break-all inline-flex items-center gap-1"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        window.open(item.url, "_blank", "noopener,noreferrer");
+                      }}
+                    >
                       <ExternalLink className="h-3 w-3 shrink-0" />
                       {item.url}
                     </a>
