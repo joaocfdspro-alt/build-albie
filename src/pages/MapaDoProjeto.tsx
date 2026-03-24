@@ -317,16 +317,7 @@ export const MapaContent = () => {
           {section.fullUrl && (
             <p className="text-xs mb-3">
               <span className="text-muted-foreground">Link: </span>
-              <a
-                href={section.fullUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gold underline break-all"
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.open(section.fullUrl, "_blank", "noopener,noreferrer");
-                }}
-              >
+              <a href={section.fullUrl} target="_blank" rel="noopener noreferrer" className="text-gold underline break-all">
                 {section.fullUrl}
               </a>
             </p>
