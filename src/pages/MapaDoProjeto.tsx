@@ -19,6 +19,7 @@ const mentoriasUrl = `${siteUrl}/mentorias/`;
 const whatsappUrl = "https://wa.me/5546999238882";
 const codigoWhatsappUrl = `${whatsappUrl}?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20C%C3%B3digo%20da%20Negocia%C3%A7%C3%A3o.`;
 const cursoWhatsappUrl = `${whatsappUrl}?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20curso%20O%20Negociador.`;
+const brandAssetsUrl = "https://drive.google.com/drive/u/1/folders/1yYOY-e1vJUFd6TOGdg4EiKv0hwFQI9Co";
 
 interface Item {
   label: string;
