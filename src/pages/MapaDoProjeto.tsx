@@ -317,16 +317,7 @@ export const MapaContent = () => {
           {section.fullUrl && (
             <p className="text-xs mb-3">
               <span className="text-muted-foreground">Link: </span>
-              <a
-                href={section.fullUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gold underline break-all"
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.open(section.fullUrl, "_blank", "noopener,noreferrer");
-                }}
-              >
+              <a href={section.fullUrl} target="_blank" rel="noopener noreferrer" className="text-gold underline break-all">
                 {section.fullUrl}
               </a>
             </p>
@@ -339,16 +330,7 @@ export const MapaContent = () => {
                 <p className="text-sm font-semibold text-foreground">{item.label}</p>
                 {item.url && (
                   <p className="text-xs text-gold mt-0.5">
-                    <a
-                      href={item.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="underline break-all inline-flex items-center gap-1"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        window.open(item.url, "_blank", "noopener,noreferrer");
-                      }}
-                    >
+                    <a href={item.url} target="_blank" rel="noopener noreferrer" className="underline break-all inline-flex items-center gap-1">
                       <ExternalLink className="h-3 w-3 shrink-0" />
                       {item.url}
                     </a>
