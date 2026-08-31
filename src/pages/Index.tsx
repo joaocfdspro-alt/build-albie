@@ -1,4 +1,6 @@
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   Mic,
   Camera,
@@ -8,13 +10,35 @@ import {
   Radio,
   Sparkles,
   ArrowUpRight,
-  MapPin,
-  Plane,
 } from "lucide-react";
 
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import portrait from "@/assets/albie-portrait.jpg";
+
+const slides = [
+  {
+    kicker: "África é Futuro",
+    title: "Conectando África, Brasil e diáspora",
+    text: "Comunicador pan-africano, palestrante e criador de conteúdo que transforma história e cultura em narrativas que aproximam pessoas.",
+  },
+  {
+    kicker: "Narrativas",
+    title: "A história d’África que não te contam",
+    text: "Recolocando o continente africano no centro da história global — do passado antigo às potências que se desenham hoje.",
+  },
+  {
+    kicker: "Geopolítica",
+    title: "África no tabuleiro do século XXI",
+    text: "Energia, minerais críticos, demografia e novas alianças redesenhando o poder global a partir do continente.",
+  },
+  {
+    kicker: "Pontes",
+    title: "Do Atlântico às oportunidades reais",
+    text: "Cultura, negócios e identidade conectando Brasil, África e mercados internacionais.",
+  },
+];
+
 
 const stats = [
   { value: "+150 mil", label: "seguidores" },
