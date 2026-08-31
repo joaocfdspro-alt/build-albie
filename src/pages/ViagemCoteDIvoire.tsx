@@ -104,4 +104,118 @@ const ViagemCoteDIvoire = () => (
         </motion.h2>
         <motion.p {...fade(0.12)} className="mt-6 text-base leading-relaxed text-muted-foreground md:text-lg">
           Entre os dias <strong className="text-foreground">4 e 11 de setembro</strong>, a{" "}
-          <strong className="text-foreground">TAAG</strong>, em parceria com o{
+          <strong className="text-foreground">TAAG</strong>, em parceria com o{" "}
+          <strong className="text-foreground">Ministério do Turismo da Costa do Marfim</strong>,
+          realizará um Famtour & PressTour exclusivo para jornalistas e representantes do setor de
+          turismo. Fui convidado pelo Ministério do Turismo da Costa do Marfim para fazer parte dessa
+          imersão.
+        </motion.p>
+        <motion.p {...fade(0.18)} className="mt-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+          A experiência foi pensada para apresentar, em primeira mão, os atrativos do destino, sua
+          cultura, gastronomia, hospitalidade e potencial turístico, além de reforçar a conexão entre
+          o <strong className="text-foreground">Brasil</strong> e a{" "}
+          <strong className="text-foreground">Costa do Marfim</strong>, via Luanda.
+        </motion.p>
+      </div>
+    </section>
+
+    {/* HIGHLIGHTS */}
+    <section className="bg-gradient-earth py-16 text-cream md:py-24">
+      <div className="mx-auto max-w-6xl px-5">
+        <motion.p {...fade(0)} className="text-[11px] font-bold uppercase tracking-[0.3em] text-saffron">
+          O que você vai conhecer
+        </motion.p>
+        <motion.h2 {...fade(0.06)} className="mt-4 font-display text-3xl md:text-5xl">
+          Destaques da viagem
+        </motion.h2>
+
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {highlights.map((h, i) => (
+            <motion.article
+              key={h.title}
+              {...fade(0.08 * i)}
+              className="group overflow-hidden rounded-3xl border border-cream/15 bg-maroon/40"
+            >
+              <div className="aspect-[4/3] overflow-hidden">
+                <img
+                  src={h.img}
+                  alt={h.title}
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                  width={1024}
+                  height={1024}
+                />
+              </div>
+              <div className="p-5 md:p-6">
+                <h3 className="font-display text-xl">{h.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-cream/75">{h.text}</p>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ITINERARY */}
+    <section className="relative overflow-hidden py-16 md:py-24">
+      <div className="pattern-dots pointer-events-none absolute inset-0 opacity-20" />
+      <div className="relative mx-auto max-w-5xl px-5">
+        <motion.p {...fade(0)} className="text-[11px] font-bold uppercase tracking-[0.3em] text-terracotta">
+          Programação
+        </motion.p>
+        <motion.h2 {...fade(0.06)} className="mt-4 font-display text-3xl md:text-5xl">
+          Roteiro da imersão
+        </motion.h2>
+
+        <div className="mt-12 space-y-4">
+          {itinerary.map((item, i) => (
+            <motion.div
+              key={item.day}
+              {...fade(0.04 * i)}
+              className="flex gap-4 rounded-2xl border border-border bg-card p-5 md:gap-6 md:p-6"
+            >
+              <div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-xl bg-gradient-sun text-maroon md:h-14 md:w-14">
+                <span className="text-[10px] font-bold uppercase tracking-wider">Set</span>
+                <span className="font-display text-lg leading-none md:text-xl">{item.day}</span>
+              </div>
+              <div>
+                <h3 className="font-display text-lg">{item.title}</h3>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* FINAL CTA */}
+    <section className="relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo via-maroon to-terracotta" />
+      <div className="pattern-dots absolute inset-0 opacity-15" />
+      <div className="relative mx-auto max-w-4xl px-5 py-20 text-center md:py-28">
+        <motion.h2 {...fade(0)} className="font-display text-3xl text-cream md:text-5xl">
+          Côte D&apos;ívoire
+        </motion.h2>
+        <motion.p {...fade(0.06)} className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-cream/80 md:text-lg">
+          Uma jornada para aproximar Brasil e África, construir pontes e contar histórias que só a
+          Costa do Marfim pode oferecer.
+        </motion.p>
+        <motion.div {...fade(0.12)} className="mt-8">
+          <a
+            href="https://wa.me/5511976480548?text=Ol%C3%A1%2C%20quero%20saber%20mais%20sobre%20a%20viagem%20%C3%A0%20Costa%20do%20Marfim"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-3 rounded-full bg-cream px-8 py-4 font-display text-lg font-bold text-maroon shadow-earth transition-transform hover:scale-105"
+          >
+            Côte D&apos;ívoire
+            <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </a>
+        </motion.div>
+      </div>
+    </section>
+
+    <SiteFooter />
+  </div>
+);
+
+export default ViagemCoteDIvoire;
