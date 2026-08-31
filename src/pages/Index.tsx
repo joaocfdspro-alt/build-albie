@@ -80,8 +80,8 @@ const Index = () => {
         <div className="pattern-dots pointer-events-none absolute inset-0 opacity-70" />
         <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-saffron/25 blur-3xl" />
 
-        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 md:grid-cols-[1.05fr_0.95fr]">
-          <div>
+        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-5 md:grid-cols-[1.05fr_0.95fr] md:gap-12">
+          <div className="order-2 md:order-1">
             <motion.p
               {...fade(0)}
               className="mb-4 inline-flex items-center gap-2 rounded-full border border-terracotta/30 bg-terracotta/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.28em] text-terracotta"
@@ -134,7 +134,7 @@ const Index = () => {
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative mx-auto w-full max-w-md"
+            className="relative order-1 mx-auto w-full max-w-xs md:order-2 md:max-w-md"
           >
             <div className="absolute -inset-3 rotate-3 rounded-[2rem] bg-indigo/90" />
             <img
