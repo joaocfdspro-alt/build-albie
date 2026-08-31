@@ -186,7 +186,7 @@ const ViagemCoteDIvoire = () => (
       <div className="pattern-dots absolute inset-0 opacity-15" />
       <div className="relative mx-auto max-w-4xl px-5 py-20 text-center md:py-28">
         <motion.h2 {...fade(0)} className="font-display text-3xl text-cream md:text-5xl">
-          Côte D&apos;ívoire
+          Acessar o DIP
         </motion.h2>
         <motion.p {...fade(0.06)} className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-cream/80 md:text-lg">
           Uma jornada para aproximar Brasil e África, construir pontes e contar histórias que só a
@@ -199,7 +199,7 @@ const ViagemCoteDIvoire = () => (
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-3 rounded-full bg-cream px-8 py-4 font-display text-lg font-bold text-maroon shadow-earth transition-transform hover:scale-105"
           >
-            Côte D&apos;ívoire
+            Acessar o DIP
             <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </a>
         </motion.div>
