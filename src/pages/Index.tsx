@@ -220,7 +220,7 @@ const Index = () => {
               rel="noopener noreferrer"
               className="group flex w-full items-center justify-between rounded-2xl bg-gradient-sun px-6 py-4 text-left text-base font-bold text-maroon shadow-earth transition-transform hover:scale-[1.02] active:scale-[0.98]"
             >
-              <span>CÔTE D’IVOIRE</span>
+              <span>Acessar o DIP</span>
               <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
             {heroLinks.map((l) =>
