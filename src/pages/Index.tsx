@@ -115,21 +115,24 @@ const Index = () => {
     <div id="topo" className="min-h-screen bg-background">
       <SiteNav />
 
-      {/* HERO — foto de fundo + carrossel */}
-      <section className="relative flex min-h-[100svh] items-end overflow-hidden">
+      {/* HERO — foto dele em tela cheia, sem texto sobre o rosto */}
+      <section className="relative h-[100svh] overflow-hidden">
         <motion.img
           src={portrait}
           alt="Albie Nguma, comunicador pan-africano e palestrante"
-          className="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
+          className="absolute inset-0 h-full w-full object-cover object-[50%_20%]"
           initial={{ scale: 1.08 }}
           animate={{ scale: 1 }}
           transition={{ duration: 12, ease: "easeOut" }}
           loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-maroon via-maroon/80 to-maroon/25" />
-        <div className="pattern-dots pointer-events-none absolute inset-0 opacity-30" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-maroon/40 via-transparent to-maroon/70" />
+        <div className="pattern-dots pointer-events-none absolute inset-0 opacity-20" />
+      </section>
 
-        <div className="relative mx-auto w-full max-w-6xl px-5 pb-14 pt-32 md:pb-20">
+      {/* CONTEÚDO DO HERO — abaixo da foto */}
+      <section className="relative -mt-1 bg-maroon px-5 pb-14 pt-10 md:pb-20">
+        <div className="mx-auto w-full max-w-6xl">
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
