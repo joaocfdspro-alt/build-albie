@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { MapPin, Globe2, Plane, ArrowUpRight, ArrowLeft } from "lucide-react";
+import { MapPin, Globe2, Plane, ArrowUpRight } from "lucide-react";
 
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import BackButton from "@/components/BackButton";
 import portrait from "@/assets/albie-portrait.jpg";
 
 const fade = (delay = 0) => ({

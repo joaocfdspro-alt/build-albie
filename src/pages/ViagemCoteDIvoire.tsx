@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 import { Calendar, MapPin, ArrowUpRight, Plane } from "lucide-react";
 
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import BackButton from "@/components/BackButton";
 import abidjanImg from "@/assets/cotedivoire-abidjan.jpg.asset.json";
 import basilicaImg from "@/assets/cotedivoire-basilica.jpg.asset.json";
 import culturaImg from "@/assets/cotedivoire-cultura.jpg.asset.json";

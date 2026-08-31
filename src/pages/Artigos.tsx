@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import BackButton from "@/components/BackButton";
 
 const artigos = [
   {

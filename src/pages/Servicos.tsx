@@ -3,6 +3,7 @@ import { Mic, Camera, Megaphone, Compass, Globe2, Radio, Sparkles, ArrowUpRight 
 
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import BackButton from "@/components/BackButton";
 
 const servicos = [
   { icon: Mic, title: "Palestras", text: "África, diáspora, cultura e geopolítica para públicos corporativos e institucionais." },
