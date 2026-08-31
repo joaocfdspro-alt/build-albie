@@ -4,7 +4,7 @@ import logo from "@/assets/nguma-logo.png";
 const links = [
   { label: "Trajetória", href: "/trajetoria" },
   { label: "Serviços", href: "/servicos" },
-  { label: "Artigos", href: "/artigos" },
+  { label: "Na mídia", href: "/artigos" },
 ];
 
 const SiteNav = () => {

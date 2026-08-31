@@ -40,11 +40,11 @@ const Artigos = () => (
       <div className="pattern-dots pointer-events-none absolute inset-0 opacity-40" />
       <div className="relative mx-auto max-w-6xl px-5">
         <motion.h1 {...fade(0)} className="font-display text-4xl md:text-6xl">
-          Artigos
+          Na mídia
         </motion.h1>
         <motion.p {...fade(0.06)} className="mt-4 max-w-2xl text-muted-foreground">
-          Ideias, análises e conteúdos sobre o continente africano, a diáspora e as conexões com o
-          Brasil.
+          Aparições, entrevistas e conteúdos sobre o continente africano, a diáspora e as conexões
+          com o Brasil.
         </motion.p>
         <motion.div {...fade(0.08)} className="mt-5 h-1 w-24 bg-gradient-sun" />
       </div>
