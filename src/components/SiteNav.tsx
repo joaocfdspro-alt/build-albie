@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import logo from "@/assets/nguma-logo.png";
+
 
 const links = [
   { label: "Trajetória", href: "/trajetoria" },
@@ -26,10 +26,10 @@ const SiteNav = () => {
       <nav className="mx-auto flex max-w-6xl items-center px-5 py-4 md:justify-between">
         <a
           href="/"
-          className="mx-auto flex items-center justify-center gap-3 md:mx-0"
+          className="mx-auto font-display text-xl tracking-[0.18em] text-cream md:mx-0 md:text-2xl"
           aria-label="Albie Nguma — início"
         >
-          <img src={logo} alt="Albie Nguma" className="h-7 w-auto md:h-8" />
+          NGUMA
         </a>
 
         <ul className="hidden items-center gap-9 md:flex">

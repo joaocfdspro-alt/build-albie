@@ -86,8 +86,8 @@ const Index = () => {
         <div className="pattern-dots pointer-events-none absolute inset-0 opacity-20" />
 
         {/* CARD LIQUID GLASS — carrossel de viagens */}
-        <div className="absolute inset-x-0 bottom-10 z-10 px-5 md:bottom-24">
-          <div className="mx-auto w-full max-w-md">
+        <div className="absolute inset-x-0 bottom-4 z-10 px-5 md:bottom-24">
+          <div className="mx-auto w-full max-w-sm md:max-w-md">
             <AnimatePresence mode="wait">
               <motion.div
                 key={trip.id}
