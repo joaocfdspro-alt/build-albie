@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Calendar, MapPin, ArrowLeft, ArrowUpRight, Plane } from "lucide-react";
+import { Calendar, MapPin, ArrowUpRight, Plane } from "lucide-react";
 
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
@@ -61,16 +61,7 @@ const ViagemCoteDIvoire = () => (
       <div className="pattern-dots pointer-events-none absolute inset-0 opacity-20" />
 
       <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-end px-5 pb-16 pt-32 md:pb-24 md:pt-40">
-        <Link
-          to="/"
-          className="mb-6 inline-flex w-fit items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-saffron"
-        >
-          <ArrowLeft className="h-3.5 w-3.5" /> Início
-        </Link>
-
-        <motion.p {...fade(0)} className="text-[11px] font-bold uppercase tracking-[0.3em] text-saffron">
-          Viagem · 04 a 11 de setembro
-        </motion.p>
+        <motion.h1 {...fade(0)} className="font-display text-4xl text-cream md:text-6xl lg:text-7xl">
         <motion.h1 {...fade(0.06)} className="mt-4 font-display text-4xl text-cream md:text-6xl lg:text-7xl">
           Costa do Marfim
         </motion.h1>
