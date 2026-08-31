@@ -4,6 +4,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Trajetoria from "./pages/Trajetoria";
+import Servicos from "./pages/Servicos";
+import Artigos from "./pages/Artigos";
+import Contato from "./pages/Contato";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 
