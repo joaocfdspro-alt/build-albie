@@ -74,79 +74,38 @@ const fade = (delay = 0) => ({
 const Index = () => {
   return (
     <div id="topo" className="min-h-screen bg-background">
-      <SiteNav />
-
       {/* HERO */}
-      <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-24">
-        <div className="pattern-dots pointer-events-none absolute inset-0 opacity-70" />
-        <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-saffron/25 blur-3xl" />
+      <MinimalistHero
+        logoText="NGUMA."
+        navLinks={[
+          { label: "Trajetória", href: "#trajetoria" },
+          { label: "Serviços", href: "#servicos" },
+          { label: "Artigos", href: "#artigos" },
+          { label: "Contato", href: "#contato" },
+        ]}
+        mainText={`Comunicador pan-africano, palestrante e criador de conteúdo.\n\nTransformo história, cultura, negócios e geopolítica em narrativas que aproximam pessoas, comunidades, marcas e mercados.`}
+        readMoreLink="#trajetoria"
+        imageSrc={portrait}
+        imageAlt="Albie Nguma, comunicador pan-africano e palestrante"
+        overlayText={{ part1: "África é", part2: "Futuro." }}
+        socialLinks={[
+          { icon: Instagram, href: "https://www.instagram.com/albieman.nguma/" },
+          { icon: Youtube, href: "https://www.youtube.com/@Albienguma" },
+          { icon: MessageCircle, href: "https://wa.me/5511976480548" },
+        ]}
+        locationText="São Paulo · Brasil"
+      />
 
-        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 md:grid-cols-[1.05fr_0.95fr]">
-          <div>
-            <motion.p
-              {...fade(0)}
-              className="mb-4 inline-flex items-center gap-2 rounded-full border border-terracotta/30 bg-terracotta/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.28em] text-terracotta"
-            >
-              África é Futuro
-            </motion.p>
-
-            <motion.h1 {...fade(0.05)} className="font-display text-4xl leading-[1.05] md:text-6xl">
-              Conectando África,
-              <br />
-              Brasil, diáspora
-              <br />
-              <span className="text-gradient-sun">e o futuro.</span>
-            </motion.h1>
-
-            <motion.p {...fade(0.12)} className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
-              Comunicador pan-africano, palestrante e criador de conteúdo. Transformo história,
-              cultura, negócios e geopolítica em narrativas que aproximam pessoas, comunidades,
-              marcas e mercados.
-            </motion.p>
-
-            <motion.div {...fade(0.18)} className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href="https://wa.me/5511976480548"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-sun px-7 py-3.5 text-sm font-bold text-maroon shadow-earth transition-transform hover:scale-105"
-              >
-                Trabalhe comigo <ArrowUpRight className="h-4 w-4" />
-              </a>
-              <a
-                href="#servicos"
-                className="inline-flex items-center gap-2 rounded-full border border-foreground/20 px-7 py-3.5 text-sm font-bold text-foreground transition-colors hover:border-foreground/50"
-              >
-                Ver serviços
-              </a>
+      {/* STATS */}
+      <section className="border-y border-border bg-card py-10">
+        <dl className="mx-auto grid max-w-4xl grid-cols-3 gap-4 px-5">
+          {stats.map((s, i) => (
+            <motion.div key={s.label} {...fade(0.05 * i)} className="border-l-2 border-saffron pl-3">
+              <dt className="font-display text-xl text-foreground md:text-3xl">{s.value}</dt>
+              <dd className="text-xs text-muted-foreground md:text-sm">{s.label}</dd>
             </motion.div>
-
-            <motion.dl {...fade(0.24)} className="mt-12 grid max-w-lg grid-cols-3 gap-4">
-              {stats.map((s) => (
-                <div key={s.label} className="border-l-2 border-saffron pl-3">
-                  <dt className="font-display text-xl text-foreground md:text-2xl">{s.value}</dt>
-                  <dd className="text-xs text-muted-foreground">{s.label}</dd>
-                </div>
-              ))}
-            </motion.dl>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.94 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative mx-auto w-full max-w-md"
-          >
-            <div className="absolute -inset-3 rotate-3 rounded-[2rem] bg-indigo/90" />
-            <img
-              src={portrait}
-              alt="Albie Nguma, comunicador pan-africano e palestrante"
-              className="relative w-full rounded-[1.75rem] object-cover shadow-earth"
-              loading="eager"
-            />
-            <div className="pattern-strip absolute -bottom-3 left-6 right-6 h-3 rounded-full" />
-          </motion.div>
-        </div>
+          ))}
+        </dl>
       </section>
 
       {/* TRAJETÓRIA */}
