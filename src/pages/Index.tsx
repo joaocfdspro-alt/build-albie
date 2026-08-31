@@ -10,6 +10,9 @@ import {
   Radio,
   Sparkles,
   ArrowUpRight,
+  ChevronDown,
+  Calendar,
+  MapPin,
 } from "lucide-react";
 
 import SiteNav from "@/components/SiteNav";
@@ -128,11 +131,23 @@ const Index = () => {
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-maroon/40 via-transparent to-maroon/70" />
         <div className="pattern-dots pointer-events-none absolute inset-0 opacity-20" />
+
+        {/* seta minimalista para baixo */}
+        <motion.a
+          href="#conteudo"
+          aria-label="Rolar para baixo"
+          className="absolute bottom-6 left-1/2 inline-flex -translate-x-1/2 flex-col items-center gap-1 text-cream/70 transition-colors hover:text-saffron"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <span className="text-[10px] font-bold uppercase tracking-[0.25em]">Descer</span>
+          <ChevronDown className="h-6 w-6" />
+        </motion.a>
       </section>
 
       {/* CONTEÚDO DO HERO — abaixo da foto */}
-      <section className="relative -mt-1 bg-maroon px-5 pb-14 pt-10 md:pb-20">
-        <div className="mx-auto w-full max-w-6xl">
+      <section id="conteudo" className="relative -mt-1 bg-maroon px-5 pb-14 pt-10 md:pb-20">
+        <div className="mx-auto w-full max-w-2xl">
           <AnimatePresence mode="wait">
             <motion.div
               key={active}
@@ -140,7 +155,6 @@ const Index = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -16 }}
               transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              className="max-w-2xl"
             >
               <p className="mb-4 inline-flex items-center rounded-full border border-saffron/40 bg-saffron/15 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.28em] text-saffron">
                 {slide.kicker}
@@ -155,7 +169,7 @@ const Index = () => {
           </AnimatePresence>
 
           {/* indicadores */}
-          <div className="mt-8 flex items-center gap-2">
+          <div className="mt-8 flex items-center justify-center gap-2">
             {slides.map((s, i) => (
               <button
                 key={s.title}
@@ -169,38 +183,41 @@ const Index = () => {
             ))}
           </div>
 
-          {/* botões abaixo do banner */}
-          <nav className="mt-9 flex flex-wrap gap-3">
+          {/* botões estilo linktree */}
+          <nav className="mt-9 flex flex-col gap-3">
             <a
               href="https://wa.me/5511976480548"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-sun px-6 py-3 text-sm font-bold text-maroon shadow-earth transition-transform hover:scale-105"
+              className="group flex w-full items-center justify-between rounded-2xl bg-cream px-6 py-4 text-base font-bold text-maroon shadow-earth transition-transform hover:scale-[1.02] active:scale-[0.98]"
             >
-              Trabalhe comigo <ArrowUpRight className="h-4 w-4" />
+              <span>Trabalhe comigo</span>
+              <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
             {heroLinks.map((l) =>
               l.to.startsWith("#") ? (
                 <a
                   key={l.label}
                   href={l.to}
-                  className="inline-flex items-center rounded-full border border-cream/30 px-6 py-3 text-sm font-bold text-cream transition-colors hover:border-saffron hover:text-saffron"
+                  className="group flex w-full items-center justify-between rounded-2xl border-2 border-cream/30 bg-transparent px-6 py-4 text-base font-bold text-cream transition-colors hover:border-saffron hover:bg-cream/5"
                 >
-                  {l.label}
+                  <span>{l.label}</span>
+                  <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </a>
               ) : (
                 <Link
                   key={l.label}
                   to={l.to}
-                  className="inline-flex items-center rounded-full border border-cream/30 px-6 py-3 text-sm font-bold text-cream transition-colors hover:border-saffron hover:text-saffron"
+                  className="group flex w-full items-center justify-between rounded-2xl border-2 border-cream/30 bg-transparent px-6 py-4 text-base font-bold text-cream transition-colors hover:border-saffron hover:bg-cream/5"
                 >
-                  {l.label}
+                  <span>{l.label}</span>
+                  <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                 </Link>
               )
             )}
           </nav>
 
-          <dl className="mt-10 grid max-w-lg grid-cols-3 gap-4">
+          <dl className="mt-10 grid grid-cols-3 gap-4">
             {stats.map((s) => (
               <div key={s.label} className="border-l-2 border-saffron pl-3">
                 <dt className="font-display text-lg text-cream md:text-2xl">{s.value}</dt>
@@ -208,6 +225,46 @@ const Index = () => {
               </div>
             ))}
           </dl>
+        </div>
+      </section>
+
+      {/* DESTAQUE — Viagem Costa Rica */}
+      <section className="bg-background px-5 py-14 md:py-20">
+        <div className="mx-auto max-w-3xl">
+          <motion.div
+            {...fade(0)}
+            className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-terracotta to-saffron p-1 shadow-earth"
+          >
+            <div className="relative rounded-[22px] bg-maroon p-6 md:p-10">
+              <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
+                <div className="flex-1">
+                  <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-saffron/15 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-saffron">
+                    <Calendar className="h-3.5 w-3.5" />
+                    Próxima viagem
+                  </div>
+                  <h2 className="font-display text-2xl text-cream md:text-4xl">
+                    Costa Rica
+                  </h2>
+                  <p className="mt-2 flex items-center gap-2 text-sm text-cream/80">
+                    <MapPin className="h-4 w-4 text-saffron" />
+                    04 a 11 de setembro
+                  </p>
+                  <p className="mt-4 max-w-md text-sm leading-relaxed text-cream/70">
+                    Uma imersão para aproximar Brasil e África através de histórias, cultura e
+                    conexões estratégicas na Costa Rica.
+                  </p>
+                </div>
+                <a
+                  href="https://wa.me/5511976480548?text=Ol%C3%A1%2C%20quero%20saber%20mais%20sobre%20a%20viagem%20%C3%A0%20Costa%20Rica"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-sun px-6 py-3 text-sm font-bold text-maroon shadow-earth transition-transform hover:scale-105"
+                >
+                  Saiba mais <ArrowUpRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
