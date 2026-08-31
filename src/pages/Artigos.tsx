@@ -6,22 +6,28 @@ import SiteFooter from "@/components/SiteFooter";
 
 const artigos = [
   {
+    tag: "Entrevista",
+    title: "Bárbara Carine no Egito: o que a viagem mudou na forma como ela vê a África",
+    text: "Conversa sobre Egito, representação africana e como viajar pelo continente transforma o olhar sobre si mesmo.",
+    href: "https://albienguma.com.br/2026/06/29/barbara-carine-no-egito-o-que-a-viagem-mudou-na-forma-como-ela-ve-a-africa/",
+  },
+  {
     tag: "História",
-    title: "A história d'África que não te contam",
-    text: "Narrativas que recolocam o continente africano no centro da história global — do passado antigo às potências que se desenham hoje.",
-    href: "https://www.instagram.com/albieman.nguma/",
+    title: "Como é que a África se chamava antes dos europeus?",
+    text: "Uma viagem pelos nomes que os próprios africanos davam ao continente antes do encontro colonial.",
+    href: "https://albienguma.com.br/2026/06/29/como-e-que-a-africa-se-chamava-antes-dos-europeus/",
   },
   {
     tag: "Geopolítica",
-    title: "África no tabuleiro do século XXI",
-    text: "Como energia, minerais críticos, demografia e novas alianças estão redesenhando o poder global a partir do continente.",
-    href: "https://www.youtube.com/@Albienguma",
+    title: "Desenho das fronteiras da África",
+    text: "Como as fronteiras atuais foram traçadas e por que entender esse mapa é fundamental para ler a África de hoje.",
+    href: "https://albienguma.com.br/2026/06/22/desenho-fronteiras-africa/",
   },
   {
-    tag: "Brasil–África",
-    title: "Pontes entre Brasil, África e diáspora",
-    text: "Cultura, negócios e identidade: o que aproxima os dois lados do Atlântico e onde estão as oportunidades reais.",
-    href: "https://www.instagram.com/albieman.nguma/",
+    tag: "Imprensa",
+    title: "Angolan influencer calls for correct pronunciation of African names on Brazilian TV",
+    text: "Matéria da Folha de S.Paulo sobre a defesa da pronúncia correta dos nomes africanos na TV brasileira.",
+    href: "https://www1.folha.uol.com.br/internacional/en/sports/2026/06/angolan-influencer-calls-for-correct-pronunciation-of-african-names-on-brazilian-tv.shtml",
   },
 ];
 
