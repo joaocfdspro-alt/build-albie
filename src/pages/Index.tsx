@@ -1,19 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import {
-  Mic,
-  Camera,
-  Megaphone,
-  Compass,
-  Globe2,
-  Radio,
-  Sparkles,
-  ArrowUpRight,
-  ChevronDown,
-  Calendar,
-  MapPin,
-} from "lucide-react";
+import { ArrowUpRight, ChevronDown, Calendar, MapPin } from "lucide-react";
 
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
@@ -48,54 +36,6 @@ const stats = [
   { value: "Milhões", label: "de visualizações" },
   { value: "+30", label: "países alcançados" },
 ];
-
-const servicos = [
-  { icon: Mic, title: "Palestras", text: "África, diáspora, cultura e geopolítica para públicos corporativos e institucionais." },
-  { icon: Camera, title: "Conteúdo para marcas", text: "Produção de conteúdo autoral para marcas e organizações que querem falar com a África." },
-  { icon: Megaphone, title: "Campanhas institucionais", text: "Campanhas e projetos de impacto com narrativa africana contemporânea." },
-  { icon: Compass, title: "Consultoria cultural", text: "Consultoria estratégica sobre África, cultura e mercados africanos." },
-  { icon: Globe2, title: "Comunicação intercultural", text: "Posicionamento institucional e comunicação entre culturas e mercados." },
-  { icon: Radio, title: "Mídia e entrevistas", text: "Podcasts, entrevistas, documentários e programas de mídia." },
-  { icon: Sparkles, title: "Mestre de cerimônias", text: "Condução de eventos corporativos, institucionais e internacionais ligados à África." },
-];
-
-const diferenciais = [
-  "Autoridade em temas africanos e da diáspora",
-  "Linguagem acessível para audiências diversas",
-  "Experiência corporativa internacional",
-  "Forte conexão com comunidades africanas e afro-diaspóricas",
-  "Conteúdo com alto potencial de alcance e engajamento",
-  "Temas complexos transformados em histórias memoráveis",
-  "Fluência em múltiplos idiomas para conectar mercados",
-];
-
-const artigos = [
-  {
-    tag: "História",
-    title: "A história d'África que não te contam",
-    text: "Narrativas que recolocam o continente africano no centro da história global — do passado antigo às potências que se desenham hoje.",
-    href: "https://www.instagram.com/albieman.nguma/",
-  },
-  {
-    tag: "Geopolítica",
-    title: "África no tabuleiro do século XXI",
-    text: "Como energia, minerais críticos, demografia e novas alianças estão redesenhando o poder global a partir do continente.",
-    href: "https://www.youtube.com/@Albienguma",
-  },
-  {
-    tag: "Brasil–África",
-    title: "Pontes entre Brasil, África e diáspora",
-    text: "Cultura, negócios e identidade: o que aproxima os dois lados do Atlântico e onde estão as oportunidades reais.",
-    href: "https://www.instagram.com/albieman.nguma/",
-  },
-];
-
-const fade = (delay = 0) => ({
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: "-80px" },
-  transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] as const },
-});
 
 const heroLinks = [
   { label: "Trajetória", to: "/trajetoria" },
