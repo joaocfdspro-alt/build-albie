@@ -19,7 +19,8 @@ const Contato = () => (
     <section className="relative overflow-hidden pb-24 pt-32 md:pb-32 md:pt-40">
       <div className="pattern-dots pointer-events-none absolute inset-0" />
       <div className="relative mx-auto max-w-4xl px-5 text-center">
-        <motion.p {...fade(0)} className="text-[11px] font-bold uppercase tracking-[0.3em] text-terracotta">
+        <BackButton className="mx-auto" />
+        <motion.p {...fade(0)} className="mt-5 text-[11px] font-bold uppercase tracking-[0.3em] text-terracotta">
           Missão
         </motion.p>
         <motion.h1 {...fade(0.06)} className="mt-5 font-display text-2xl leading-snug md:text-4xl">

@@ -61,7 +61,8 @@ const ViagemCoteDIvoire = () => (
       <div className="pattern-dots pointer-events-none absolute inset-0 opacity-20" />
 
       <div className="relative mx-auto flex h-full max-w-6xl flex-col justify-end px-5 pb-16 pt-32 md:pb-24 md:pt-40">
-        <motion.h1 {...fade(0)} className="font-display text-4xl text-cream md:text-6xl lg:text-7xl">
+        <BackButton />
+        <motion.h1 {...fade(0)} className="mt-5 font-display text-4xl text-cream md:text-6xl lg:text-7xl">
           Costa do Marfim
         </motion.h1>
         <motion.p {...fade(0.1)} className="mt-4 max-w-2xl text-lg leading-relaxed text-cream/85 md:text-xl">
