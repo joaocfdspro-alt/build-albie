@@ -86,8 +86,8 @@ const Index = () => {
         <div className="pattern-dots pointer-events-none absolute inset-0 opacity-20" />
 
         {/* CARD LIQUID GLASS — carrossel de viagens */}
-        <div className="absolute inset-x-0 top-20 z-10 px-5 md:top-28">
-          <div className="mx-auto w-full max-w-sm md:max-w-md">
+        <div className="absolute inset-x-0 bottom-20 z-10 px-5 md:bottom-28">
+          <div className="mx-auto w-full max-w-md md:max-w-2xl">
             <AnimatePresence mode="wait">
               <motion.div
                 key={trip.id}
@@ -95,41 +95,39 @@ const Index = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -16, scale: 0.98 }}
                 transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                className="relative overflow-hidden rounded-[28px] p-[2px] shadow-2xl md:rounded-[32px]"
+                className="relative overflow-hidden rounded-[24px] p-[2px] shadow-2xl"
                 style={{
                   background:
                     "linear-gradient(135deg, hsl(12 72% 46% / 0.95), hsl(38 92% 50% / 0.95), hsl(12 72% 46% / 0.95))",
                 }}
               >
-                <div className="relative overflow-hidden rounded-[26px] bg-maroon/55 p-5 backdrop-blur-xl md:rounded-[30px] md:p-8">
+                <div className="relative overflow-hidden rounded-[22px] bg-maroon/55 p-4 backdrop-blur-xl md:p-5">
                   {/* reflexo sutil de vidro */}
                   <div className="pointer-events-none absolute -left-1/2 -top-1/2 h-[200%] w-[200%] rotate-45 bg-gradient-to-b from-cream/10 via-transparent to-transparent opacity-40" />
 
-                  <div className="relative flex flex-col gap-3 md:gap-4">
-                    <div className="inline-flex w-fit items-center gap-2 rounded-full border border-saffron/30 bg-saffron/15 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-saffron">
-                      <Calendar className="h-3.5 w-3.5" />
-                      {trip.badge}
-                    </div>
+                  <div className="relative flex flex-col items-start gap-3 md:flex-row md:items-center md:justify-between md:gap-6">
+                    <div className="flex min-w-0 flex-1 flex-col gap-2">
+                      <div className="inline-flex w-fit items-center gap-2 rounded-full border border-saffron/30 bg-saffron/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.22em] text-saffron">
+                        <Calendar className="h-3 w-3" />
+                        {trip.badge}
+                      </div>
 
-                    <div>
-                      <h2 className="font-display text-2xl leading-none text-cream md:text-4xl">
-                        {trip.title}
-                      </h2>
-                      <p className="mt-1.5 flex items-center gap-2 text-sm font-medium text-cream/80 md:mt-2">
-                        <MapPin className="h-4 w-4 text-saffron" />
-                        {trip.date}
-                      </p>
+                      <div className="flex flex-col gap-0.5 md:flex-row md:items-baseline md:gap-3">
+                        <h2 className="font-display text-2xl leading-none text-cream md:text-3xl">
+                          {trip.title}
+                        </h2>
+                        <p className="flex items-center gap-1.5 text-sm font-medium text-cream/80">
+                          <MapPin className="h-3.5 w-3.5 text-saffron" />
+                          {trip.date}
+                        </p>
+                      </div>
                     </div>
-
-                    <p className="hidden max-w-sm text-sm leading-relaxed text-cream/75 md:block">
-                      {trip.text}
-                    </p>
 
                     <a
                       href={trip.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group mt-1 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-sun px-6 py-3 text-sm font-bold text-maroon shadow-earth transition-transform hover:scale-[1.02] active:scale-[0.98] md:py-3.5"
+                      className="group inline-flex w-full flex-shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-sun px-5 py-2.5 text-sm font-bold text-maroon shadow-earth transition-transform hover:scale-[1.02] active:scale-[0.98] md:w-auto md:px-6"
                     >
                       {trip.cta}
                       <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
@@ -141,7 +139,7 @@ const Index = () => {
 
             {/* indicadores do carrossel de viagens */}
             {trips.length > 1 && (
-              <div className="mt-4 flex items-center justify-center gap-2">
+              <div className="mt-3 flex items-center justify-center gap-2">
                 {trips.map((t, i) => (
                   <button
                     key={t.id}
