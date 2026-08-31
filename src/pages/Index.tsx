@@ -99,9 +99,9 @@ const fade = (delay = 0) => ({
 
 const heroLinks = [
   { label: "Trajetória", to: "/trajetoria" },
-  { label: "Serviços", to: "#servicos" },
-  { label: "Artigos", to: "#artigos" },
-  { label: "Contato", to: "#contato" },
+  { label: "Serviços", to: "/servicos" },
+  { label: "Artigos", to: "/artigos" },
+  { label: "Contato", to: "/contato" },
 ];
 
 const trips = [
