@@ -86,7 +86,7 @@ const Index = () => {
         <div className="pattern-dots pointer-events-none absolute inset-0 opacity-20" />
 
         {/* CARD LIQUID GLASS — carrossel de viagens */}
-        <div className="absolute inset-x-0 bottom-4 z-10 px-5 md:bottom-24">
+        <div className="absolute inset-x-0 bottom-14 z-10 px-5 md:bottom-24">
           <div className="mx-auto w-full max-w-sm md:max-w-md">
             <AnimatePresence mode="wait">
               <motion.div
@@ -159,7 +159,7 @@ const Index = () => {
         </div>
 
         {/* seta minimalista para baixo */}
-        <div className="absolute inset-x-0 bottom-4 z-20 flex justify-center">
+        <div className="absolute inset-x-0 bottom-2 z-20 flex justify-center">
           <motion.a
             href="#conteudo"
             aria-label="Rolar para baixo"
