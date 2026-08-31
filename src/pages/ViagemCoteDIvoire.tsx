@@ -199,7 +199,7 @@ const ViagemCoteDIvoire = () => (
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-3 rounded-full bg-cream px-8 py-4 font-display text-lg font-bold text-maroon shadow-earth transition-transform hover:scale-105"
           >
-            Côte D&apos;ívoire
+            Acessar o DIP
             <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </a>
         </motion.div>
