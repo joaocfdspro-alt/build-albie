@@ -14,8 +14,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Montserrat", "sans-serif"],
-        copperplate: ["Copperplate", "Copperplate Gothic Bold", "Copperplate Gothic", "Trajan Pro", "Georgia", "serif"],
+        sans: ["DM Sans", "sans-serif"],
+        display: ["Archivo Black", "DM Sans", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -51,14 +51,11 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        gold: {
-          DEFAULT: "hsl(var(--gold))",
-          light: "hsl(var(--gold-light))",
-          dark: "hsl(var(--gold-dark))",
-        },
-        warm: "hsl(var(--warm))",
+        saffron: "hsl(var(--saffron))",
+        terracotta: "hsl(var(--terracotta))",
+        indigo: "hsl(var(--indigo))",
+        maroon: "hsl(var(--maroon))",
         cream: "hsl(var(--cream))",
-        copper: "hsl(var(--copper))",
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -84,10 +81,7 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "pulse-gold": {
-          "0%, 100%": { boxShadow: "0 0 15px hsl(38 36% 62% / 0.15)" },
-          "50%": { boxShadow: "0 0 30px hsl(38 36% 62% / 0.3)" },
-        },
+
         "fade-up": {
           from: { opacity: "0", transform: "translateY(20px)" },
           to: { opacity: "1", transform: "translateY(0)" },
@@ -96,7 +90,6 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "pulse-gold": "pulse-gold 3s ease-in-out infinite",
         "fade-up": "fade-up 0.6s ease-out forwards",
       },
     },

@@ -1,187 +1,338 @@
 import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 import {
-  BookOpen,
-  GraduationCap,
-  Target,
-  Users,
-  Flame,
-  BrainCircuit,
+  Mic,
+  Camera,
+  Megaphone,
+  Compass,
+  Globe2,
+  Radio,
+  Sparkles,
+  ArrowUpRight,
+  MapPin,
+  Plane,
 } from "lucide-react";
 
-import ivoHero from "@/assets/ivo-hero.jpg";
-import HubLink from "@/components/HubLink";
-import IvoLogo from "@/components/IvoLogo";
-import D7Footer from "@/components/D7Footer";
+import SiteNav from "@/components/SiteNav";
+import SiteFooter from "@/components/SiteFooter";
+import portrait from "@/assets/albie-portrait.jpg";
+
+const stats = [
+  { value: "+150 mil", label: "seguidores" },
+  { value: "Milhões", label: "de visualizações" },
+  { value: "+30", label: "países alcançados" },
+];
+
+const servicos = [
+  { icon: Mic, title: "Palestras", text: "África, diáspora, cultura e geopolítica para públicos corporativos e institucionais." },
+  { icon: Camera, title: "Conteúdo para marcas", text: "Produção de conteúdo autoral para marcas e organizações que querem falar com a África." },
+  { icon: Megaphone, title: "Campanhas institucionais", text: "Campanhas e projetos de impacto com narrativa africana contemporânea." },
+  { icon: Compass, title: "Consultoria cultural", text: "Consultoria estratégica sobre África, cultura e mercados africanos." },
+  { icon: Globe2, title: "Comunicação intercultural", text: "Posicionamento institucional e comunicação entre culturas e mercados." },
+  { icon: Radio, title: "Mídia e entrevistas", text: "Podcasts, entrevistas, documentários e programas de mídia." },
+  { icon: Sparkles, title: "Mestre de cerimônias", text: "Condução de eventos corporativos, institucionais e internacionais ligados à África." },
+];
+
+const diferenciais = [
+  "Autoridade em temas africanos e da diáspora",
+  "Linguagem acessível para audiências diversas",
+  "Experiência corporativa internacional",
+  "Forte conexão com comunidades africanas e afro-diaspóricas",
+  "Conteúdo com alto potencial de alcance e engajamento",
+  "Temas complexos transformados em histórias memoráveis",
+  "Fluência em múltiplos idiomas para conectar mercados",
+];
+
+const artigos = [
+  {
+    tag: "História",
+    title: "A história d'África que não te contam",
+    text: "Narrativas que recolocam o continente africano no centro da história global — do passado antigo às potências que se desenham hoje.",
+    href: "https://www.instagram.com/albieman.nguma/",
+  },
+  {
+    tag: "Geopolítica",
+    title: "África no tabuleiro do século XXI",
+    text: "Como energia, minerais críticos, demografia e novas alianças estão redesenhando o poder global a partir do continente.",
+    href: "https://www.youtube.com/@Albienguma",
+  },
+  {
+    tag: "Brasil–África",
+    title: "Pontes entre Brasil, África e diáspora",
+    text: "Cultura, negócios e identidade: o que aproxima os dois lados do Atlântico e onde estão as oportunidades reais.",
+    href: "https://www.instagram.com/albieman.nguma/",
+  },
+];
+
+const fade = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-80px" },
+  transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] as const },
+});
 
 const Index = () => {
-  const navigate = useNavigate();
-
   return (
-    <div className="min-h-screen flex flex-col bg-background relative">
-      {/* Black sides + centered column with parallax bg */}
-      <div className="fixed inset-0 z-0 flex justify-center">
-        <div className="relative w-full max-w-md">
-          <img
-            src={ivoHero}
-            alt="Ivo Brasil"
-            className="w-full h-full object-cover object-[center_20%] blur-[1px]"
-          />
-          {/* Side fades to black */}
-          <div className="absolute inset-y-0 -left-4 w-16 bg-gradient-to-r from-background to-transparent" />
-          <div className="absolute inset-y-0 -right-4 w-16 bg-gradient-to-l from-background to-transparent" />
-          {/* Bottom fade */}
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-background/20" />
-          {/* Subtle gold tint on edges */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[hsl(38_36%_62%/0.04)] via-transparent to-transparent" />
-        </div>
-      </div>
+    <div id="topo" className="min-h-screen bg-background">
+      <SiteNav />
 
-      {/* Ensure black on the sides outside center column */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-y-0 left-0 w-[calc(50%-224px)] bg-background" />
-        <div className="absolute inset-y-0 right-0 w-[calc(50%-224px)] bg-background" />
-      </div>
+      {/* HERO */}
+      <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-24">
+        <div className="pattern-dots pointer-events-none absolute inset-0 opacity-70" />
+        <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-saffron/25 blur-3xl" />
 
-      <div className="relative z-10 w-full max-w-md mx-auto">
-        {/* Hero section - transparent so parallax shows */}
-        <div className="relative h-[65vh] min-h-[460px] max-h-[580px]">
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
-
-          {/* Content overlay */}
-          <div className="relative z-10 h-full flex flex-col justify-end">
-            {/* Logo */}
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="absolute top-6 left-0 right-0 flex justify-center"
+        <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-5 md:grid-cols-[1.05fr_0.95fr]">
+          <div>
+            <motion.p
+              {...fade(0)}
+              className="mb-4 inline-flex items-center gap-2 rounded-full border border-terracotta/30 bg-terracotta/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.28em] text-terracotta"
             >
-              <IvoLogo size="xl" />
+              África é Futuro
+            </motion.p>
+
+            <motion.h1 {...fade(0.05)} className="font-display text-4xl leading-[1.05] md:text-6xl">
+              Conectando África,
+              <br />
+              Brasil, diáspora
+              <br />
+              <span className="text-gradient-sun">e o futuro.</span>
+            </motion.h1>
+
+            <motion.p {...fade(0.12)} className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+              Comunicador pan-africano, palestrante e criador de conteúdo. Transformo história,
+              cultura, negócios e geopolítica em narrativas que aproximam pessoas, comunidades,
+              marcas e mercados.
+            </motion.p>
+
+            <motion.div {...fade(0.18)} className="mt-8 flex flex-wrap items-center gap-3">
+              <a
+                href="https://wa.me/5511976480548"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-sun px-7 py-3.5 text-sm font-bold text-maroon shadow-earth transition-transform hover:scale-105"
+              >
+                Trabalhe comigo <ArrowUpRight className="h-4 w-4" />
+              </a>
+              <a
+                href="#servicos"
+                className="inline-flex items-center gap-2 rounded-full border border-foreground/20 px-7 py-3.5 text-sm font-bold text-foreground transition-colors hover:border-foreground/50"
+              >
+                Ver serviços
+              </a>
             </motion.div>
 
-            {/* Hero text */}
-            <div className="px-7 pb-8 relative z-10">
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.7 }}
-                className="text-[10px] font-semibold uppercase tracking-[0.35em] text-gold/80 mb-3"
-              >
-                Estrategista · Mentor · Palestrante
-              </motion.p>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                className="font-copperplate text-[24px] font-bold leading-[1.15] tracking-wide uppercase mb-4"
-              >
-                Você não perde negócios<br />
-                por falta de produto.<br />
-                <span className="text-gradient-gold">Perde por falta de método.</span>
-              </motion.h1>
-
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ delay: 0.8, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-                className="h-[1px] line-gold origin-left mb-4"
-              />
-
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.9, duration: 0.6 }}
-                className="text-[13px] text-secondary-foreground/80 leading-relaxed max-w-[320px]"
-              >
-                +20 anos em negociações bilionárias. O método que transforma 
-                conversas difíceis em acordos vantajosos.
-              </motion.p>
-            </div>
+            <motion.dl {...fade(0.24)} className="mt-12 grid max-w-lg grid-cols-3 gap-4">
+              {stats.map((s) => (
+                <div key={s.label} className="border-l-2 border-saffron pl-3">
+                  <dt className="font-display text-xl text-foreground md:text-2xl">{s.value}</dt>
+                  <dd className="text-xs text-muted-foreground">{s.label}</dd>
+                </div>
+              ))}
+            </motion.dl>
           </div>
-        </div>
 
-        {/* Links section - solid background so content scrolls over parallax */}
-        <div className="relative z-20 bg-background px-5 -mt-2 pb-12">
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.1 }}
-            className="flex items-center gap-3 mb-6 mt-8"
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="relative mx-auto w-full max-w-md"
           >
-            <div className="h-[1px] flex-1 line-gold" />
-            <span className="text-[9px] font-bold uppercase tracking-[0.3em] text-muted-foreground font-copperplate">
-              Central do Negociador
-            </span>
-            <div className="h-[1px] flex-1 line-gold" />
+            <div className="absolute -inset-3 rotate-3 rounded-[2rem] bg-indigo/90" />
+            <img
+              src={portrait}
+              alt="Albie Nguma, comunicador pan-africano e palestrante"
+              className="relative w-full rounded-[1.75rem] object-cover shadow-earth"
+              loading="eager"
+            />
+            <div className="pattern-strip absolute -bottom-3 left-6 right-6 h-3 rounded-full" />
           </motion.div>
+        </div>
+      </section>
 
-          <div className="space-y-3">
-            <HubLink
-              icon={BrainCircuit}
-              title="Diagnóstico de Negociação"
-              subtitle="Descubra seu perfil e onde você está perdendo dinheiro"
-              href="/quiz"
-              variant="primary"
-              index={0}
-              isInternal
-              onClick={() => navigate("/quiz")}
-            />
+      {/* TRAJETÓRIA */}
+      <section id="trajetoria" className="bg-gradient-earth py-20 text-cream md:py-28">
+        <div className="mx-auto max-w-6xl px-5">
+          <motion.h2 {...fade(0)} className="font-display text-3xl md:text-5xl">
+            Trajetória
+          </motion.h2>
+          <motion.div {...fade(0.06)} className="mt-5 h-1 w-24 bg-gradient-sun" />
 
-            <HubLink
-              icon={Target}
-              title="Código da Negociação"
-              subtitle="Programa de 90 dias para se tornar um negociador estratégico"
-              href="/codigo-da-negociacao"
-              variant="highlight"
-              index={1}
-              isInternal
-              onClick={() => navigate("/codigo-da-negociacao")}
-            />
+          <div className="mt-12 grid gap-10 md:grid-cols-2">
+            <motion.div {...fade(0.1)} className="space-y-5 text-cream/80">
+              <p className="text-lg leading-relaxed text-cream">
+                Filho de educadores, cresci em um ambiente onde história, conhecimento e debate
+                público faziam parte do cotidiano. Minha mãe foi professora e meu pai, professor de
+                História Africana, História da Antiguidade e também político — despertando em mim
+                desde cedo o interesse por identidade, cultura, desenvolvimento e relações
+                internacionais.
+              </p>
+              <p className="leading-relaxed">
+                Nasci em Angola, vivi em diferentes países e aprendi que as maiores oportunidades
+                surgem quando culturas, ideias e pessoas se conectam.
+              </p>
+              <p className="leading-relaxed">
+                Minha trajetória profissional combina experiência corporativa internacional, atuação
+                em negócios, relacionamento e desenvolvimento de mercados na América Latina.
+              </p>
+            </motion.div>
 
-            <HubLink
-              icon={GraduationCap}
-              title="Curso O Negociador"
-              subtitle="Treinamento com técnicas e estratégias práticas"
-              href="https://ivobrasil.com.br/onegociador/"
-              variant="secondary"
-              index={2}
-            />
+            <motion.div {...fade(0.18)} className="space-y-5 text-cream/80">
+              <p className="leading-relaxed">
+                Hoje, uno essa vivência à comunicação para contar histórias que ajudam a compreender
+                a África contemporânea, suas conexões com o Brasil e as transformações que estão
+                moldando o século XXI.
+              </p>
 
-            <HubLink
-              icon={Users}
-              title="Mentoria"
-              subtitle="Acompanhamento estratégico para negociadores"
-              href="https://ivobrasil.com.br/mentorias/"
-              variant="secondary"
-              index={3}
-            />
+              <div className="flex flex-wrap gap-3 pt-2">
+                <span className="inline-flex items-center gap-2 rounded-full border border-cream/20 px-4 py-2 text-xs font-medium">
+                  <MapPin className="h-3.5 w-3.5 text-saffron" /> Angola · Brasil · Mundo
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-cream/20 px-4 py-2 text-xs font-medium">
+                  <Globe2 className="h-3.5 w-3.5 text-saffron" /> 9 idiomas
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-cream/20 px-4 py-2 text-xs font-medium">
+                  <Plane className="h-3.5 w-3.5 text-saffron" /> Piloto em formação
+                </span>
+              </div>
 
-            <HubLink
-              icon={BookOpen}
-              title="Livros"
-              subtitle="Fundamentos e técnicas para maximizar seus ganhos"
-              href="https://ivobrasil.com.br/livros/"
-              variant="secondary"
-              index={4}
-            />
-
-            <HubLink
-              icon={Flame}
-              title="Imersão Virando a Mesa"
-              subtitle="Imersão presencial para empresários e líderes"
-              href="https://ivobrasil.com.br/imersao-virando-a-mesa/"
-              variant="secondary"
-              index={5}
-            />
-          </div>
-
-          <div className="mt-14">
-            <D7Footer />
+              <blockquote className="mt-8 rounded-2xl border-l-4 border-saffron bg-cream/5 p-6">
+                <p className="font-display text-lg leading-snug text-cream md:text-xl">
+                  “Não conto apenas histórias sobre a África. Construo pontes entre África, Brasil e
+                  o mundo.”
+                </p>
+                <footer className="mt-3 text-xs uppercase tracking-[0.25em] text-saffron">
+                  Albie Nguma
+                </footer>
+              </blockquote>
+            </motion.div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* SERVIÇOS */}
+      <section id="servicos" className="relative py-20 md:py-28">
+        <div className="mx-auto max-w-6xl px-5">
+          <motion.h2 {...fade(0)} className="font-display text-3xl md:text-5xl">
+            Serviços
+          </motion.h2>
+          <motion.p {...fade(0.06)} className="mt-4 max-w-2xl text-muted-foreground">
+            Formatos para marcas, instituições e eventos que querem falar sobre África com
+            profundidade, verdade e alcance.
+          </motion.p>
+          <motion.div {...fade(0.08)} className="mt-5 h-1 w-24 bg-gradient-sun" />
+
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {servicos.map((s, i) => (
+              <motion.article
+                key={s.title}
+                {...fade(0.04 * i)}
+                className="group rounded-2xl border border-border bg-card p-6 transition-all hover:-translate-y-1 hover:border-saffron hover:shadow-earth"
+              >
+                <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-saffron/15 text-terracotta transition-colors group-hover:bg-gradient-sun group-hover:text-maroon">
+                  <s.icon className="h-5 w-5" />
+                </div>
+                <h3 className="font-display text-lg">{s.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.text}</p>
+              </motion.article>
+            ))}
+          </div>
+
+          {/* Por que trabalhar comigo */}
+          <div className="mt-20 rounded-3xl bg-indigo p-8 text-cream md:p-12">
+            <motion.h3 {...fade(0)} className="font-display text-2xl md:text-4xl">
+              Por que trabalhar comigo?
+            </motion.h3>
+            <ul className="mt-8 grid gap-4 md:grid-cols-2">
+              {diferenciais.map((d, i) => (
+                <motion.li key={d} {...fade(0.04 * i)} className="flex items-start gap-3">
+                  <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rotate-45 bg-saffron" />
+                  <span className="text-sm leading-relaxed text-cream/85">{d}</span>
+                </motion.li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ARTIGOS */}
+      <section id="artigos" className="bg-muted/60 py-20 md:py-28">
+        <div className="mx-auto max-w-6xl px-5">
+          <motion.h2 {...fade(0)} className="font-display text-3xl md:text-5xl">
+            Artigos
+          </motion.h2>
+          <motion.p {...fade(0.06)} className="mt-4 max-w-2xl text-muted-foreground">
+            Ideias, análises e conteúdos sobre o continente africano, a diáspora e as conexões com o
+            Brasil.
+          </motion.p>
+          <motion.div {...fade(0.08)} className="mt-5 h-1 w-24 bg-gradient-sun" />
+
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            {artigos.map((a, i) => (
+              <motion.a
+                key={a.title}
+                href={a.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                {...fade(0.06 * i)}
+                className="group flex flex-col rounded-2xl border border-border bg-card p-7 transition-all hover:-translate-y-1 hover:shadow-earth"
+              >
+                <span className="text-[11px] font-bold uppercase tracking-[0.22em] text-terracotta">
+                  {a.tag}
+                </span>
+                <h3 className="mt-3 font-display text-xl leading-snug">{a.title}</h3>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{a.text}</p>
+                <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-foreground">
+                  Acompanhar
+                  <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
+              </motion.a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* MISSÃO + CONTATO */}
+      <section id="contato" className="relative overflow-hidden py-20 md:py-28">
+        <div className="pattern-dots pointer-events-none absolute inset-0" />
+        <div className="relative mx-auto max-w-4xl px-5 text-center">
+          <motion.p {...fade(0)} className="text-[11px] font-bold uppercase tracking-[0.3em] text-terracotta">
+            Missão
+          </motion.p>
+          <motion.h2 {...fade(0.06)} className="mt-5 font-display text-2xl leading-snug md:text-4xl">
+            Aproximar África e Brasil através de histórias, conhecimento e oportunidades,
+            contribuindo para uma narrativa mais ampla, moderna e conectada sobre o continente
+            africano.
+          </motion.h2>
+
+          <motion.div {...fade(0.14)} className="mt-10 flex flex-wrap justify-center gap-3">
+            <a
+              href="https://wa.me/5511976480548"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-sun px-8 py-4 text-sm font-bold text-maroon shadow-earth transition-transform hover:scale-105"
+            >
+              Falar no WhatsApp <ArrowUpRight className="h-4 w-4" />
+            </a>
+            <a
+              href="https://www.instagram.com/albieman.nguma/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-foreground/20 px-8 py-4 text-sm font-bold transition-colors hover:border-foreground/50"
+            >
+              Instagram
+            </a>
+            <a
+              href="https://www.youtube.com/@Albienguma"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-foreground/20 px-8 py-4 text-sm font-bold transition-colors hover:border-foreground/50"
+            >
+              YouTube
+            </a>
+          </motion.div>
+        </div>
+      </section>
+
+      <SiteFooter />
     </div>
   );
 };
