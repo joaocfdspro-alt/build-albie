@@ -94,143 +94,120 @@ const fade = (delay = 0) => ({
   transition: { duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] as const },
 });
 
+const heroLinks = [
+  { label: "Trajetória", to: "/trajetoria" },
+  { label: "Serviços", to: "#servicos" },
+  { label: "Artigos", to: "#artigos" },
+  { label: "Contato", to: "#contato" },
+];
+
 const Index = () => {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const id = window.setInterval(() => setActive((i) => (i + 1) % slides.length), 6000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const slide = slides[active];
+
   return (
     <div id="topo" className="min-h-screen bg-background">
       <SiteNav />
 
-      {/* HERO */}
-      <section className="relative overflow-hidden pt-28 pb-16 md:pt-36 md:pb-24">
-        <div className="pattern-dots pointer-events-none absolute inset-0 opacity-70" />
-        <div className="pointer-events-none absolute -right-24 -top-24 h-80 w-80 rounded-full bg-saffron/25 blur-3xl" />
+      {/* HERO — foto de fundo + carrossel */}
+      <section className="relative flex min-h-[100svh] items-end overflow-hidden">
+        <motion.img
+          src={portrait}
+          alt="Albie Nguma, comunicador pan-africano e palestrante"
+          className="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
+          initial={{ scale: 1.08 }}
+          animate={{ scale: 1 }}
+          transition={{ duration: 12, ease: "easeOut" }}
+          loading="eager"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-maroon via-maroon/80 to-maroon/25" />
+        <div className="pattern-dots pointer-events-none absolute inset-0 opacity-30" />
 
-        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-5 md:grid-cols-[1.05fr_0.95fr] md:gap-12">
-          <div className="order-2 md:order-1">
-            <motion.p
-              {...fade(0)}
-              className="mb-4 inline-flex items-center gap-2 rounded-full border border-terracotta/30 bg-terracotta/10 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.28em] text-terracotta"
+        <div className="relative mx-auto w-full max-w-6xl px-5 pb-14 pt-32 md:pb-20">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={active}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="max-w-2xl"
             >
-              África é Futuro
-            </motion.p>
-
-            <motion.h1 {...fade(0.05)} className="font-display text-4xl leading-[1.05] md:text-6xl">
-              Conectando África,
-              <br />
-              Brasil, diáspora
-              <br />
-              <span className="text-gradient-sun">e o futuro.</span>
-            </motion.h1>
-
-            <motion.p {...fade(0.12)} className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
-              Comunicador pan-africano, palestrante e criador de conteúdo. Transformo história,
-              cultura, negócios e geopolítica em narrativas que aproximam pessoas, comunidades,
-              marcas e mercados.
-            </motion.p>
-
-            <motion.div {...fade(0.18)} className="mt-8 flex flex-wrap items-center gap-3">
-              <a
-                href="https://wa.me/5511976480548"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-sun px-7 py-3.5 text-sm font-bold text-maroon shadow-earth transition-transform hover:scale-105"
-              >
-                Trabalhe comigo <ArrowUpRight className="h-4 w-4" />
-              </a>
-              <a
-                href="#servicos"
-                className="inline-flex items-center gap-2 rounded-full border border-foreground/20 px-7 py-3.5 text-sm font-bold text-foreground transition-colors hover:border-foreground/50"
-              >
-                Ver serviços
-              </a>
+              <p className="mb-4 inline-flex items-center rounded-full border border-saffron/40 bg-saffron/15 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.28em] text-saffron">
+                {slide.kicker}
+              </p>
+              <h1 className="font-display text-4xl leading-[1.05] text-cream md:text-6xl">
+                {slide.title}
+              </h1>
+              <p className="mt-5 max-w-xl text-base leading-relaxed text-cream/80 md:text-lg">
+                {slide.text}
+              </p>
             </motion.div>
+          </AnimatePresence>
 
-            <motion.dl {...fade(0.24)} className="mt-12 grid max-w-lg grid-cols-3 gap-4">
-              {stats.map((s) => (
-                <div key={s.label} className="border-l-2 border-saffron pl-3">
-                  <dt className="font-display text-xl text-foreground md:text-2xl">{s.value}</dt>
-                  <dd className="text-xs text-muted-foreground">{s.label}</dd>
-                </div>
-              ))}
-            </motion.dl>
+          {/* indicadores */}
+          <div className="mt-8 flex items-center gap-2">
+            {slides.map((s, i) => (
+              <button
+                key={s.title}
+                type="button"
+                onClick={() => setActive(i)}
+                aria-label={`Ir para o slide ${i + 1}`}
+                className={`h-1.5 rounded-full transition-all ${
+                  i === active ? "w-10 bg-gradient-sun" : "w-4 bg-cream/30 hover:bg-cream/60"
+                }`}
+              />
+            ))}
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.94 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="relative order-1 mx-auto w-full max-w-xs md:order-2 md:max-w-md"
-          >
-            <div className="absolute -inset-3 rotate-3 rounded-[2rem] bg-indigo/90" />
-            <img
-              src={portrait}
-              alt="Albie Nguma, comunicador pan-africano e palestrante"
-              className="relative w-full rounded-[1.75rem] object-cover shadow-earth"
-              loading="eager"
-            />
-            <div className="pattern-strip absolute -bottom-3 left-6 right-6 h-3 rounded-full" />
-          </motion.div>
-        </div>
-      </section>
+          {/* botões abaixo do banner */}
+          <nav className="mt-9 flex flex-wrap gap-3">
+            <a
+              href="https://wa.me/5511976480548"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-sun px-6 py-3 text-sm font-bold text-maroon shadow-earth transition-transform hover:scale-105"
+            >
+              Trabalhe comigo <ArrowUpRight className="h-4 w-4" />
+            </a>
+            {heroLinks.map((l) =>
+              l.to.startsWith("#") ? (
+                <a
+                  key={l.label}
+                  href={l.to}
+                  className="inline-flex items-center rounded-full border border-cream/30 px-6 py-3 text-sm font-bold text-cream transition-colors hover:border-saffron hover:text-saffron"
+                >
+                  {l.label}
+                </a>
+              ) : (
+                <Link
+                  key={l.label}
+                  to={l.to}
+                  className="inline-flex items-center rounded-full border border-cream/30 px-6 py-3 text-sm font-bold text-cream transition-colors hover:border-saffron hover:text-saffron"
+                >
+                  {l.label}
+                </Link>
+              )
+            )}
+          </nav>
 
-      {/* TRAJETÓRIA */}
-      <section id="trajetoria" className="bg-gradient-earth py-20 text-cream md:py-28">
-        <div className="mx-auto max-w-6xl px-5">
-          <motion.h2 {...fade(0)} className="font-display text-3xl md:text-5xl">
-            Trajetória
-          </motion.h2>
-          <motion.div {...fade(0.06)} className="mt-5 h-1 w-24 bg-gradient-sun" />
-
-          <div className="mt-12 grid gap-10 md:grid-cols-2">
-            <motion.div {...fade(0.1)} className="space-y-5 text-cream/80">
-              <p className="text-lg leading-relaxed text-cream">
-                Filho de educadores, cresci em um ambiente onde história, conhecimento e debate
-                público faziam parte do cotidiano. Minha mãe foi professora e meu pai, professor de
-                História Africana, História da Antiguidade e também político — despertando em mim
-                desde cedo o interesse por identidade, cultura, desenvolvimento e relações
-                internacionais.
-              </p>
-              <p className="leading-relaxed">
-                Nasci em Angola, vivi em diferentes países e aprendi que as maiores oportunidades
-                surgem quando culturas, ideias e pessoas se conectam.
-              </p>
-              <p className="leading-relaxed">
-                Minha trajetória profissional combina experiência corporativa internacional, atuação
-                em negócios, relacionamento e desenvolvimento de mercados na América Latina.
-              </p>
-            </motion.div>
-
-            <motion.div {...fade(0.18)} className="space-y-5 text-cream/80">
-              <p className="leading-relaxed">
-                Hoje, uno essa vivência à comunicação para contar histórias que ajudam a compreender
-                a África contemporânea, suas conexões com o Brasil e as transformações que estão
-                moldando o século XXI.
-              </p>
-
-              <div className="flex flex-wrap gap-3 pt-2">
-                <span className="inline-flex items-center gap-2 rounded-full border border-cream/20 px-4 py-2 text-xs font-medium">
-                  <MapPin className="h-3.5 w-3.5 text-saffron" /> Angola · Brasil · Mundo
-                </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-cream/20 px-4 py-2 text-xs font-medium">
-                  <Globe2 className="h-3.5 w-3.5 text-saffron" /> 9 idiomas
-                </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-cream/20 px-4 py-2 text-xs font-medium">
-                  <Plane className="h-3.5 w-3.5 text-saffron" /> Piloto em formação
-                </span>
+          <dl className="mt-10 grid max-w-lg grid-cols-3 gap-4">
+            {stats.map((s) => (
+              <div key={s.label} className="border-l-2 border-saffron pl-3">
+                <dt className="font-display text-lg text-cream md:text-2xl">{s.value}</dt>
+                <dd className="text-xs text-cream/70">{s.label}</dd>
               </div>
-
-              <blockquote className="mt-8 rounded-2xl border-l-4 border-saffron bg-cream/5 p-6">
-                <p className="font-display text-lg leading-snug text-cream md:text-xl">
-                  “Não conto apenas histórias sobre a África. Construo pontes entre África, Brasil e
-                  o mundo.”
-                </p>
-                <footer className="mt-3 text-xs uppercase tracking-[0.25em] text-saffron">
-                  Albie Nguma
-                </footer>
-              </blockquote>
-            </motion.div>
-          </div>
+            ))}
+          </dl>
         </div>
       </section>
+
 
       {/* SERVIÇOS */}
       <section id="servicos" className="relative py-20 md:py-28">
