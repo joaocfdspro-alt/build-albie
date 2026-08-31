@@ -7,6 +7,7 @@ import SiteFooter from "@/components/SiteFooter";
 import abidjanImg from "@/assets/cotedivoire-abidjan.jpg.asset.json";
 import basilicaImg from "@/assets/cotedivoire-basilica.jpg.asset.json";
 import culturaImg from "@/assets/cotedivoire-cultura.jpg.asset.json";
+import { COTE_DIVOIRE_CTA_URL } from "@/lib/links";
 
 const fade = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -202,7 +203,7 @@ const ViagemCoteDIvoire = () => (
         </motion.p>
         <motion.div {...fade(0.12)} className="mt-8">
           <a
-            href="https://wa.me/5511976480548?text=Ol%C3%A1%2C%20quero%20saber%20mais%20sobre%20a%20viagem%20%C3%A0%20Costa%20do%20Marfim"
+            href={COTE_DIVOIRE_CTA_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="group inline-flex items-center gap-3 rounded-full bg-cream px-8 py-4 font-display text-lg font-bold text-maroon shadow-earth transition-transform hover:scale-105"
