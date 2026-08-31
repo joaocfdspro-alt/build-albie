@@ -42,6 +42,7 @@ const heroLinks = [
   { label: "Trajetória", to: "/trajetoria" },
   { label: "Serviços / Trabalhe comigo", to: "/servicos" },
   { label: "Na mídia", to: "/artigos" },
+  { label: "Inspirações", to: "/inspiracoes" },
 ];
 
 const trips = [
