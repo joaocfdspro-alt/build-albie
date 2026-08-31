@@ -12,7 +12,8 @@ import {
   Plane,
 } from "lucide-react";
 
-import SiteNav from "@/components/SiteNav";
+import { Instagram, Youtube, MessageCircle } from "lucide-react";
+import MinimalistHero from "@/components/ui/minimalist-hero";
 import SiteFooter from "@/components/SiteFooter";
 import portrait from "@/assets/albie-portrait.jpg";
 
