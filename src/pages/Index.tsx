@@ -213,13 +213,13 @@ const Index = () => {
 
           {/* botões estilo linktree */}
           <nav className="mt-9 flex flex-col gap-3">
-            <a
-              href="#"
-              className="group flex w-full items-center justify-between rounded-2xl bg-gradient-sun px-6 py-4 text-base font-bold text-maroon shadow-earth transition-transform hover:scale-[1.02] active:scale-[0.98]"
+            <button
+              type="button"
+              className="group flex w-full items-center justify-between rounded-2xl bg-gradient-sun px-6 py-4 text-left text-base font-bold text-maroon shadow-earth transition-transform hover:scale-[1.02] active:scale-[0.98]"
             >
               <span>CÔTE D’IVOIRE</span>
               <ArrowUpRight className="h-5 w-5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-            </a>
+            </button>
             {heroLinks.map((l) =>
               l.to.startsWith("#") ? (
                 <a
