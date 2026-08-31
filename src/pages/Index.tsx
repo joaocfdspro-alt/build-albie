@@ -76,7 +76,7 @@ const Index = () => {
         <motion.img
           src={portrait}
           alt="Albie Nguma, comunicador pan-africano e palestrante"
-          className="absolute inset-0 h-full w-full object-cover object-[50%_20%]"
+          className="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
           initial={{ scale: 1.08 }}
           animate={{ scale: 1 }}
           transition={{ duration: 12, ease: "easeOut" }}
@@ -86,8 +86,8 @@ const Index = () => {
         <div className="pattern-dots pointer-events-none absolute inset-0 opacity-20" />
 
         {/* CARD LIQUID GLASS — carrossel de viagens */}
-        <div className="absolute inset-x-0 bottom-10 z-10 px-5 md:bottom-24">
-          <div className="mx-auto w-full max-w-md">
+        <div className="absolute inset-x-0 top-20 z-10 px-5 md:top-28">
+          <div className="mx-auto w-full max-w-sm md:max-w-md">
             <AnimatePresence mode="wait">
               <motion.div
                 key={trip.id}
@@ -159,7 +159,7 @@ const Index = () => {
         </div>
 
         {/* seta minimalista para baixo */}
-        <div className="absolute inset-x-0 bottom-4 z-20 flex justify-center">
+        <div className="absolute inset-x-0 bottom-2 z-20 flex justify-center">
           <motion.a
             href="#conteudo"
             aria-label="Rolar para baixo"
