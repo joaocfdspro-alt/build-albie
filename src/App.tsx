@@ -19,7 +19,7 @@ const App = () => (
       <ScrollToTop />
       {/* Desktop: simula visão mobile centralizada em um frame escuro */}
       <div className="min-h-screen bg-maroon md:bg-[#080505]">
-        <div className="relative mx-auto min-h-screen w-full bg-background shadow-none md:max-w-[430px] md:overflow-hidden md:rounded-[2rem] md:shadow-2xl md:ring-1 md:ring-cream/10">
+        <div className="relative mx-auto min-h-screen w-full bg-background shadow-none md:max-w-[430px] md:overflow-hidden md:rounded-b-[2rem] md:shadow-2xl md:ring-1 md:ring-cream/10">
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/trajetoria" element={<Trajetoria />} />
