@@ -1,12 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500&display=swap');
-
-@font-face {
-  font-family: 'Copperplate';
-  src: url('/fonts/Copperplate.ttc') format('truetype-collection');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -14,81 +6,42 @@
 
 @layer base {
   :root {
-    --background: 0 0% 2%;
-    --foreground: 38 20% 90%;
+    /* Paleta afro-contemporânea: creme, marrom-vinho, açafrão, índigo, terracota */
+    --background: 39 60% 96%;
+    --foreground: 350 62% 13%;
 
-    --card: 0 0% 6%;
-    --card-foreground: 38 20% 90%;
-
-    --popover: 0 0% 6%;
-    --popover-foreground: 38 20% 90%;
-
-    --primary: 38 36% 62%;
-    --primary-foreground: 0 0% 2%;
-
-    --secondary: 0 0% 10%;
-    --secondary-foreground: 38 15% 75%;
-
-    --muted: 0 0% 12%;
-    --muted-foreground: 30 8% 42%;
-
-    --accent: 38 36% 62%;
-    --accent-foreground: 0 0% 2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 30 8% 14%;
-    --input: 30 8% 14%;
-    --ring: 38 36% 62%;
-
-    --radius: 0.5rem;
-
-    --gold: 38 36% 62%;
-    --gold-light: 38 42% 75%;
-    --gold-dark: 38 40% 42%;
-    --warm: 20 15% 8%;
-    --cream: 38 20% 90%;
-    --ember: 21 69% 30%;
-    --copper: 21 69% 30%;
-
-    --sidebar-background: 0 0% 2%;
-    --sidebar-foreground: 38 20% 90%;
-    --sidebar-primary: 38 36% 62%;
-    --sidebar-primary-foreground: 0 0% 2%;
-    --sidebar-accent: 0 0% 10%;
-    --sidebar-accent-foreground: 38 20% 90%;
-    --sidebar-border: 30 8% 14%;
-    --sidebar-ring: 38 36% 62%;
-  }
-
-  .admin-light {
-    --background: 30 15% 97%;
-    --foreground: 0 0% 10%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
+    --card-foreground: 350 62% 13%;
+
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-    --primary: 38 36% 52%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 30 10% 93%;
-    --secondary-foreground: 0 0% 25%;
-    --muted: 30 8% 90%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 38 36% 52%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 30 10% 88%;
-    --input: 30 10% 88%;
-    --ring: 38 36% 52%;
-    --gold: 38 36% 52%;
-    --gold-light: 38 42% 65%;
-    --gold-dark: 38 40% 35%;
-    --warm: 30 15% 95%;
-    --cream: 38 20% 90%;
-    --ember: 21 30% 80%;
-    --copper: 21 50% 40%;
+    --popover-foreground: 350 62% 13%;
+
+    --primary: 38 92% 50%;
+    --primary-foreground: 350 62% 13%;
+
+    --secondary: 232 55% 27%;
+    --secondary-foreground: 39 60% 96%;
+
+    --muted: 38 35% 90%;
+    --muted-foreground: 350 15% 35%;
+
+    --accent: 12 72% 46%;
+    --accent-foreground: 39 60% 96%;
+
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 39 60% 96%;
+
+    --border: 38 30% 84%;
+    --input: 38 30% 84%;
+    --ring: 38 92% 50%;
+
+    --radius: 0.75rem;
+
+    --saffron: 38 92% 50%;
+    --terracotta: 12 72% 46%;
+    --indigo: 232 55% 27%;
+    --maroon: 350 62% 13%;
+    --cream: 39 60% 96%;
   }
 }
 
@@ -97,99 +50,56 @@
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'DM Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: hsl(var(--saffron));
+    color: hsl(var(--maroon));
   }
 }
 
 @layer utilities {
-  .font-copperplate {
-    font-family: 'Copperplate', 'Copperplate Gothic Bold', 'Copperplate Gothic', 'Trajan Pro', Georgia, serif;
+  .font-display {
+    font-family: 'Archivo Black', 'DM Sans', sans-serif;
+    letter-spacing: -0.02em;
   }
 
-  .text-gradient-gold {
+  .text-gradient-sun {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(38 42% 75%), hsl(38 36% 62%), hsl(38 40% 42%));
+    background-image: linear-gradient(100deg, hsl(38 92% 50%), hsl(12 72% 46%));
   }
 
-  .text-gradient-ember {
-    @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, hsl(38 36% 62%), hsl(21 69% 50%));
+  .bg-gradient-sun {
+    background-image: linear-gradient(100deg, hsl(38 92% 52%), hsl(24 85% 50%));
   }
 
-  .bg-gradient-gold {
-    background-image: linear-gradient(135deg, hsl(38 42% 75%), hsl(38 36% 62%));
+  .bg-gradient-earth {
+    background-image: linear-gradient(160deg, hsl(350 62% 13%), hsl(12 55% 20%));
   }
 
-  .bg-gradient-gold-deep {
-    background-image: linear-gradient(135deg, hsl(38 36% 62%), hsl(38 40% 42%));
+  .shadow-earth {
+    box-shadow: 0 18px 50px -22px hsl(350 62% 13% / 0.45);
   }
 
-  .bg-gradient-dark {
-    background-image: linear-gradient(180deg, hsl(0 0% 2%) 0%, hsl(20 10% 5%) 50%, hsl(0 0% 2%) 100%);
+  /* Faixa de padrão geométrico inspirada em tecidos africanos */
+  .pattern-strip {
+    background-color: hsl(12 72% 46%);
+    background-image:
+      repeating-linear-gradient(90deg, hsl(39 60% 96%) 0 6px, transparent 6px 14px),
+      repeating-linear-gradient(90deg, transparent 0 20px, hsl(38 92% 50%) 20px 26px);
+    background-size: 28px 100%;
   }
 
-  .bg-gradient-hero {
-    background-image: linear-gradient(
-      180deg,
-      transparent 0%,
-      hsl(0 0% 2% / 0.3) 40%,
-      hsl(0 0% 2% / 0.85) 70%,
-      hsl(0 0% 2%) 100%
-    );
-  }
-
-  .shadow-gold {
-    box-shadow: 0 4px 40px -8px hsl(38 36% 62% / 0.25);
-  }
-
-  .shadow-gold-intense {
-    box-shadow: 0 0 50px -10px hsl(38 36% 62% / 0.3), 0 0 100px -20px hsl(38 36% 62% / 0.1);
-  }
-
-  .glow-gold {
-    box-shadow: 0 0 25px hsl(38 36% 62% / 0.1), 0 0 80px hsl(38 36% 62% / 0.05);
-  }
-
-  .border-gold-gradient {
-    border-image: linear-gradient(180deg, hsl(38 36% 62% / 0.4), hsl(38 36% 62% / 0.05)) 1;
-  }
-
-  .line-gold {
-    background-image: linear-gradient(90deg, transparent, hsl(38 36% 62% / 0.4), transparent);
-  }
-}
-
-@media print {
-  .print\:admin-light {
-    --background: 30 15% 97%;
-    --foreground: 0 0% 10%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-    --primary: 38 36% 52%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 30 10% 93%;
-    --secondary-foreground: 0 0% 25%;
-    --muted: 30 8% 90%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 38 36% 52%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 30 10% 88%;
-    --input: 30 10% 88%;
-    --ring: 38 36% 52%;
-    --gold: 38 36% 52%;
-    --gold-light: 38 42% 65%;
-    --gold-dark: 38 40% 35%;
-    --warm: 30 15% 95%;
-    --cream: 38 20% 90%;
-    --ember: 21 30% 80%;
-    --copper: 21 50% 40%;
+  .pattern-dots {
+    background-image: radial-gradient(hsl(12 72% 46% / 0.18) 1.5px, transparent 1.6px);
+    background-size: 18px 18px;
   }
 }
