@@ -24,14 +24,6 @@ const SiteNav = () => {
       }`}
     >
       <nav className="mx-auto flex max-w-6xl items-center px-5 py-4 md:justify-between">
-        <a
-          href="/"
-          className="mx-auto font-display text-xl tracking-[0.18em] text-cream md:mx-0 md:text-2xl"
-          aria-label="Albie Nguma — início"
-        >
-          NGUMA
-        </a>
-
         <ul className="hidden items-center gap-9 md:flex">
           {links.map((l) => (
             <li key={l.href}>
