@@ -7,6 +7,7 @@ import SiteFooter from "@/components/SiteFooter";
 import abidjanImg from "@/assets/cotedivoire-abidjan.jpg.asset.json";
 import basilicaImg from "@/assets/cotedivoire-basilica.jpg.asset.json";
 import culturaImg from "@/assets/cotedivoire-cultura.jpg.asset.json";
+import { COTE_DIVOIRE_CTA_URL } from "@/lib/links";
 
 const fade = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },

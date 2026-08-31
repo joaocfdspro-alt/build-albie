@@ -6,6 +6,7 @@ import { ArrowUpRight, ChevronDown, Calendar, MapPin } from "lucide-react";
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
 import portrait from "@/assets/albie-portrait.jpg";
+import { COTE_DIVOIRE_CTA_URL } from "@/lib/links";
 
 const slides = [
   {
