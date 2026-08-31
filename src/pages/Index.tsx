@@ -160,16 +160,18 @@ const Index = () => {
         </div>
 
         {/* seta minimalista para baixo */}
-        <motion.a
-          href="#conteudo"
-          aria-label="Rolar para baixo"
-          className="absolute bottom-4 left-1/2 inline-flex -translate-x-1/2 flex-col items-center gap-1 text-cream/70 transition-colors hover:text-saffron"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <span className="text-[10px] font-bold uppercase tracking-[0.25em]">Descer</span>
-          <ChevronDown className="h-6 w-6" />
-        </motion.a>
+        <div className="absolute inset-x-0 bottom-4 z-20 flex justify-center">
+          <motion.a
+            href="#conteudo"
+            aria-label="Rolar para baixo"
+            className="flex flex-col items-center gap-1 text-cream/70 transition-colors hover:text-saffron"
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <span className="text-[10px] font-bold uppercase tracking-[0.25em]">Descer</span>
+            <ChevronDown className="h-6 w-6" />
+          </motion.a>
+        </div>
       </section>
 
       {/* CONTEÚDO DO HERO — abaixo da foto */}
