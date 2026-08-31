@@ -7,6 +7,7 @@ import Trajetoria from "./pages/Trajetoria";
 import Servicos from "./pages/Servicos";
 import Artigos from "./pages/Artigos";
 import Contato from "./pages/Contato";
+import ViagemCoteDIvoire from "./pages/ViagemCoteDIvoire";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 
@@ -22,6 +23,7 @@ const App = () => (
         <Route path="/servicos" element={<Servicos />} />
         <Route path="/artigos" element={<Artigos />} />
         <Route path="/contato" element={<Contato />} />
+        <Route path="/cote-divoire" element={<ViagemCoteDIvoire />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
