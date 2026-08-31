@@ -14,7 +14,7 @@ import {
 
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
-import portrait from "@/assets/albie-portrait.jpg.asset.json";
+import portrait from "@/assets/albie-portrait.jpg";
 
 const stats = [
   { value: "+150 mil", label: "seguidores" },
@@ -138,7 +138,7 @@ const Index = () => {
           >
             <div className="absolute -inset-3 rotate-3 rounded-[2rem] bg-indigo/90" />
             <img
-              src={portrait.url}
+              src={portrait}
               alt="Albie Nguma, comunicador pan-africano e palestrante"
               className="relative w-full rounded-[1.75rem] object-cover shadow-earth"
               loading="eager"

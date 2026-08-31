@@ -1,4 +1,4 @@
-import logo from "@/assets/nguma-logo.png.asset.json";
+import logo from "@/assets/nguma-logo.png";
 
 const socials = [
   { label: "Instagram", href: "https://www.instagram.com/albieman.nguma/" },
@@ -11,7 +11,7 @@ const SiteFooter = () => (
     <div className="pattern-strip h-2 w-full" />
     <div className="mx-auto max-w-6xl px-5 py-14">
       <div className="flex flex-col items-center gap-8 text-center">
-        <img src={logo.url} alt="Albie Nguma" className="h-8 w-auto brightness-0 invert opacity-90" />
+        <img src={logo} alt="Albie Nguma" className="h-8 w-auto brightness-0 invert opacity-90" />
         <p className="font-display text-2xl text-gradient-sun md:text-3xl">ÁFRICA É FUTURO</p>
 
         <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">

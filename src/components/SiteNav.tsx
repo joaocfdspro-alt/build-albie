@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
-import logo from "@/assets/nguma-logo.png.asset.json";
+import logo from "@/assets/nguma-logo.png";
 
 const links = [
   { label: "Trajetória", href: "#trajetoria" },
@@ -28,7 +28,7 @@ const SiteNav = () => {
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4">
         <a href="#topo" className="flex items-center gap-3" aria-label="Albie Nguma — início">
-          <img src={logo.url} alt="Albie Nguma" className="h-6 w-auto md:h-7" />
+          <img src={logo} alt="Albie Nguma" className="h-6 w-auto md:h-7" />
         </a>
 
         <ul className="hidden items-center gap-9 md:flex">
