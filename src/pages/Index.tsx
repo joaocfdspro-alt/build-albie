@@ -76,7 +76,7 @@ const Index = () => {
         <motion.img
           src={portrait}
           alt="Albie Nguma, comunicador pan-africano e palestrante"
-          className="absolute inset-0 h-full w-full object-cover object-[50%_25%]"
+          className="absolute inset-0 h-full w-full object-cover object-[50%_42%]"
           initial={{ scale: 1.08 }}
           animate={{ scale: 1 }}
           transition={{ duration: 12, ease: "easeOut" }}
