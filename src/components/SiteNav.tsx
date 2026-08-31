@@ -5,7 +5,6 @@ const links = [
   { label: "Trajetória", href: "/trajetoria" },
   { label: "Serviços", href: "/servicos" },
   { label: "Artigos", href: "/artigos" },
-  { label: "Contato", href: "/contato" },
 ];
 
 const SiteNav = () => {
