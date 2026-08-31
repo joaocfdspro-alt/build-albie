@@ -104,8 +104,21 @@ const heroLinks = [
   { label: "Contato", to: "#contato" },
 ];
 
+const trips = [
+  {
+    id: "costa-rica",
+    badge: "Próxima viagem",
+    title: "Costa Rica",
+    date: "04 a 11 de setembro",
+    text: "Uma imersão para aproximar Brasil e África através de histórias, cultura e conexões estratégicas na Costa Rica.",
+    cta: "Saiba mais",
+    href: "https://wa.me/5511976480548?text=Ol%C3%A1%2C%20quero%20saber%20mais%20sobre%20a%20viagem%20%C3%A0%20Costa%20Rica",
+  },
+];
+
 const Index = () => {
   const [active, setActive] = useState(0);
+  const [activeTrip, setActiveTrip] = useState(0);
 
   useEffect(() => {
     const id = window.setInterval(() => setActive((i) => (i + 1) % slides.length), 6000);
@@ -113,12 +126,13 @@ const Index = () => {
   }, []);
 
   const slide = slides[active];
+  const trip = trips[activeTrip];
 
   return (
     <div id="topo" className="min-h-screen bg-background">
       <SiteNav />
 
-      {/* HERO — foto dele em tela cheia, sem texto sobre o rosto */}
+      {/* HERO — foto dele em tela cheia + card liquid glass no topo */}
       <section className="relative h-[100svh] overflow-hidden">
         <motion.img
           src={portrait}
@@ -129,14 +143,87 @@ const Index = () => {
           transition={{ duration: 12, ease: "easeOut" }}
           loading="eager"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-maroon/40 via-transparent to-maroon/70" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-maroon/40 via-maroon/20 to-maroon/85" />
         <div className="pattern-dots pointer-events-none absolute inset-0 opacity-20" />
+
+        {/* CARD LIQUID GLASS — carrossel de viagens */}
+        <div className="absolute inset-x-0 bottom-16 z-10 px-5 md:bottom-20">
+          <div className="mx-auto w-full max-w-md">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={trip.id}
+                initial={{ opacity: 0, y: 30, scale: 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -16, scale: 0.98 }}
+                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                className="relative overflow-hidden rounded-[32px] p-[2px] shadow-2xl"
+                style={{
+                  background:
+                    "linear-gradient(135deg, hsl(12 72% 46% / 0.95), hsl(38 92% 50% / 0.95), hsl(12 72% 46% / 0.95))",
+                }}
+              >
+                <div className="relative overflow-hidden rounded-[30px] bg-maroon/55 p-6 backdrop-blur-xl md:p-8">
+                  {/* reflexo sutil de vidro */}
+                  <div className="pointer-events-none absolute -left-1/2 -top-1/2 h-[200%] w-[200%] rotate-45 bg-gradient-to-b from-cream/10 via-transparent to-transparent opacity-40" />
+
+                  <div className="relative flex flex-col gap-4">
+                    <div className="inline-flex w-fit items-center gap-2 rounded-full border border-saffron/30 bg-saffron/15 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-saffron">
+                      <Calendar className="h-3.5 w-3.5" />
+                      {trip.badge}
+                    </div>
+
+                    <div>
+                      <h2 className="font-display text-3xl leading-none text-cream md:text-4xl">
+                        {trip.title}
+                      </h2>
+                      <p className="mt-2 flex items-center gap-2 text-sm font-medium text-cream/80">
+                        <MapPin className="h-4 w-4 text-saffron" />
+                        {trip.date}
+                      </p>
+                    </div>
+
+                    <p className="max-w-sm text-sm leading-relaxed text-cream/75">
+                      {trip.text}
+                    </p>
+
+                    <a
+                      href={trip.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group mt-1 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-sun px-6 py-3.5 text-sm font-bold text-maroon shadow-earth transition-transform hover:scale-[1.02] active:scale-[0.98]"
+                    >
+                      {trip.cta}
+                      <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* indicadores do carrossel de viagens */}
+            {trips.length > 1 && (
+              <div className="mt-4 flex items-center justify-center gap-2">
+                {trips.map((t, i) => (
+                  <button
+                    key={t.id}
+                    type="button"
+                    onClick={() => setActiveTrip(i)}
+                    aria-label={`Ir para a viagem ${i + 1}`}
+                    className={`h-1.5 rounded-full transition-all ${
+                      i === activeTrip ? "w-10 bg-gradient-sun" : "w-4 bg-cream/30 hover:bg-cream/60"
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
 
         {/* seta minimalista para baixo */}
         <motion.a
           href="#conteudo"
           aria-label="Rolar para baixo"
-          className="absolute bottom-6 left-1/2 inline-flex -translate-x-1/2 flex-col items-center gap-1 text-cream/70 transition-colors hover:text-saffron"
+          className="absolute bottom-4 left-1/2 inline-flex -translate-x-1/2 flex-col items-center gap-1 text-cream/70 transition-colors hover:text-saffron"
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -228,45 +315,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* DESTAQUE — Viagem Costa Rica */}
-      <section className="bg-background px-5 py-14 md:py-20">
-        <div className="mx-auto max-w-3xl">
-          <motion.div
-            {...fade(0)}
-            className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-terracotta to-saffron p-1 shadow-earth"
-          >
-            <div className="relative rounded-[22px] bg-maroon p-6 md:p-10">
-              <div className="flex flex-col gap-5 md:flex-row md:items-center md:justify-between">
-                <div className="flex-1">
-                  <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-saffron/15 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.2em] text-saffron">
-                    <Calendar className="h-3.5 w-3.5" />
-                    Próxima viagem
-                  </div>
-                  <h2 className="font-display text-2xl text-cream md:text-4xl">
-                    Costa Rica
-                  </h2>
-                  <p className="mt-2 flex items-center gap-2 text-sm text-cream/80">
-                    <MapPin className="h-4 w-4 text-saffron" />
-                    04 a 11 de setembro
-                  </p>
-                  <p className="mt-4 max-w-md text-sm leading-relaxed text-cream/70">
-                    Uma imersão para aproximar Brasil e África através de histórias, cultura e
-                    conexões estratégicas na Costa Rica.
-                  </p>
-                </div>
-                <a
-                  href="https://wa.me/5511976480548?text=Ol%C3%A1%2C%20quero%20saber%20mais%20sobre%20a%20viagem%20%C3%A0%20Costa%20Rica"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-sun px-6 py-3 text-sm font-bold text-maroon shadow-earth transition-transform hover:scale-105"
-                >
-                  Saiba mais <ArrowUpRight className="h-4 w-4" />
-                </a>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
 
 
       {/* SERVIÇOS */}
