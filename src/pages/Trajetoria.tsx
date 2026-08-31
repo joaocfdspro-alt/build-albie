@@ -37,12 +37,7 @@ const Trajetoria = () => {
 
       <section className="bg-gradient-earth pb-16 pt-32 text-cream md:pb-24 md:pt-40">
         <div className="mx-auto max-w-6xl px-5">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-saffron"
-          >
-            <ArrowLeft className="h-3.5 w-3.5" /> Início
-          </Link>
+          <BackButton />
 
           <motion.h1 {...fade(0.04)} className="mt-6 font-display text-4xl md:text-6xl">
             Trajetória
