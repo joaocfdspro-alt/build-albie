@@ -71,7 +71,7 @@ const Index = () => {
     <div id="topo" className="min-h-screen bg-background">
       <SiteNav />
 
-      {/* HERO — foto dele em tela cheia + card liquid glass no topo */}
+      {/* HERO — foto dele em tela cheia + slides sobre a foto */}
       <section className="relative h-[100svh] overflow-hidden">
         <motion.img
           src={portrait}
@@ -85,8 +85,65 @@ const Index = () => {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-maroon/40 via-maroon/20 to-maroon/85" />
         <div className="pattern-dots pointer-events-none absolute inset-0 opacity-20" />
 
-        {/* CARD LIQUID GLASS — carrossel de viagens */}
+        {/* SLIDES — sobre a foto */}
         <div className="absolute inset-x-0 bottom-20 z-10 px-5 md:bottom-28">
+          <div className="mx-auto w-full max-w-2xl">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={active}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -16 }}
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <p className="mb-3 inline-flex items-center rounded-full border border-saffron/40 bg-saffron/15 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.28em] text-saffron">
+                  {slide.kicker}
+                </p>
+                <h1 className="font-display text-4xl leading-[1.05] text-cream md:text-5xl">
+                  {slide.title}
+                </h1>
+                <p className="mt-4 max-w-xl text-base leading-relaxed text-cream/80 md:text-lg">
+                  {slide.text}
+                </p>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* indicadores */}
+            <div className="mt-6 flex items-center justify-center gap-2">
+              {slides.map((s, i) => (
+                <button
+                  key={s.title}
+                  type="button"
+                  onClick={() => setActive(i)}
+                  aria-label={`Ir para o slide ${i + 1}`}
+                  className={`h-1.5 rounded-full transition-all ${
+                    i === active ? "w-10 bg-gradient-sun" : "w-4 bg-cream/30 hover:bg-cream/60"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* seta minimalista para baixo */}
+        <div className="absolute inset-x-0 bottom-2 z-20 flex justify-center">
+          <motion.a
+            href="#conteudo"
+            aria-label="Rolar para baixo"
+            className="flex flex-col items-center gap-1 text-cream/70 transition-colors hover:text-saffron"
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <span className="text-[10px] font-bold uppercase tracking-[0.25em]">Descer</span>
+            <ChevronDown className="h-6 w-6" />
+          </motion.a>
+        </div>
+      </section>
+
+      {/* CONTEÚDO DO HERO — abaixo da foto */}
+      <section id="conteudo" className="relative -mt-1 bg-maroon px-5 pb-14 pt-10 md:pb-20">
+        <div className="mx-auto w-full max-w-2xl">
+          {/* CARD LIQUID GLASS — carrossel de viagens */}
           <div className="mx-auto w-full max-w-md md:max-w-2xl">
             <AnimatePresence mode="wait">
               <motion.div
@@ -123,15 +180,13 @@ const Index = () => {
                       </div>
                     </div>
 
-                    <a
-                      href={trip.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <Link
+                      to={trip.href}
                       className="group inline-flex w-full flex-shrink-0 items-center justify-center gap-2 rounded-full bg-gradient-sun px-5 py-2.5 text-sm font-bold text-maroon shadow-earth transition-transform hover:scale-[1.02] active:scale-[0.98] md:w-auto md:px-6"
                     >
                       {trip.cta}
                       <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </motion.div>
@@ -153,60 +208,6 @@ const Index = () => {
                 ))}
               </div>
             )}
-          </div>
-        </div>
-
-        {/* seta minimalista para baixo */}
-        <div className="absolute inset-x-0 bottom-2 z-20 flex justify-center">
-          <motion.a
-            href="#conteudo"
-            aria-label="Rolar para baixo"
-            className="flex flex-col items-center gap-1 text-cream/70 transition-colors hover:text-saffron"
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          >
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em]">Descer</span>
-            <ChevronDown className="h-6 w-6" />
-          </motion.a>
-        </div>
-      </section>
-
-      {/* CONTEÚDO DO HERO — abaixo da foto */}
-      <section id="conteudo" className="relative -mt-1 bg-maroon px-5 pb-14 pt-10 md:pb-20">
-        <div className="mx-auto w-full max-w-2xl">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={active}
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <p className="mb-4 inline-flex items-center rounded-full border border-saffron/40 bg-saffron/15 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.28em] text-saffron">
-                {slide.kicker}
-              </p>
-              <h1 className="font-display text-4xl leading-[1.05] text-cream md:text-6xl">
-                {slide.title}
-              </h1>
-              <p className="mt-5 max-w-xl text-base leading-relaxed text-cream/80 md:text-lg">
-                {slide.text}
-              </p>
-            </motion.div>
-          </AnimatePresence>
-
-          {/* indicadores */}
-          <div className="mt-8 flex items-center justify-center gap-2">
-            {slides.map((s, i) => (
-              <button
-                key={s.title}
-                type="button"
-                onClick={() => setActive(i)}
-                aria-label={`Ir para o slide ${i + 1}`}
-                className={`h-1.5 rounded-full transition-all ${
-                  i === active ? "w-10 bg-gradient-sun" : "w-4 bg-cream/30 hover:bg-cream/60"
-                }`}
-              />
-            ))}
           </div>
 
           {/* botões estilo linktree */}
