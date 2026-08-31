@@ -3,6 +3,7 @@ import { Mic, Camera, Megaphone, Compass, Globe2, Radio, Sparkles, ArrowUpRight 
 
 import SiteNav from "@/components/SiteNav";
 import SiteFooter from "@/components/SiteFooter";
+import BackButton from "@/components/BackButton";
 
 const servicos = [
   { icon: Mic, title: "Palestras", text: "África, diáspora, cultura e geopolítica para públicos corporativos e institucionais." },
@@ -38,7 +39,8 @@ const Servicos = () => (
     <section className="relative pb-16 pt-32 md:pb-20 md:pt-40">
       <div className="pattern-dots pointer-events-none absolute inset-0 opacity-40" />
       <div className="relative mx-auto max-w-6xl px-5">
-        <motion.h1 {...fade(0)} className="font-display text-4xl md:text-6xl">
+        <BackButton />
+        <motion.h1 {...fade(0)} className="mt-5 font-display text-4xl md:text-6xl">
           Serviços
         </motion.h1>
         <motion.p {...fade(0.06)} className="mt-4 max-w-2xl text-muted-foreground">
