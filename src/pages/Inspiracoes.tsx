@@ -276,20 +276,20 @@ const Inspiracoes = () => {
               <motion.div
                 key={item.name}
                 {...fade(index * 0.04)}
-                className="rounded-2xl border border-cream/10 bg-maroon/40 p-6 backdrop-blur-sm md:p-8"
+                className="rounded-2xl border border-cream/20 bg-maroon p-6 md:p-8"
               >
                 <div className="flex items-start gap-3">
                   <BookOpen className="mt-1 h-5 w-5 shrink-0 text-saffron" />
                   <div>
                     <h2 className="font-display text-2xl text-cream md:text-3xl">{item.name}</h2>
                     {item.note && (
-                      <p className="mt-2 text-sm italic leading-relaxed text-cream/70">{item.note}</p>
+                      <p className="mt-2 text-sm italic leading-relaxed text-cream/90">{item.note}</p>
                     )}
                   </div>
                 </div>
-                <ul className="mt-5 space-y-2 border-t border-cream/10 pt-5">
+                <ul className="mt-5 space-y-2 border-t border-cream/20 pt-5">
                   {item.works.map((work) => (
-                    <li key={work} className="flex items-start gap-2 text-sm leading-relaxed text-cream/85 md:text-base">
+                    <li key={work} className="flex items-start gap-2 text-sm leading-relaxed text-cream md:text-base">
                       <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-saffron" />
                       {work}
                     </li>
