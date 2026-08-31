@@ -39,9 +39,8 @@ const stats = [
 
 const heroLinks = [
   { label: "Trajetória", to: "/trajetoria" },
-  { label: "Serviços", to: "/servicos" },
+  { label: "Serviços / Trabalhe comigo", to: "/servicos" },
   { label: "Artigos", to: "/artigos" },
-  { label: "Contato", to: "/contato" },
 ];
 
 const trips = [
