@@ -43,6 +43,7 @@ Tipografia: `Plus Jakarta Sans` (já carregada pelo site) para UI; `.deep-serif`
   sidebar fixa de 248px. Nunca existe "tela de celular centralizada".
 - Fotografia contemporânea em `public/deep/` + hero de Abidjan em `public/cote-conecta/abidjan-home.jpg`.
 - Cartões elegantes: fundo papel, borda 1px navy 12%, sombra baixa, raio 16px.
+- Public: topbar com bandeiras e menu; o retorno ao Hub fica dentro do menu para preservar a hierarquia da home. A assinatura completa “Destination Intelligence Platform” aparece no Hub, em variantes clara e branca.
 
 ## 4. Personagens
 

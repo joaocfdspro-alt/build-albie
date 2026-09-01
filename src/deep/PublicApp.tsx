@@ -1,11 +1,34 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent } from "react";
 import { useDeep } from "./store";
-import { BUSINESS_EVENTS, COMPANIES, EXPERIENCES, READY_ITEMS, SECTORS, STYLES, TAAG_URL, buildJourney } from "./data";
+import {
+  BUSINESS_EVENTS,
+  COMPANIES,
+  DURATIONS,
+  EXPERIENCES,
+  INTERESTS,
+  ORIGINS,
+  READY_ITEMS,
+  SECTORS,
+  STYLES,
+  TAAG_URL,
+  buildJourney,
+} from "./data";
 import { Icon, LangSwitcher, Lockup, Modal, loc } from "./ui";
 
 const JourneyMap = lazy(() => import("./JourneyMap"));
 
-type MainScreen = "home" | "chat" | "route" | "checklist" | "tips" | "profile" | "experiences" | "business" | "intent";
+type MainScreen =
+  | "home"
+  | "origin"
+  | "setup"
+  | "chat"
+  | "route"
+  | "checklist"
+  | "tips"
+  | "profile"
+  | "experiences"
+  | "business"
+  | "intent";
 type RouteTab = "route" | "map" | "budget";
 type Locale = "pt" | "fr" | "en";
 
@@ -179,12 +202,6 @@ const CHECK_DETAILS: Record<
 
 const PublicHeader = ({ title, onBack, onMenu }: { title?: string; onBack?: () => void; onMenu: () => void }) => {
   const { lang } = useDeep();
-  const hubLabel = tx(
-    lang,
-    "Voltar para Public, Explorer e Ministry",
-    "Retourner à Public, Explorer et Ministry",
-    "Back to Public, Explorer and Ministry",
-  );
 
   return (
     <header className="dip-public-header">
@@ -207,16 +224,6 @@ const PublicHeader = ({ title, onBack, onMenu }: { title?: string; onBack?: () =
         <LangSwitcher />
         <button
           type="button"
-          className="dip-icon-button dip-hub-button"
-          aria-label={hubLabel}
-          title={hubLabel}
-          onClick={() => window.location.assign("/dip")}
-        >
-          <Icon name="grid" size={20} />
-          <span className="dip-hub-label">{tx(lang, "Ambientes", "Espaces", "Spaces")}</span>
-        </button>
-        <button
-          type="button"
           className="dip-icon-button"
           aria-label={tx(lang, "Abrir menu", "Ouvrir le menu", "Open menu")}
           onClick={onMenu}
@@ -233,7 +240,7 @@ const PublicHeader = ({ title, onBack, onMenu }: { title?: string; onBack?: () =
 };
 
 const BottomNav = ({ screen, go, lang }: { screen: MainScreen; go: (s: MainScreen) => void; lang: Locale }) => {
-  const active = screen === "chat" || screen === "business" || screen === "intent" ? "home" : screen;
+  const active = ["origin", "setup", "chat", "business", "intent"].includes(screen) ? "home" : screen;
   return (
     <nav className="dip-bottom-nav" aria-label="DIP Public">
       {NAV.map((item) => (
@@ -251,8 +258,83 @@ const BottomNav = ({ screen, go, lang }: { screen: MainScreen; go: (s: MainScree
   );
 };
 
+const OriginScreen = ({ go, onMenu }: { go: (s: MainScreen) => void; onMenu: () => void }) => {
+  const { lang, state, setProfile } = useDeep();
+  return (
+    <div className="dip-page dip-start-page">
+      <PublicHeader
+        title={tx(lang, "De onde você está viajando?", "D’où voyagez-vous ?", "Where are you traveling from?")}
+        onBack={() => go("home")}
+        onMenu={onMenu}
+      />
+      <main className="dip-start-content">
+        <div className="dip-flow-progress" aria-label={tx(lang, "Etapa 1 de 3", "Étape 1 sur 3", "Step 1 of 3")}>
+          <span className="is-active" /><span /><span />
+        </div>
+        <p className="dip-eyebrow">{tx(lang, "Comece pelo seu ponto de partida", "Commencez par votre point de départ", "Start with your point of departure")}</p>
+        <h2>{tx(lang, "Isso ajuda a Aya a personalizar sua jornada.", "Cela aide Aya à personnaliser votre voyage.", "This helps Aya personalize your journey.")}</h2>
+        <div className="dip-origin-list" role="list">
+          {ORIGINS.slice(0, 4).map((origin) => (
+            <button
+              type="button"
+              key={origin.id}
+              className={state.profile.origin === origin.id ? "is-selected" : ""}
+              aria-pressed={state.profile.origin === origin.id}
+              onClick={() => setProfile({ origin: origin.id })}
+            >
+              <span className="dip-origin-flag">{origin.id === "BR" ? "🇧🇷" : origin.id === "FR" ? "🇫🇷" : origin.id === "US" ? "🇺🇸" : "🇵🇹"}</span>
+              <span><strong>{loc(origin.label, lang)}</strong><small>{origin.id}</small></span>
+              <Icon name="check" size={18} />
+            </button>
+          ))}
+        </div>
+        <button type="button" className="dip-primary" onClick={() => go("setup")}>
+          {tx(lang, "Continuar", "Continuer", "Continue")} <Icon name="arrow" size={18} />
+        </button>
+      </main>
+    </div>
+  );
+};
+
+const SetupScreen = ({ go, onMenu }: { go: (s: MainScreen) => void; onMenu: () => void }) => {
+  const { lang, state, setProfile } = useDeep();
+  const selectedInterests = state.profile.interests;
+  const toggleInterest = (id: string) =>
+    setProfile({ interests: selectedInterests.includes(id) ? selectedInterests.filter((item) => item !== id) : [...selectedInterests, id] });
+  return (
+    <div className="dip-page dip-start-page">
+      <PublicHeader
+        title={tx(lang, "Seu perfil de viagem", "Votre profil de voyage", "Your travel profile")}
+        onBack={() => go("origin")}
+        onMenu={onMenu}
+      />
+      <main className="dip-start-content">
+        <div className="dip-flow-progress" aria-label={tx(lang, "Etapa 2 de 3", "Étape 2 sur 3", "Step 2 of 3")}>
+          <span className="is-active" /><span className="is-active" /><span />
+        </div>
+        <p className="dip-eyebrow">{tx(lang, "Só o essencial por enquanto", "Seulement l’essentiel pour commencer", "Just the essentials for now")}</p>
+        <h2>{tx(lang, "A Aya vai transformar essas escolhas em uma jornada com a sua cara.", "Aya transformera ces choix en un voyage qui vous ressemble.", "Aya will turn these choices into a journey that feels like yours.")}</h2>
+        <fieldset className="dip-start-field"><legend>{tx(lang, "Duração da viagem", "Durée du voyage", "Trip length")}</legend><div className="dip-choice-grid dip-choice-grid--4">{DURATIONS.map((item) => <button type="button" key={item.id} aria-pressed={state.profile.duration === item.id} onClick={() => setProfile({ duration: item.id })}>{loc(item.label, lang)}</button>)}</div></fieldset>
+        <fieldset className="dip-start-field"><legend>{tx(lang, "Com quem você viaja?", "Avec qui voyagez-vous ?", "Who are you traveling with?")}</legend><div className="dip-choice-grid">{COMPANIES.map((item) => <button type="button" key={item.id} aria-pressed={state.profile.company === item.id} onClick={() => setProfile({ company: item.id })}>{loc(item.label, lang)}</button>)}</div></fieldset>
+        <fieldset className="dip-start-field"><legend>{tx(lang, "Interesses principais", "Centres d’intérêt", "Main interests")}</legend><div className="dip-choice-grid">{INTERESTS.slice(0, 4).map((item) => <button type="button" key={item.id} aria-pressed={selectedInterests.includes(item.id)} onClick={() => toggleInterest(item.id)}>{loc(item.label, lang)}</button>)}</div></fieldset>
+        <fieldset className="dip-start-field"><legend>{tx(lang, "Estilo de viagem", "Style de voyage", "Travel style")}</legend><div className="dip-choice-grid dip-choice-grid--4">{STYLES.map((item) => <button type="button" key={item.id} aria-pressed={state.profile.style === item.id} onClick={() => setProfile({ style: item.id })}>{loc(item.label, lang)}</button>)}</div></fieldset>
+        <button type="button" className="dip-primary" onClick={() => go("chat")}>
+          {tx(lang, "Conversar com a Aya", "Parler avec Aya", "Talk to Aya")} <Icon name="arrow" size={18} />
+        </button>
+      </main>
+    </div>
+  );
+};
+
 const HomeScreen = ({ go, onMenu }: { go: (s: MainScreen) => void; onMenu: () => void }) => {
   const { lang } = useDeep();
+
+  useEffect(() => {
+    EXPERIENCES.slice(0, 4).forEach((item) => {
+      const image = new Image();
+      image.src = item.image;
+    });
+  }, []);
 
   return (
     <div className="dip-home dip-public-home-v2">
@@ -285,25 +367,22 @@ const HomeScreen = ({ go, onMenu }: { go: (s: MainScreen) => void; onMenu: () =>
               <p>
                 {tx(
                   lang,
-                  "Como posso ajudar você hoje?",
-                  "Comment puis-je vous aider aujourd’hui ?",
-                  "How can I help you today?",
+                  "Que tipo de viagem você quer viver?",
+                  "Quel voyage souhaitez-vous vivre ?",
+                  "What kind of journey would you love to experience?",
                 )}
               </p>
             </div>
-            <span className="dip-voice-card__signal" aria-hidden="true">
-              <Icon name="signal" size={24} />
-            </span>
           </div>
 
-          <button type="button" className="dip-public-voice-cta" onClick={() => go("chat")}>
-            <Icon name="chat" size={23} />
+          <button type="button" className="dip-public-voice-cta" onClick={() => go("origin")}>
+            <Icon name="mic" size={23} />
             {tx(lang, "Começar com a Aya", "Commencer avec Aya", "Start with Aya")}
           </button>
 
           <div className="dip-voice-wave" aria-hidden="true">
-            {Array.from({ length: 22 }).map((_, index) => (
-              <i key={index} style={{ "--voice-bar": `${8 + ((index * 7) % 24)}px` } as CSSProperties} />
+            {Array.from({ length: 17 }).map((_, index) => (
+              <i key={index} style={{ "--voice-bar": `${5 + ((index * 5) % 14)}px` } as CSSProperties} />
             ))}
           </div>
         </div>
@@ -315,8 +394,8 @@ const HomeScreen = ({ go, onMenu }: { go: (s: MainScreen) => void; onMenu: () =>
         </div>
         <div className="dip-suggestion-rail">
           {EXPERIENCES.slice(0, 4).map((item) => (
-            <button type="button" key={item.id} onClick={() => go("experiences")}>
-              <img src={item.image} alt="" width={280} height={190} loading="lazy" />
+          <button type="button" key={item.id} onClick={() => go("experiences")}>
+              <img src={item.image} alt="" width={280} height={190} loading="eager" fetchPriority="high" />
               <span>
                 <strong>{loc(item.title, lang)}</strong>
                 <small>{loc(item.short, lang)}</small>
@@ -337,6 +416,45 @@ const ChatScreen = ({ go, onMenu }: { go: (s: MainScreen) => void; onMenu: () =>
   const [replying, setReplying] = useState(false);
   const replyTimer = useRef<number | null>(null);
   const logRef = useRef<HTMLDivElement | null>(null);
+  const originLabel = ORIGINS.find((item) => item.id === state.profile.origin);
+  const interestLabels = state.profile.interests
+    .map((id) => INTERESTS.find((item) => item.id === id))
+    .filter(Boolean)
+    .map((item) => loc(item!.label, lang));
+
+  const readClues = (message: string) => {
+    const normalized = message.toLocaleLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const patch: Parameters<typeof setProfile>[0] = {};
+    const duration = normalized.match(/(\d+)\s*(dia|dias|day|days|jour|jours)/);
+    if (duration) patch.duration = duration[1];
+    if (/sozinh|solo|alone|seul/.test(normalized)) patch.company = "solo";
+    if (/casal|couple|partner|duo/.test(normalized)) patch.company = "couple";
+    if (/famil|children|enfant/.test(normalized)) patch.company = "family";
+    if (/premium|luxo|luxury/.test(normalized)) patch.style = "premium";
+    if (/econom|economique|budget|low cost/.test(normalized)) patch.style = "essential";
+    const nextInterests = [...state.profile.interests];
+    (["culture", "nature", "gastronomy", "beach", "business"] as const).forEach((id) => {
+      const terms: Record<string, string[]> = {
+        culture: ["culture", "historia", "history", "patrimoine"],
+        nature: ["nature", "forest", "floresta", "parc"],
+        gastronomy: ["gastronomia", "gastronomy", "food", "comida", "cuisine"],
+        beach: ["praia", "beach", "plage", "litoral"],
+        business: ["negocio", "business", "affaires", "trabalho"],
+      };
+      if (terms[id].some((term) => normalized.includes(term)) && !nextInterests.includes(id)) nextInterests.push(id);
+    });
+    if (nextInterests.length) patch.interests = nextInterests;
+    if (Object.keys(patch).length) setProfile(patch);
+    return normalized;
+  };
+
+  const replyFor = (normalized: string) => {
+    if (/praia|beach|plage|litoral/.test(normalized)) return tx(lang, "Anotado: vou equilibrar praia e lagoa. Grand-Bassam e Assinie entram como pausas de mar, com cultura local no caminho.", "Noté : je vais équilibrer plage et lagune. Grand-Bassam et Assinie seront vos respirations côté mer, avec de la culture en chemin.", "Noted: I’ll balance beach and lagoon time. Grand-Bassam and Assinie become your seaside pauses, with local culture along the way.");
+    if (/gastronomia|gastronomy|food|comida|cuisine/.test(normalized)) return tx(lang, "Seu interesse por sabores ficou claro. Vou incluir um maquis em Marcory e experiências com anfitriões locais, sem deixar o ritmo pesado.", "Votre envie de saveurs est claire. J’ajoute un maquis à Marcory et des expériences avec des hôtes locaux, sans alourdir le rythme.", "Your love of flavor is clear. I’ll add a Marcory maquis and host-led experiences without making the pace feel heavy.");
+    if (/negocio|business|affaires|trabalho/.test(normalized)) return tx(lang, "Entendi o lado profissional. Vou separar momentos de conexão em Abidjan e uma passagem institucional por Yamoussoukro.", "J’ai compris la dimension professionnelle. Je séparerai les temps de connexion à Abidjan d’un passage institutionnel à Yamoussoukro.", "I understand the professional side. I’ll separate connection time in Abidjan from an institutional stop in Yamoussoukro.");
+    if (/sozinh|solo|alone|seul|casal|couple|famil/.test(normalized)) return tx(lang, "Perfeito. Vou adaptar o ritmo e as escolhas de hospedagem para que essa companhia se sinta confortável em cada etapa.", "Parfait. J’adapterai le rythme et les choix d’hébergement pour que cette compagnie se sente à l’aise à chaque étape.", "Perfect. I’ll tune the pace and stay choices so this travel party feels comfortable at every step.");
+    return tx(lang, "Estou captando seu DNA de viagem: interesses, ritmo e contexto. Continue me contando e eu ajusto o roteiro antes de confirmar.", "Je capte votre ADN de voyage : intérêts, rythme et contexte. Continuez à me parler et j’ajusterai l’itinéraire avant confirmation.", "I’m capturing your travel DNA: interests, pace and context. Keep telling me more and I’ll tune the itinerary before we confirm.");
+  };
 
   useEffect(
     () => () => {
@@ -403,6 +521,14 @@ const ChatScreen = ({ go, onMenu }: { go: (s: MainScreen) => void; onMenu: () =>
             "Perfect. Your itinerary combines Abidjan, Grand-Bassam and local cultural experiences. What is your budget?",
           )}
         </div>
+        <div className="dip-bubble dip-bubble--aya">
+          {tx(
+            lang,
+            `Já registrei ${originLabel ? loc(originLabel.label, lang) : "sua origem"}, ${state.profile.duration || 7} dias e um ritmo ${state.profile.style === "premium" ? "premium" : "confortável"}. Vou cruzar isso com ${interestLabels.length ? interestLabels.join(", ") : "seus interesses"}.`,
+            `J’ai noté ${originLabel ? loc(originLabel.label, lang) : "votre origine"}, ${state.profile.duration || 7} jours et un rythme ${state.profile.style === "premium" ? "premium" : "confortable"}. Je croiserai cela avec ${interestLabels.length ? interestLabels.join(", ") : "vos envies"}.`,
+            `I’ve captured ${originLabel ? loc(originLabel.label, lang) : "your origin"}, ${state.profile.duration || 7} days and a ${state.profile.style === "premium" ? "premium" : "comfortable"} pace. I’ll combine that with ${interestLabels.length ? interestLabels.join(", ") : "your interests"}.`,
+          )}
+        </div>
         <div className="dip-bubble dip-bubble--me">
           {tx(
             lang,
@@ -455,18 +581,14 @@ const ChatScreen = ({ go, onMenu }: { go: (s: MainScreen) => void; onMenu: () =>
           setMessages((current) => [...current, { id: Date.now(), role: "me", text: message }]);
           setDraft("");
           setReplying(true);
+          const normalized = readClues(message);
           replyTimer.current = window.setTimeout(() => {
             setMessages((current) => [
               ...current,
               {
                 id: Date.now() + 1,
                 role: "aya",
-                text: tx(
-                  lang,
-                  "Entendi. Vou considerar isso no seu roteiro e priorizar experiências que combinem com o que você procura.",
-                  "Compris. Je vais en tenir compte dans votre itinéraire et privilégier les expériences qui correspondent à vos envies.",
-                  "Got it. I’ll use that in your itinerary and prioritize experiences that match what you’re looking for.",
-                ),
+                text: replyFor(normalized),
               },
             ]);
             setReplying(false);
@@ -558,7 +680,7 @@ const TimelineGroup = ({ group, lang }: { group: "green" | "orange"; lang: Local
       <div className="dip-route-list">
         {items.map((item) => (
           <article key={item.id}>
-            <img src={item.image} alt="" width={180} height={112} loading="lazy" />
+            <img src={item.image} alt="" width={180} height={112} loading="eager" fetchPriority="high" />
             <div>
               <strong>{item.title[lang]}</strong>
               <span>{item.meta[lang]}</span>
@@ -645,6 +767,7 @@ const RouteMapPanel = ({ lang }: { lang: Locale }) => {
         </button>
         {selected && (
           <div className="dip-map-card" aria-live="polite">
+            <img src={selected.image} alt="" width={72} height={72} loading="eager" />
             <span className={selected.group}>
               <Icon name="pin" size={25} />
             </span>
@@ -885,6 +1008,11 @@ const RouteScreen = ({ go, onMenu }: { go: (s: MainScreen) => void; onMenu: () =
       {tab === "route" && <RouteTimeline lang={lang} />}
       {tab === "map" && <RouteMapPanel lang={lang} />}
       {tab === "budget" && <BudgetPanel lang={lang} />}
+      <button type="button" className="dip-ready-link" onClick={() => go("checklist")}>
+        <Icon name="check" size={18} />
+        {tx(lang, "Conferir checklist e voos TAAG", "Vérifier la checklist et les vols TAAG", "Check travel readiness and TAAG flights")}
+        <Icon name="arrow" size={17} />
+      </button>
     </div>
   );
 };
@@ -916,6 +1044,7 @@ const ChecklistScreen = ({ go, onMenu }: { go: (s: MainScreen) => void; onMenu: 
         onBack={() => go("home")}
         onMenu={onMenu}
       />
+      <p className="dip-eyebrow dip-check-step">08 · {tx(lang, "Pronto para viajar", "Prêt à voyager", "Ready to travel")}</p>
       <section className="dip-check-summary">
         <div className="dip-check-ring" style={{ "--dip-ring": `${pct}deg` } as CSSProperties}>
           <span>
@@ -1052,7 +1181,7 @@ const TipsScreen = ({ go, onMenu }: { go: (s: MainScreen) => void; onMenu: () =>
           <div className="dip-experience-grid">
             {favorites.map((item) => (
               <article key={item.id}>
-                <img src={item.image} alt="" width={420} height={280} loading="lazy" />
+                <img src={item.image} alt="" width={420} height={280} loading="eager" fetchPriority="high" />
                 <div>
                   <h2>{loc(item.title, lang)}</h2>
                   <p>{loc(item.short, lang)}</p>
@@ -1090,7 +1219,7 @@ const ProfileScreen = ({ go, onMenu }: { go: (s: MainScreen) => void; onMenu: ()
       <main className="dip-simple-content">
         <div className="dip-profile-hero">
           <img
-            src={USER_PROFILE_IMAGE}
+            src="/deep/traveler-profile.png"
             alt={tx(lang, "Foto do viajante DIP", "Photo du voyageur DIP", "DIP traveler photo")}
             width={88}
             height={88}
@@ -1125,21 +1254,34 @@ const ProfileScreen = ({ go, onMenu }: { go: (s: MainScreen) => void; onMenu: ()
           </div>
           <div>
             <small>{tx(lang, "Interesses", "Intérêts", "Interests")}</small>
-            <strong>{state.profile.interests.length || 3}</strong>
+            <strong>{state.profile.interests.length || 0}</strong>
           </div>
         </div>
         <button type="button" className="dip-primary" onClick={() => go("route")}>
           {tx(lang, "Abrir meu roteiro", "Ouvrir mon itinéraire", "Open my itinerary")}
         </button>
+        <section className="dip-dna-card" aria-labelledby="dip-dna-title">
+          <div>
+            <p className="dip-eyebrow">{tx(lang, "Seu DNA de viagem", "Votre ADN de voyage", "Your travel DNA")}</p>
+            <h3 id="dip-dna-title">{tx(lang, "Preferências captadas pela Aya", "Préférences captées par Aya", "Preferences captured by Aya")}</h3>
+          </div>
+          <div className="dip-dna-tags">
+            {state.profile.interests.map((id) => {
+              const item = INTERESTS.find((interest) => interest.id === id);
+              return item ? <span key={id}>{loc(item.label, lang)}</span> : null;
+            })}
+            <span>{style ? loc(style.label, lang) : tx(lang, "Conforto", "Confort", "Comfort")}</span>
+          </div>
+          <p className="dip-dna-note">
+            {tx(lang, "A conversa pode atualizar esse resumo a qualquer momento.", "La conversation peut mettre ce résumé à jour à tout moment.", "The conversation can update this summary at any time.")}
+          </p>
+        </section>
         <div className="dip-profile-actions">
-          <button type="button" onClick={() => go("experiences")}>
-            {tx(lang, "Experiências", "Expériences", "Experiences")}
+          <button type="button" onClick={() => go("chat")}>
+            {tx(lang, "Ajustar com a Aya", "Ajuster avec Aya", "Tune with Aya")} <Icon name="arrow" size={17} />
           </button>
-          <button type="button" onClick={() => go("business")}>
-            {tx(lang, "Negócios", "Affaires", "Business")}
-          </button>
-          <button type="button" onClick={() => go("intent")}>
-            {tx(lang, "Intenção de viagem", "Intention de voyage", "Travel intent")}
+          <button type="button" onClick={() => go("checklist")}>
+            {tx(lang, "Travel ready e voos TAAG", "Prêt à voyager et vols TAAG", "Travel readiness and TAAG flights")} <Icon name="arrow" size={17} />
           </button>
         </div>
       </main>
@@ -1163,7 +1305,7 @@ const ExperiencesScreen = ({ go, onMenu }: { go: (s: MainScreen) => void; onMenu
             const saved = state.savedIds.includes(item.id);
             return (
               <article key={item.id}>
-                <img src={item.image} alt="" width={420} height={280} loading="lazy" />
+                <img src={item.image} alt="" width={420} height={280} loading="eager" fetchPriority="high" />
                 <div>
                   <h2>{loc(item.title, lang)}</h2>
                   <p>{loc(item.short, lang)}</p>
@@ -1331,6 +1473,8 @@ const PublicApp = ({ onHub }: { onHub: () => void }) => {
     <div className="deep-shell deep-public-canonical" ref={mainRef} tabIndex={-1}>
       <main className="dip-main" id="deep-public-main">
         {screen === "home" && <HomeScreen go={go} onMenu={() => setMenuOpen(true)} />}
+        {screen === "origin" && <OriginScreen go={go} onMenu={() => setMenuOpen(true)} />}
+        {screen === "setup" && <SetupScreen go={go} onMenu={() => setMenuOpen(true)} />}
         {screen === "chat" && <ChatScreen go={go} onMenu={() => setMenuOpen(true)} />}
         {screen === "route" && <RouteScreen go={go} onMenu={() => setMenuOpen(true)} />}
         {screen === "checklist" && <ChecklistScreen go={go} onMenu={() => setMenuOpen(true)} />}
@@ -1370,6 +1514,15 @@ const PublicApp = ({ onHub }: { onHub: () => void }) => {
             }}
           >
             {tx(lang, "Intenção de viagem", "Intention de voyage", "Travel intent")}
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setMenuOpen(false);
+              go("checklist");
+            }}
+          >
+            {tx(lang, "Checklist e voos TAAG", "Checklist et vols TAAG", "Checklist and TAAG flights")}
           </button>
           <button type="button" onClick={onHub}>
             {tx(lang, "Voltar ao Hub DIP", "Retour au Hub DIP", "Back to DIP Hub")}

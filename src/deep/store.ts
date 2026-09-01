@@ -54,6 +54,7 @@ export type DeepState = {
   profile: DeepProfile;
   journeyIds: string[];
   savedIds: string[];
+  favoritesSeeded: boolean;
   addedIds: string[];
   checklist: string[];
   events: DeepEvent[];
@@ -69,7 +70,8 @@ export const DEFAULT_STATE: DeepState = {
   languageWasChosen: false,
   profile: { origin: "BR", intent: "leisure", duration: "8", company: "couple", style: "comfort", interests: ["culture", "gastronomy"] },
   journeyIds: [],
-  savedIds: [],
+  savedIds: ["abidjan", "grand-bassam"],
+  favoritesSeeded: true,
   addedIds: [],
   checklist: [],
   events: [],
@@ -85,12 +87,15 @@ export const loadState = (): DeepState => {
     if (!raw) return DEFAULT_STATE;
     const parsed = JSON.parse(raw) as Partial<DeepState>;
     const languageWasChosen = parsed.languageWasChosen === true;
+    const shouldSeedFavorites = parsed.favoritesSeeded !== true;
     return {
       ...DEFAULT_STATE,
       ...parsed,
       lang: languageWasChosen && parsed.lang ? parsed.lang : "en",
       languageWasChosen,
       profile: { ...DEFAULT_STATE.profile, ...(parsed.profile ?? {}) },
+      savedIds: shouldSeedFavorites ? DEFAULT_STATE.savedIds : (parsed.savedIds ?? DEFAULT_STATE.savedIds),
+      favoritesSeeded: true,
     };
   } catch {
     return DEFAULT_STATE;

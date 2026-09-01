@@ -189,6 +189,7 @@ export const DURATIONS = [
   { id: "4", label: L("4 dias", "4 jours", "4 days") },
   { id: "8", label: L("8 dias", "8 jours", "8 days") },
   { id: "12", label: L("12 dias", "12 jours", "12 days") },
+  { id: "15", label: L("+12 dias", "+12 jours", "+12 days") },
 ];
 
 export const COMPANIES = [

@@ -23,7 +23,7 @@ HUB (/dip)
               partners · feedback · reports · settings
 ```
 
-- O botão de grade no topbar (e o item Hub na sidebar do Ministry) sempre retorna ao hub.
+- No Public, o retorno ao Hub DIP fica no menu sanduíche para manter o topbar limpo; o item Hub na sidebar do Ministry permanece disponível.
 - Mobile: bottom nav com 5 destinos por perspectiva. Desktop: navegação horizontal (Public/Explorer)
   ou sidebar (Ministry).
 
@@ -106,3 +106,10 @@ Breakpoints usados: 700 (modal centralizado), 780/800/900/1000 (grades), 1024 (d
 - O retrato fornecido de Albie é usado no Explorer e no Ministry; outros creators usam identidades visuais genéricas e não reivindicam pessoas reais.
 - SGAT é governado pelo Ministry. A visão geral mostra o estado de conexão e Settings explica e-Administration, e-Tourism e valorização de dados.
 - O retorno ao hub DIP é sempre explícito no mobile e permanece disponível na sidebar no desktop.
+
+## 9. Public: sequência de descoberta
+
+- A CTA da home inicia a sequência `origem → perfil de viagem → conversa com Aya → roteiro`.
+- A conversa é determinística e local, mas responde por intenção e atualiza duração, companhia, estilo e interesses no perfil persistido.
+- O roteiro oferece acesso direto a *Travel readiness* e voos TAAG; o cartão do mapa exibe a foto do ponto selecionado.
+- O perfil é um resumo do DNA de viagem captado pela Aya; edição acontece no chat, não em accordions desconectados.

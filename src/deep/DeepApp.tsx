@@ -52,7 +52,7 @@ const Hub = ({ onOpen, onReset }: { onOpen: (p: Perspective) => void; onReset: (
   return (
     <div className="deep-hub">
       <header className="deep-wrap deep-row" style={{ justifyContent: "space-between", paddingTop: 22, gap: 12 }}>
-        <Lockup light />
+        <Lockup light full />
         <LangSwitcher light />
       </header>
       <div className="deep-wrap deep-hub__inner">

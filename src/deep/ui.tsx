@@ -10,12 +10,14 @@ export const loc = (value: Localized, lang: DeepLang) => value[lang];
 export const Lockup = ({
   light = false,
   small = false,
+  full = false,
   as = "div",
   onClick,
   label,
 }: {
   light?: boolean;
   small?: boolean;
+  full?: boolean;
   as?: "div" | "button";
   onClick?: () => void;
   label?: string;
@@ -24,9 +26,10 @@ export const Lockup = ({
     <>
       <span className="deep-lockup__mark">DIP</span>
       <span className="deep-lockup__sub">Côte d’Ivoire</span>
+      {full && <span className="deep-lockup__tagline">Destination<br />Intelligence Platform</span>}
     </>
   );
-  const cls = `deep-lockup${light ? " deep-lockup--light" : ""}${small ? " deep-lockup--sm" : ""}`;
+  const cls = `deep-lockup${light ? " deep-lockup--light" : ""}${small ? " deep-lockup--sm" : ""}${full ? " deep-lockup--full" : ""}`;
   if (as === "button") {
     return (
       <button
@@ -215,6 +218,12 @@ export const Section = ({
 
 export const Icon = ({ name, size = 20 }: { name: string; size?: number }) => {
   const paths: Record<string, ReactNode> = {
+    mic: (
+      <>
+        <rect x="9" y="3" width="6" height="12" rx="3" />
+        <path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6" />
+      </>
+    ),
     chat: (
       <>
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
