@@ -16,6 +16,7 @@ type Dict = Record<string, string>;
 const pt: Dict = {
   "brand.sub": "Destination Intelligence Platform",
   "brand.tagline": "Uma plataforma. Três perspectivas.",
+  "brand.footer": "Intelligence Platform, desenvolvido por The Set Company",
   "hub.eyebrow": "Demonstração institucional",
   "hub.title": "Cada jornada torna o destino mais inteligente.",
   "hub.lead":
@@ -182,6 +183,7 @@ const pt: Dict = {
 const fr: Dict = {
   "brand.sub": "Destination Intelligence Platform",
   "brand.tagline": "Une plateforme. Trois perspectives.",
+  "brand.footer": "Intelligence Platform, développé par The Set Company",
   "hub.eyebrow": "Démonstration institutionnelle",
   "hub.title": "Chaque voyage rend la destination plus intelligente.",
   "hub.lead":
@@ -348,6 +350,7 @@ const fr: Dict = {
 const en: Dict = {
   "brand.sub": "Destination Intelligence Platform",
   "brand.tagline": "One platform. Three perspectives.",
+  "brand.footer": "Intelligence Platform, developed by The Set Company",
   "hub.eyebrow": "Institutional demonstration",
   "hub.title": "Every journey makes the destination smarter.",
   "hub.lead":

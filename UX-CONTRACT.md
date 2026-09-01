@@ -43,7 +43,7 @@ Chave `deep.state.v1` no `localStorage` (`src/deep/store.ts`):
 | `intentConfirmed` | intenção de viagem confirmada |
 | `explorerCheckins` | check-ins de campo |
 
-O botão **Limpar** no hub reseta a demonstração preservando o idioma.
+O estado é mantido entre perspectivas; não há ação de limpeza exposta na interface de demonstração.
 
 ## 3. Eventos locais
 
@@ -69,10 +69,11 @@ Cada evento também dispara um toast `DIP · <evento> → Ministry`. Na central 
 - Dicionário em `src/deep/i18n.ts` (`pt` / `fr` / `en`), fallback para `en` e depois para a própria chave.
 - Conteúdo editorial (experiências, agenda, setores, relatórios) é `Localized` em `src/deep/data.ts`,
   lido pelo helper `loc(value, lang)`.
-- Inglês é o idioma padrão em um primeiro acesso. A troca é instantânea e a escolha explícita fica persistida; nada recarrega.
+- Inglês é o idioma padrão em um primeiro acesso. A troca acontece no Hub, é instantânea e a escolha explícita fica persistida;
+  Public, Explorer e Ministry herdam o idioma salvo e não repetem bandeiras nos cabeçalhos.
 - Idioma e origem são campos **separados** na tela *Start*.
 - `PT = Português (Brasil)`, `FR = Français (France)`, `EN = English (United States)`;
-  o seletor usa `role="group"` + `aria-pressed` (não é `<select>` nativo).
+  o seletor do Hub usa `role="group"` + `aria-pressed` (não é `<select>` nativo).
 - `document.documentElement.lang` acompanha a escolha.
 
 ## 5. Comportamento responsivo

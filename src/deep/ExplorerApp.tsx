@@ -68,9 +68,8 @@ const MiniIcon = ({
 };
 
 const ExplorerApp = ({ onHub }: { onHub: () => void }) => {
-  const { t, lang, setLang, state, addCheckin, addFeedback, pushEvent, toast } = useDeep();
+  const { t, lang, state, addCheckin, addFeedback, pushEvent, toast } = useDeep();
   const [screen, setScreen] = useState<Screen>("home");
-  const [langOpen, setLangOpen] = useState(false);
   const [noticeOpen, setNoticeOpen] = useState(false);
   const [selectedDay, setSelectedDay] = useState(AGENDA[0]?.id ?? "day-1");
   const [logText, setLogText] = useState("");
@@ -93,7 +92,6 @@ const ExplorerApp = ({ onHub }: { onHub: () => void }) => {
   const go = (next: Screen) => {
     setScreen(next);
     setError(null);
-    setLangOpen(false);
     setNoticeOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -154,48 +152,6 @@ const ExplorerApp = ({ onHub }: { onHub: () => void }) => {
       )}
       {title && <h1 className="dip-explorer-top__title">{title}</h1>}
       <div className="dip-explorer-top__actions">
-        <div className="dip-explorer-popoverwrap">
-          <button
-            type="button"
-            className="dip-explorer-langbtn"
-            onClick={() => {
-              setLangOpen(!langOpen);
-              setNoticeOpen(false);
-            }}
-            aria-expanded={langOpen}
-            aria-label="Language / Idioma / Langue"
-          >
-            {lang.toUpperCase()}
-          </button>
-          {langOpen && (
-            <div
-              className="dip-explorer-popover dip-explorer-language"
-              role="group"
-              aria-label="Language / Idioma / Langue"
-            >
-              {(
-                [
-                  { id: "pt", flag: "🇧🇷", label: "Português" },
-                  { id: "en", flag: "🇺🇸", label: "English" },
-                  { id: "fr", flag: "🇫🇷", label: "Français" },
-                ] as const
-              ).map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  aria-pressed={lang === item.id}
-                  onClick={() => {
-                    setLang(item.id);
-                    setLangOpen(false);
-                  }}
-                >
-                  <span aria-hidden="true">{item.flag}</span>
-                  <span>{item.label}</span>
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
         {!back && (
           <div className="dip-explorer-popoverwrap">
             <button
@@ -203,7 +159,6 @@ const ExplorerApp = ({ onHub }: { onHub: () => void }) => {
               className="dip-explorer-iconbtn"
               onClick={() => {
                 setNoticeOpen(!noticeOpen);
-                setLangOpen(false);
               }}
               aria-expanded={noticeOpen}
               aria-label={loc({ pt: "Notificações", fr: "Notifications", en: "Notifications" }, lang)}
@@ -369,7 +324,6 @@ const ExplorerApp = ({ onHub }: { onHub: () => void }) => {
               className="dip-explorer-desktop-iconbtn"
               onClick={() => {
                 setNoticeOpen(!noticeOpen);
-                setLangOpen(false);
               }}
               aria-expanded={noticeOpen}
               aria-label={loc({ pt: "Notificações", fr: "Notifications", en: "Notifications" }, lang)}
@@ -1218,10 +1172,6 @@ const ExplorerApp = ({ onHub }: { onHub: () => void }) => {
                     <button type="button" onClick={onHub}>
                       <Icon name="grid" size={20} />
                       {loc({ pt: "Trocar área do DIP", fr: "Changer d’espace DIP", en: "Switch DIP area" }, lang)}
-                    </button>
-                    <button type="button" onClick={() => setLangOpen(true)}>
-                      <Icon name="settings" size={20} />
-                      {loc({ pt: "Idioma", fr: "Langue", en: "Language" }, lang)} · {lang.toUpperCase()}
                     </button>
                   </div>
                   <section className="dip-explorer-panel">

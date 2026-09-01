@@ -14,14 +14,14 @@ import {
   type LocalFeedback,
   useDeep,
 } from "./store";
-import { Icon, LangSwitcher, Lockup } from "./ui";
+import { LangSwitcher, Lockup } from "./ui";
 import PublicApp from "./PublicApp";
 import ExplorerApp from "./ExplorerApp";
 import MinistryApp from "./MinistryApp";
 
 type Perspective = "hub" | "public" | "explorer" | "ministry";
 
-const Hub = ({ onOpen, onReset }: { onOpen: (p: Perspective) => void; onReset: () => void }) => {
+const Hub = ({ onOpen }: { onOpen: (p: Perspective) => void }) => {
   const { t } = useDeep();
   const cards: { id: Perspective; num: string; title: string; sub: string; desc: string; mod: string }[] = [
     {
@@ -59,7 +59,7 @@ const Hub = ({ onOpen, onReset }: { onOpen: (p: Perspective) => void; onReset: (
         <p className="deep-eyebrow" style={{ color: "rgba(255,255,255,.65)" }}>
           {t("hub.eyebrow")}
         </p>
-        <h1 className="deep-h1 deep-serif" style={{ marginTop: 12, maxWidth: 720 }}>
+        <h1 className="deep-h1" style={{ marginTop: 12, maxWidth: 720 }}>
           {t("hub.title")}
         </h1>
         <p className="deep-body" style={{ color: "rgba(255,255,255,.76)", marginTop: 14, maxWidth: 560, fontSize: 16 }}>
@@ -83,32 +83,15 @@ const Hub = ({ onOpen, onReset }: { onOpen: (p: Perspective) => void; onReset: (
           ))}
         </div>
 
-        <div className="deep-row" style={{ gap: 12, marginTop: 28, flexWrap: "wrap" }}>
-          <button type="button" className="deep-btn deep-btn--primary" onClick={() => onOpen("public")}>
-            {t("hub.enter")} <Icon name="arrow" size={18} />
-          </button>
-          <span className="deep-small" style={{ color: "rgba(255,255,255,.7)" }}>
-            {t("hub.sequence")}
-          </span>
-        </div>
-
         <div className="deep-row" style={{ gap: 12, marginTop: 26, flexWrap: "wrap" }}>
           <span className="deep-badge" style={{ background: "rgba(255,255,255,.14)", color: "#fff" }}>
             {t("hub.demo")}
           </span>
-          <button
-            type="button"
-            className="deep-btn deep-btn--ghost deep-btn--sm"
-            style={{ color: "#fff", borderColor: "rgba(255,255,255,.3)" }}
-            onClick={onReset}
-          >
-            {t("common.clear")}
-          </button>
         </div>
       </div>
       <footer className="deep-wrap" style={{ padding: "0 20px 26px" }}>
         <p style={{ fontSize: 11.5, color: "rgba(255,255,255,.5)" }}>
-          DIP — Destination Intelligence Platform · {t("brand.tagline")}
+          <strong>DIP · Intelligence Platform</strong> · {t("brand.footer")}
         </p>
       </footer>
     </div>
@@ -211,7 +194,7 @@ const DeepApp = () => {
   return (
     <DeepContext.Provider value={value}>
       <div className="deep-app">
-        {perspective === "hub" && <Hub onOpen={open} onReset={value.resetDemo} />}
+        {perspective === "hub" && <Hub onOpen={open} />}
         {perspective === "public" && <PublicApp onHub={goHub} />}
         {perspective === "explorer" && <ExplorerApp onHub={goHub} />}
         {perspective === "ministry" && <MinistryApp onHub={goHub} />}

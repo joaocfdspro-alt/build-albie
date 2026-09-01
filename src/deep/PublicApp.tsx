@@ -13,7 +13,7 @@ import {
   TAAG_URL,
   buildJourney,
 } from "./data";
-import { Icon, LangSwitcher, Lockup, Modal, loc } from "./ui";
+import { Icon, Lockup, Modal, loc } from "./ui";
 
 const JourneyMap = lazy(() => import("./JourneyMap"));
 
@@ -221,7 +221,6 @@ const PublicHeader = ({ title, onBack, onMenu }: { title?: string; onBack?: () =
       </div>
       {title ? <h1>{title}</h1> : <span />}
       <div className="dip-public-header__actions">
-        <LangSwitcher />
         <button
           type="button"
           className="dip-icon-button"
@@ -1487,7 +1486,6 @@ const PublicApp = ({ onHub }: { onHub: () => void }) => {
       <BottomNav screen={screen} go={go} lang={lang} />
       <Modal open={menuOpen} onClose={() => setMenuOpen(false)} title="DIP Public">
         <div className="dip-menu">
-          <LangSwitcher />
           <button
             type="button"
             onClick={() => {

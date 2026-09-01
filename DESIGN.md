@@ -8,7 +8,7 @@ Rota canônica `/dip`; aliases legados `/deep` e `/cote-conecta`.
 - Lockup oficial preservado: `DIP` + `CÔTE D’IVOIRE`, assinatura *Destination Intelligence Platform*.
 - O nome falado e escrito do produto é **DIP**. PUBLIC, EXPLORER e MINISTRY são perspectivas, não marcas. O namespace técnico legado `deep` permanece apenas internamente para compatibilidade.
 - A marca **não** é gerada por IA. O componente `Lockup` (`src/deep/ui.tsx`) desenha o lockup em tipografia,
-  com variantes `light` (fundos escuros) e `small` (topbars).
+  com variantes `light` (fundos escuros), `small` (topbars) e `full` (DIP + Destination Intelligence Platform).
 
 ## 2. Tokens
 
@@ -32,8 +32,8 @@ Definidos em `src/deep/deep.css`, escopados no seletor raiz `.deep-app` — nada
 | `--deep-shadow` | sombra dupla suave | profundidade sutil |
 | `--deep-nav-h` | `64px` | altura da bottom nav |
 
-Tipografia: `Plus Jakarta Sans` (já carregada pelo site) para UI; `.deep-serif`
-(Iowan/Palatino/Georgia) apenas em títulos editoriais de hero e hub.
+Tipografia: `Plus Jakarta Sans` (já carregada pelo site) para toda a interface, incluindo o Hub. Não usar serif como
+tratamento padrão de títulos ou logotipos.
 
 ## 3. Regra visual
 
@@ -43,7 +43,9 @@ Tipografia: `Plus Jakarta Sans` (já carregada pelo site) para UI; `.deep-serif`
   sidebar fixa de 248px. Nunca existe "tela de celular centralizada".
 - Fotografia contemporânea em `public/deep/` + hero de Abidjan em `public/cote-conecta/abidjan-home.jpg`.
 - Cartões elegantes: fundo papel, borda 1px navy 12%, sombra baixa, raio 16px.
-- Public: topbar com bandeiras e menu; o retorno ao Hub fica dentro do menu para preservar a hierarquia da home. A assinatura completa “Destination Intelligence Platform” aparece no Hub, em variantes clara e branca.
+- Public: topbar compacto com logo DIP e menu; o retorno ao Hub fica dentro do menu para preservar a hierarquia da home.
+  O seletor de idioma com bandeiras pertence somente ao topo do Hub. A assinatura completa “Destination Intelligence Platform”
+  aparece no Hub em variantes clara e branca.
 
 ## 4. Personagens
 
@@ -78,5 +80,5 @@ feedback), empty (`.deep-empty`), error (`role="alert"` nos formulários) e succ
 - O Ministry é a camada institucional e desktop-first de inteligência, governança e integrações.
 - SGAT aparece como infraestrutura oficial conectada em **Visão Geral** e detalhada em **Configurações**.
 - A mensagem é complementar: SGAT organiza e-Administration, e-Tourism e valorização de dados; DIP acrescenta experiência, campanhas e inteligência internacional.
-- Cabeçalho mobile do Ministry: botão explícito de retorno ao hub, seletor por bandeiras e uma única central de notificações/atividade.
+- Cabeçalho mobile do Ministry: botão explícito de retorno ao hub e uma única central de notificações/atividade; o idioma é herdado do Hub.
 - Inglês é o idioma inicial. PT-BR, FR-FR e EN-US são escolhas explícitas e persistidas.

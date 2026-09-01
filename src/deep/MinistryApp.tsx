@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { useDeep } from "./store";
 import { BASE_FEEDBACK, CAMPAIGNS, CREATORS, FUNNEL, JOURNEYS, MARKETS, PARTNERS, REPORTS, TRAVELERS } from "./data";
-import { DemoFlag, Icon, LangSwitcher, Modal, loc } from "./ui";
+import { DemoFlag, Icon, Modal, loc } from "./ui";
 
 type PrimaryView = "overview" | "travelers" | "campaigns" | "experiences" | "more";
 type ExperienceView = "journeys" | "signals" | "funnel";
@@ -339,7 +339,6 @@ const MinistryApp = ({ onHub }: { onHub: () => void }) => {
         <div className="dip-ministry-desktop-topbar">
           <h1 id="ministry-desktop-title">{tx({ pt: "Visão geral", fr: "Vue d’ensemble", en: "Overview" })}</h1>
           <div className="dip-ministry-desktop-topbar__actions">
-            <LangSwitcher />
             <button
               type="button"
               className="dip-ministry-sgat-pill"
@@ -1021,10 +1020,6 @@ const MinistryApp = ({ onHub }: { onHub: () => void }) => {
           <h1>{tx({ pt: "Configurações", fr: "Paramètres", en: "Settings" })}</h1>
           <div className="dip-ministry-settings">
             <div>
-              <strong>
-                {tx({ pt: "Idioma da interface", fr: "Langue de l’interface", en: "Interface language" })}
-              </strong>
-              <LangSwitcher />
             </div>
             <div className="dip-ministry-sgat-detail">
               <span className="dip-ministry-sgat__badge">
@@ -1568,7 +1563,6 @@ const MinistryApp = ({ onHub }: { onHub: () => void }) => {
               DIP <span>MINISTRY</span>
             </button>
           </div>
-          <LangSwitcher />
           <div className="dip-ministry-header__actions">
             <button
               type="button"
